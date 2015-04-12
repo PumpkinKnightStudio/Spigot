@@ -1,0 +1,68 @@
+From e58d58fbd9592e2b2d5a2bdbbfc1219676598f86 Mon Sep 17 00:00:00 2001
+From: Cory Redmond <acecheese@live.co.uk>
+Date: Thu, 12 Feb 2015 18:23:11 +0000
+Subject: [PATCH] Allow for specific proxy IP's to be authenticated.
+
+
+diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
+index c9a7839..0051fed 100644
+--- a/src/main/java/net/minecraft/server/HandshakeListener.java
++++ b/src/main/java/net/minecraft/server/HandshakeListener.java
+@@ -74,8 +74,19 @@ public class HandshakeListener implements PacketHandshakingInListener {
+                 this.b.a((PacketListener) (new LoginListener(this.a, this.b)));
+                 // Spigot Start
+                 if (org.spigotmc.SpigotConfig.bungee) {
++
+                     String[] split = packethandshakinginsetprotocol.b.split("\00");
+                     if ( split.length == 3 || split.length == 4 ) {
++
++						if ( org.spigotmc.SpigotConfig.ipRestrictEnabled ) {
++							if (!org.spigotmc.SpigotConfig.allowedIPs.contains(((java.net.InetSocketAddress) b.getSocketAddress()).getHostString())) {
++								chatcomponenttext = new ChatComponentText("The BungeeCord server you are using is not allowed.");
++								this.b.handle(new PacketLoginOutDisconnect(chatcomponenttext));
++								this.b.close(chatcomponenttext);
++								return;
++							}
++						}
++
+                         packethandshakinginsetprotocol.b = split[0];
+                         b.j = new java.net.InetSocketAddress(split[1], ((java.net.InetSocketAddress) b.getSocketAddress()).getPort());
+                         b.spoofedUUID = com.mojang.util.UUIDTypeAdapter.fromString( split[2] );
+diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
+index c03388d..d61c7df 100644
+--- a/src/main/java/org/spigotmc/SpigotConfig.java
++++ b/src/main/java/org/spigotmc/SpigotConfig.java
+@@ -68,8 +68,8 @@ public class SpigotConfig
+ 
+         commands = new HashMap<String, Command>();
+ 
+-        version = getInt( "config-version", 8 );
+-        set( "config-version", 8 );
++        version = getInt( "config-version", 9 );
++        set( "config-version", 9 );
+         readConfig( SpigotConfig.class, null );
+     }
+ 
+@@ -386,4 +386,19 @@ public class SpigotConfig
+             Bukkit.getLogger().info( "Debug logging is disabled" );
+         }
+     }
++
++	public static HashSet<String> allowedIPs;
++	public static boolean ipRestrictEnabled;
++	private static void ipRestrict(){
++
++		ipRestrictEnabled = getBoolean( "ipRestriction.enabled", false );
++
++		//HashSet for speed in lookup.
++		allowedIPs = new HashSet<String>();
++		allowedIPs.addAll( getList( "ipRestriction.allowed", Arrays.asList(
++				new String[]{ "127.0.0.1" }
++		) ) );
++
++	}
++
+ }
+-- 
+1.9.4.msysgit.0
+
