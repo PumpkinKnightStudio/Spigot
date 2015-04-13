@@ -1,0 +1,101 @@
+From 881b564ce3aa0ad8effd808039715ab9a0c3801e Mon Sep 17 00:00:00 2001
+From: Andy Shulman <andy.shulman@hotmail.com>
+Date: Fri, 1 Nov 2013 16:49:15 -0400
+Subject: [PATCH] Fire BlockFromTo Events but mark as cancelled those that do
+ not actually flow
+
+
+diff --git a/src/main/java/net/minecraft/server/BlockFlowing.java b/src/main/java/net/minecraft/server/BlockFlowing.java
+index 5d36af3..be787c2 100644
+--- a/src/main/java/net/minecraft/server/BlockFlowing.java
++++ b/src/main/java/net/minecraft/server/BlockFlowing.java
+@@ -25,7 +25,6 @@ public class BlockFlowing extends BlockFluids {
+     public void b(World world, BlockPosition blockposition, IBlockData iblockdata, Random random) {
+         // CraftBukkit start
+         org.bukkit.World bworld = world.getWorld();
+-        org.bukkit.Server server = world.getServer();
+         org.bukkit.block.Block source = bworld == null ? null : bworld.getBlockAt(blockposition.getX(), blockposition.getY(), blockposition.getZ());
+         // CraftBukkit end
+         int i = ((Integer) iblockdata.get(BlockFlowing.LEVEL)).intValue();
+@@ -98,23 +97,11 @@ public class BlockFlowing extends BlockFluids {
+         IBlockData iblockdata2 = world.getType(blockposition.down());
+ 
+         if (this.h(world, blockposition.down(), iblockdata2)) {
+-            // CraftBukkit start - Send "down" to the server
+-            BlockFromToEvent event = new BlockFromToEvent(source, BlockFace.DOWN);
+-            if (server != null) {
+-                server.getPluginManager().callEvent(event);
+-            }
+-            if (!event.isCancelled()) {
+-            if (this.material == Material.LAVA && world.getType(blockposition.down()).getBlock().getMaterial() == Material.WATER) {
+-                world.setTypeUpdate(blockposition.down(), Blocks.STONE.getBlockData());
+-                this.fizz(world, blockposition.down());
+-                return;
+-            }
+-
++            // CraftBukkit start -- add source block parameter
+             if (i >= 8) {
+-                this.flow(world, blockposition.down(), iblockdata2, i);
++                this.flow(world, blockposition.down(), iblockdata2, i, source);
+             } else {
+-                this.flow(world, blockposition.down(), iblockdata2, i + 8);
+-            }
++                this.flow(world, blockposition.down(), iblockdata2, i + 8, source);
+             }
+             // CraftBukkit end
+         } else if (i >= 0 && (i == 0 || this.g(world, blockposition.down(), iblockdata2))) {
+@@ -134,26 +121,39 @@ public class BlockFlowing extends BlockFluids {
+             while (iterator1.hasNext()) {
+                 EnumDirection enumdirection1 = (EnumDirection) iterator1.next();
+ 
+-                // CraftBukkit start
+-                BlockFromToEvent event = new BlockFromToEvent(source, org.bukkit.craftbukkit.block.CraftBlock.notchToBlockFace(enumdirection1));
+-                if (server != null) {
+-                    server.getPluginManager().callEvent(event);
+-                }
+-
+-                if (!event.isCancelled()) {
+-                    this.flow(world, blockposition.shift(enumdirection1), world.getType(blockposition.shift(enumdirection1)), k);
+-                }
+-                // CraftBukkit end
++                this.flow(world, blockposition.shift(enumdirection1), world.getType(blockposition.shift(enumdirection1)), k, source); // CraftBukkit - add source block parameter
+             }
+         }
+ 
+     }
+ 
+-    private void flow(World world, BlockPosition blockposition, IBlockData iblockdata, int i) {
+-        if (world.isLoaded(blockposition) && this.h(world, blockposition, iblockdata)) { // CraftBukkit - add isLoaded check
++    private void flow(World world, BlockPosition blockposition, IBlockData iblockdata, int i, org.bukkit.block.Block sourceBlock) { // CraftBukkit start
++        if (!world.isLoaded(blockposition)) {
++            return;
++        }
++
++        org.bukkit.Server server = world.getServer();
++        org.bukkit.block.Block to = world.getWorld().getBlockAt(blockposition.getX(), blockposition.getY(), blockposition.getZ());
++        BlockFromToEvent event = new BlockFromToEvent(sourceBlock, to);
++        event.setCancelled(!this.h(world, blockposition, iblockdata));
++        if (server != null) {
++            server.getPluginManager().callEvent(event);
++        }
++        if (event.isCancelled()) {
++            return;
++        }
++        // CraftBukkit end
++
++        if (this.h(world, blockposition, iblockdata)) {
+             if (iblockdata.getBlock() != Blocks.AIR) {
+                 if (this.material == Material.LAVA) {
+                     this.fizz(world, blockposition);
++                    // CraftBukkit start
++                    if (world.getType(blockposition).getBlock().getMaterial() == Material.WATER) {
++                        world.setTypeUpdate(blockposition, Blocks.STONE.getBlockData());
++                        return;
++                    }
++                    // CraftBukkit end
+                 } else {
+                     iblockdata.getBlock().b(world, blockposition, iblockdata, 0);
+                 }
+-- 
+1.9.1
+
