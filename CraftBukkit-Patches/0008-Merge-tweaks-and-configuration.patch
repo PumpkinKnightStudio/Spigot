@@ -1,4 +1,4 @@
-From 5f945d18735c2588742a9ee996276be54f8dd76e Mon Sep 17 00:00:00 2001
+From 71d6f34342b3b3c57947cb548e50a3437007b316 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:46:33 +1100
 Subject: [PATCH] Merge tweaks and configuration
@@ -6,7 +6,7 @@ Subject: [PATCH] Merge tweaks and configuration
 This allows the merging of Experience orbs, as well as the configuration of the merge radius of items. Additionally it refactors the merge algorithm to be a better experience for players.
 
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index 6243b0e..c1b904d 100644
+index 6243b0e..73b9e38 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -122,7 +122,10 @@ public class EntityItem extends Entity {
@@ -21,7 +21,7 @@ index 6243b0e..c1b904d 100644
  
          while (iterator.hasNext()) {
              EntityItem entityitem = (EntityItem) iterator.next();
-@@ -156,11 +159,13 @@ public class EntityItem extends Entity {
+@@ -156,11 +159,17 @@ public class EntityItem extends Entity {
                      } else if (itemstack1.count + itemstack.count > itemstack1.getMaxStackSize()) {
                          return false;
                      } else {
@@ -31,6 +31,10 @@ index 6243b0e..c1b904d 100644
 -                        entityitem.setItemStack(itemstack1);
 -                        this.die();
 +                        // Spigot start
++                        // do not merge when separated by a solid block
++                        if (world.areSeparatedBySolidBlock(this, entityitem))
++                            return false;
++
 +                        itemstack.count += itemstack1.count;
 +                        this.pickupDelay = Math.max(entityitem.pickupDelay, this.pickupDelay);
 +                        this.age = Math.min(entityitem.age, this.age);
@@ -41,10 +45,38 @@ index 6243b0e..c1b904d 100644
                      }
                  } else {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 11e072b..df4d9cd 100644
+index 11e072b..62270dc 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -970,6 +970,23 @@ public abstract class World implements IBlockAccess {
+@@ -888,6 +888,27 @@ public abstract class World implements IBlockAccess {
+         }
+     }
+ 
++    // Spigot start
++    // Performs a ray trace between entity1 and entity2, returning true if a
++    // solid block is found between them or false if none
++    public boolean areSeparatedBySolidBlock(Entity entity1, Entity entity2) {
++        // nextUp is used because the y coord of entities is at
++        // the bottom of their bounding box and the rayTrace logic
++        // sees this as an intersection with whatever the entity
++        // is standing on
++        Vec3D thisPos = new Vec3D(entity1.locX, Math.nextUp(entity1.locY), entity1.locZ);
++        Vec3D otherPos = new Vec3D(entity2.locX, Math.nextUp(entity2.locY), entity2.locZ);
++        // a second, slightly offset ray trace is used to stop merging
++        // through corners
++        Vec3D thisPosOffset = new Vec3D(Math.nextUp(entity1.locX), Math.nextUp(entity1.locY), Math.nextUp(entity1.locZ));
++        Vec3D otherPosOffset = new Vec3D(Math.nextUp(entity2.locX), Math.nextUp(entity2.locY), Math.nextUp(entity2.locZ));
++
++        // do the actual traces
++        return rayTrace(thisPos, otherPos, false, true, false) != null
++                || rayTrace(thisPosOffset, otherPosOffset, false, true, false) != null;
++    }
++    // Spigot end
++
+     public void makeSound(Entity entity, String s, float f, float f1) {
+         for (int i = 0; i < this.u.size(); ++i) {
+             ((IWorldAccess) this.u.get(i)).a(s, entity.locX, entity.locY, entity.locZ, f, f1);
+@@ -970,6 +991,23 @@ public abstract class World implements IBlockAccess {
              // Not all projectiles extend EntityProjectile, so check for Bukkit interface instead
              event = CraftEventFactory.callProjectileLaunchEvent(entity);
          }
@@ -57,7 +89,7 @@ index 11e072b..df4d9cd 100644
 +                for (Entity e : entities) {
 +                    if (e instanceof EntityExperienceOrb) {
 +                        EntityExperienceOrb loopItem = (EntityExperienceOrb) e;
-+                        if (!loopItem.dead) {
++                        if (!loopItem.dead && !areSeparatedBySolidBlock(entity, loopItem)) {
 +                            xp.value += loopItem.value;
 +                            loopItem.die();
 +                        }
