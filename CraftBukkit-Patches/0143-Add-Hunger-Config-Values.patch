@@ -1,11 +1,11 @@
-From 6602ece5a20bf90d8b724daaeac85179849c4419 Mon Sep 17 00:00:00 2001
+From 475ce1c6a4becadeca26e8b0028e5e2d53863ff1 Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 51f196a..7eb26f7 100644
+index 6f1a48f..ddc0d4a 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -1084,7 +1084,7 @@ public abstract class EntityHuman extends EntityLiving {
@@ -30,7 +30,7 @@ index 51f196a..7eb26f7 100644
  
      }
 diff --git a/src/main/java/net/minecraft/server/FoodMetaData.java b/src/main/java/net/minecraft/server/FoodMetaData.java
-index 456b9b3..3af4180 100644
+index 2505a78..d0bcad6 100644
 --- a/src/main/java/net/minecraft/server/FoodMetaData.java
 +++ b/src/main/java/net/minecraft/server/FoodMetaData.java
 @@ -63,7 +63,7 @@ public class FoodMetaData {
@@ -43,10 +43,10 @@ index 456b9b3..3af4180 100644
              }
          } else if (this.foodLevel <= 0) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index b19558b..0f9b67c 100644
+index 625aa65..8119fdf 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -303,4 +303,16 @@ public class SpigotWorldConfig
+@@ -310,4 +310,16 @@ public class SpigotWorldConfig
          largeFeatureSeed = getInt( "seed-feature", 14357617 );
          log( "Custom Map Seeds:  Village: " + villageSeed + " Feature: " + largeFeatureSeed );
      }

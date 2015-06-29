@@ -1,4 +1,4 @@
-From 1a625048845e34778ffdba0ad1042370f586a797 Mon Sep 17 00:00:00 2001
+From bcf0351e2661d9e282fbf056a37df0a60ccb40f3 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -145,7 +145,7 @@ index aa36bf2..3c7814d 100644
          super(world);
          this.setSize(0.25F, 0.25F);
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index c1b904d..06d4687 100644
+index 47c92d2..da51160 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
 @@ -121,6 +121,28 @@ public class EntityItem extends Entity {
@@ -196,10 +196,10 @@ index 6ef9c83..e3a9e44 100644
      public void G() {
          this.damageEntity(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 6de46dc..221e2f2 100644
+index 05f95dd..66a778c 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1306,6 +1306,7 @@ public abstract class World implements IBlockAccess {
+@@ -1328,6 +1328,7 @@ public abstract class World implements IBlockAccess {
          this.g.clear();
          this.methodProfiler.c("regular");
  
@@ -207,7 +207,7 @@ index 6de46dc..221e2f2 100644
          timings.entityTick.startTiming(); // Spigot
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
-@@ -1480,9 +1481,11 @@ public abstract class World implements IBlockAccess {
+@@ -1502,9 +1503,11 @@ public abstract class World implements IBlockAccess {
          int j = MathHelper.floor(entity.locZ);
          byte b0 = 32;
  
@@ -527,10 +527,10 @@ index 0000000..d3f4af1
 +    }
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index a85800d..da8563b 100644
+index 27de189..3097939 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -140,4 +140,15 @@ public class SpigotWorldConfig
+@@ -147,4 +147,15 @@ public class SpigotWorldConfig
          mobSpawnRange = (byte) getInt( "mob-spawn-range", 4 );
          log( "Mob Spawn Range: " + mobSpawnRange );
      }

@@ -1,11 +1,11 @@
-From 9a00ec321402602d5ae5f59f2f640db206adae98 Mon Sep 17 00:00:00 2001
+From c2465ed3447a78b254068358c3d3fbf15df10804 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Mon, 14 Oct 2013 19:20:10 +1100
 Subject: [PATCH] Arrow Despawn Rate
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
-index 01c66e3..46f6374 100644
+index 3359160..3a80776 100644
 --- a/src/main/java/net/minecraft/server/EntityArrow.java
 +++ b/src/main/java/net/minecraft/server/EntityArrow.java
 @@ -155,7 +155,7 @@ public class EntityArrow extends Entity implements IProjectile {
@@ -18,10 +18,10 @@ index 01c66e3..46f6374 100644
                  }
              } else {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index efbfa2e..d8433ac 100644
+index 0083d62..ce843b2 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -207,4 +207,11 @@ public class SpigotWorldConfig
+@@ -214,4 +214,11 @@ public class SpigotWorldConfig
          itemDespawnRate = getInt( "item-despawn-rate", 6000 );
          log( "Item Despawn Rate: " + itemDespawnRate );
      }

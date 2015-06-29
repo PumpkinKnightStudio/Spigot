@@ -1,14 +1,14 @@
-From 99507859014f932c1d4c637c3a02008d1bd70a18 Mon Sep 17 00:00:00 2001
+From 8837a4918f3a3822ea33cad2b2b20c373278d1fd Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 11 Jun 2013 12:17:37 +1000
 Subject: [PATCH] More Efficient GetCubes
 
 
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index e9211fe..9867081 100644
+index 88deb90..b662ffd 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -1104,28 +1104,56 @@ public abstract class World implements IBlockAccess {
+@@ -1126,28 +1126,56 @@ public abstract class World implements IBlockAccess {
          IBlockData iblockdata = Blocks.STONE.getBlockData();
          BlockPosition.MutableBlockPosition blockposition_mutableblockposition = new BlockPosition.MutableBlockPosition();
  

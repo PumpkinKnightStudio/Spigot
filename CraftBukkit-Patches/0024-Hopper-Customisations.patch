@@ -1,4 +1,4 @@
-From a52a850cb8198e8db2afb6c34acaa96093c6ffd7 Mon Sep 17 00:00:00 2001
+From f264ee2d175aea8de6a7083ebdfebfbc833cd80e Mon Sep 17 00:00:00 2001
 From: erocs <github@erocs.org>
 Date: Sun, 8 Sep 2013 12:06:15 -0700
 Subject: [PATCH] Hopper Customisations
@@ -97,10 +97,10 @@ index 8f771af..6785b71 100644
  
                      iinventory.update();
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 3d4896b..f0e3b97 100644
+index 5280455..9da655f 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -166,4 +166,19 @@ public class SpigotWorldConfig
+@@ -173,4 +173,19 @@ public class SpigotWorldConfig
          otherTrackingRange = getInt( "entity-tracking-range.other", otherTrackingRange );
          log( "Entity Tracking Range: Pl " + playerTrackingRange + " / An " + animalTrackingRange + " / Mo " + monsterTrackingRange + " / Mi " + miscTrackingRange + " / Other " + otherTrackingRange );
      }

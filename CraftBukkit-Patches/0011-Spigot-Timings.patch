@@ -1,4 +1,4 @@
-From a88c31aaedf181cd24f119991ee777ffebc767da Mon Sep 17 00:00:00 2001
+From 0d84db759bbc7926cc34228caca51d56bcff08e2 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -419,7 +419,7 @@ index 513712d..b8d0961 100644
      private static Map<String, Class<? extends TileEntity>> f = Maps.newHashMap();
      private static Map<Class<? extends TileEntity>, String> g = Maps.newHashMap();
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 68f4996..45cafe7 100644
+index ee3f389..a43d122 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -21,6 +21,7 @@ import org.bukkit.Bukkit;
@@ -447,7 +447,7 @@ index 68f4996..45cafe7 100644
      }
  
      public World b() {
-@@ -1302,6 +1306,7 @@ public abstract class World implements IBlockAccess {
+@@ -1324,6 +1328,7 @@ public abstract class World implements IBlockAccess {
          this.g.clear();
          this.methodProfiler.c("regular");
  
@@ -455,7 +455,7 @@ index 68f4996..45cafe7 100644
          // CraftBukkit start - Use field for loop variable
          for (this.tickPosition = 0; this.tickPosition < this.entityList.size(); ++this.tickPosition) {
              entity = (Entity) this.entityList.get(this.tickPosition);
-@@ -1318,7 +1323,9 @@ public abstract class World implements IBlockAccess {
+@@ -1340,7 +1345,9 @@ public abstract class World implements IBlockAccess {
              this.methodProfiler.a("tick");
              if (!entity.dead) {
                  try {
@@ -465,7 +465,7 @@ index 68f4996..45cafe7 100644
                  } catch (Throwable throwable1) {
                      crashreport = CrashReport.a(throwable1, "Ticking entity");
                      crashreportsystemdetails = crashreport.a("Entity being ticked");
-@@ -1343,7 +1350,9 @@ public abstract class World implements IBlockAccess {
+@@ -1365,7 +1372,9 @@ public abstract class World implements IBlockAccess {
              this.methodProfiler.b();
          }
  
@@ -475,7 +475,7 @@ index 68f4996..45cafe7 100644
          this.M = true;
          // CraftBukkit start - From below, clean up tile entities before ticking them
          if (!this.c.isEmpty()) {
-@@ -1362,6 +1371,7 @@ public abstract class World implements IBlockAccess {
+@@ -1384,6 +1393,7 @@ public abstract class World implements IBlockAccess {
  
                  if (this.isLoaded(blockposition) && this.N.a(blockposition)) {
                      try {
@@ -483,7 +483,7 @@ index 68f4996..45cafe7 100644
                          ((IUpdatePlayerListBox) tileentity).c();
                      } catch (Throwable throwable2) {
                          CrashReport crashreport1 = CrashReport.a(throwable2, "Ticking block entity");
-@@ -1370,6 +1380,11 @@ public abstract class World implements IBlockAccess {
+@@ -1392,6 +1402,11 @@ public abstract class World implements IBlockAccess {
                          tileentity.a(crashreportsystemdetails1);
                          throw new ReportedException(crashreport1);
                      }
@@ -495,7 +495,7 @@ index 68f4996..45cafe7 100644
                  }
              }
  
-@@ -1382,6 +1397,8 @@ public abstract class World implements IBlockAccess {
+@@ -1404,6 +1419,8 @@ public abstract class World implements IBlockAccess {
              }
          }
  
@@ -504,7 +504,7 @@ index 68f4996..45cafe7 100644
          this.M = false;
          /* CraftBukkit start - Moved up
          if (!this.c.isEmpty()) {
-@@ -1414,6 +1431,7 @@ public abstract class World implements IBlockAccess {
+@@ -1436,6 +1453,7 @@ public abstract class World implements IBlockAccess {
              this.b.clear();
          }
  
@@ -512,7 +512,7 @@ index 68f4996..45cafe7 100644
          this.methodProfiler.b();
          this.methodProfiler.b();
      }
-@@ -1458,6 +1476,7 @@ public abstract class World implements IBlockAccess {
+@@ -1480,6 +1498,7 @@ public abstract class World implements IBlockAccess {
          // CraftBukkit start - Use neighbor cache instead of looking up
          Chunk startingChunk = this.getChunkIfLoaded(i >> 4, j >> 4);
          if (!flag || (startingChunk != null && startingChunk.areNeighborsLoaded(2)) /* this.isAreaLoaded(i - b0, 0, j - b0, i + b0, 0, j + b0) */) {
@@ -520,7 +520,7 @@ index 68f4996..45cafe7 100644
              // CraftBukkit end
              entity.P = entity.locX;
              entity.Q = entity.locY;
-@@ -1521,6 +1540,7 @@ public abstract class World implements IBlockAccess {
+@@ -1543,6 +1562,7 @@ public abstract class World implements IBlockAccess {
                  }
              }
  

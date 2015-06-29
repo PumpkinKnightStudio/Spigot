@@ -1,4 +1,4 @@
-From 4a8222673596ec7fb6fa2b3332b1cb4687b3a446 Mon Sep 17 00:00:00 2001
+From 9d6df5a4b387a194434c4d49a8f55c816c99372d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -32,10 +32,10 @@ index 411f2dc..6648a70 100644
          i1 *= this.g;
          j1 *= this.g;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 75e66d5..b19558b 100644
+index a76766e..625aa65 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -294,4 +294,13 @@ public class SpigotWorldConfig
+@@ -301,4 +301,13 @@ public class SpigotWorldConfig
      {
          witherSpawnSoundRadius = getInt( "wither-spawn-sound-radius", 0 );
      }

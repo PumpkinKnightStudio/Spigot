@@ -1,4 +1,4 @@
-From d528062516b72771b4941e2e59cb02dc06cea9f0 Mon Sep 17 00:00:00 2001
+From 33dad7f44e08787cb3e43d84aa9d9f6c2bcb7494 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,7 +8,7 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index f22e695..3d8d59a 100644
+index 7e7aa11..746cbce 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -42,6 +42,7 @@ public class Chunk {
@@ -144,10 +144,10 @@ index cc1b347..3964e3f 100644
                                                                  continue label115;
                                                              }
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index a3255eb..a85800d 100644
+index 790d681..27de189 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-@@ -133,4 +133,11 @@ public class SpigotWorldConfig
+@@ -140,4 +140,11 @@ public class SpigotWorldConfig
          viewDistance = getInt( "view-distance", Bukkit.getViewDistance() );
          log( "View Distance: " + viewDistance );
      }
