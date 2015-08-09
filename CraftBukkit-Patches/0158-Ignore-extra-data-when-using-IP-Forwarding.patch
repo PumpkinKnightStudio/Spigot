@@ -1,0 +1,23 @@
+From 95c4447b6882db5dac3825dc114218c4a726455f Mon Sep 17 00:00:00 2001
+From: Daniel Naylor <git@drnaylor.co.uk>
+Date: Sun, 9 Aug 2015 14:19:04 +0100
+Subject: [PATCH] Ignore extra data when using IP Forwarding
+
+
+diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
+index 64f6a9b..544ecc8 100644
+--- a/src/main/java/net/minecraft/server/HandshakeListener.java
++++ b/src/main/java/net/minecraft/server/HandshakeListener.java
+@@ -74,7 +74,8 @@ public class HandshakeListener implements PacketHandshakingInListener {
+                 this.b.a((PacketListener) (new LoginListener(this.a, this.b)));
+                 // Spigot Start
+                 if (org.spigotmc.SpigotConfig.bungee) {
+-                    String[] split = packethandshakinginsetprotocol.hostname.split("\00");
++                    // Remove any extra data Bungee sends - not interested in it here.
++                    String[] split = packethandshakinginsetprotocol.hostname.split("\00\\|", 2)[0].split("\00");
+                     if ( split.length == 3 || split.length == 4 ) {
+                         packethandshakinginsetprotocol.hostname = split[0];
+                         b.l = new java.net.InetSocketAddress(split[1], ((java.net.InetSocketAddress) b.getSocketAddress()).getPort());
+-- 
+1.9.5.msysgit.0
+
