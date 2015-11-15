@@ -1,0 +1,52 @@
+From 4449d4ac24d91719b3997916d5b6eed7cea22af7 Mon Sep 17 00:00:00 2001
+From: Wouter Gerarts <wouto1997@gmail.com>
+Date: Sun, 15 Nov 2015 04:01:23 +0100
+Subject: [PATCH] Add methods to PermissionAttachment to add/remove multiple
+ permissions before recalculating them
+
+
+diff --git a/src/main/java/org/bukkit/permissions/PermissionAttachment.java b/src/main/java/org/bukkit/permissions/PermissionAttachment.java
+index b2a44d5..c59e5b4 100644
+--- a/src/main/java/org/bukkit/permissions/PermissionAttachment.java
++++ b/src/main/java/org/bukkit/permissions/PermissionAttachment.java
+@@ -1,5 +1,6 @@
+ package org.bukkit.permissions;
+ 
++import java.util.Collection;
+ import java.util.LinkedHashMap;
+ import java.util.Map;
+ import org.bukkit.plugin.Plugin;
+@@ -121,6 +122,30 @@ public class PermissionAttachment {
+     public void unsetPermission(Permission perm) {
+         unsetPermission(perm.getName());
+     }
++    
++    /**
++     * Sets multiple permissions to the given values.
++     * 
++     * @param permissionMap A map of permissions to set and their values
++     */
++    public void setPermissions(Map<String, Boolean> permissionMap) {
++        permissions.putAll(permissionMap);
++        permissible.recalculatePermissions();
++    }
++    
++    /**
++     * Removes multiple permissions from this attachment.
++     * <p>
++     * Permissions that do not exist in this attachment are ignored.
++     * 
++     * @param permissionList A Collection of names of permissions to be removed.
++     */
++    public void unsetPermissions(Collection<String> permissionList) {
++        for (String perm : permissionList) {
++            permissions.remove(perm);
++        }
++        permissible.recalculatePermissions();
++    }
+ 
+     /**
+      * Removes this attachment from its registered {@link Permissible}
+-- 
+2.6.2.windows.1
+
