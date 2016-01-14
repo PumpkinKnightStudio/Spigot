@@ -1,0 +1,66 @@
+From 0ea13b49aa166a2e7d3429f2d2e1d78a669ed668 Mon Sep 17 00:00:00 2001
+From: ItsHarry <info@itsjerryandharry.com>
+Date: Thu, 14 Jan 2016 21:33:58 +0100
+Subject: [PATCH] Prevent projectiles from colliding with hidden players.
+
+
+diff --git a/src/main/java/net/minecraft/server/EntityArrow.java b/src/main/java/net/minecraft/server/EntityArrow.java
+index 3a80776..c7f6562 100644
+--- a/src/main/java/net/minecraft/server/EntityArrow.java
++++ b/src/main/java/net/minecraft/server/EntityArrow.java
+@@ -220,6 +220,14 @@ public class EntityArrow extends Entity implements IProjectile {
+             float f2;
+             float f3;
+ 
++            // Spigot start - Allow arrows to fly through vanished players the shooter can't see
++            if (movingobjectposition != null && movingobjectposition.entity instanceof EntityPlayer && shooter != null && shooter instanceof EntityPlayer) {
++                if (!((EntityPlayer) shooter).getBukkitEntity().canSee(((EntityPlayer) movingobjectposition.entity).getBukkitEntity())) {
++                    movingobjectposition = null;
++                }
++            }
++            // Spigot end
++
+             if (movingobjectposition != null) {
+                 org.bukkit.craftbukkit.event.CraftEventFactory.callProjectileHitEvent(this); // CraftBukkit - Call event
+                 if (movingobjectposition.entity != null) {
+diff --git a/src/main/java/net/minecraft/server/EntityFishingHook.java b/src/main/java/net/minecraft/server/EntityFishingHook.java
+index 503e78a..5434eb0 100644
+--- a/src/main/java/net/minecraft/server/EntityFishingHook.java
++++ b/src/main/java/net/minecraft/server/EntityFishingHook.java
+@@ -187,6 +187,14 @@ public class EntityFishingHook extends Entity {
+                 movingobjectposition = new MovingObjectPosition(entity);
+             }
+ 
++            // Spigot start - Allow fishing hooks to fly through vanished players the shooter can't see
++            if (movingobjectposition != null && movingobjectposition.entity instanceof EntityPlayer && owner != null && owner instanceof EntityPlayer) {
++                if (!((EntityPlayer) owner).getBukkitEntity().canSee(((EntityPlayer) movingobjectposition.entity).getBukkitEntity())) {
++                    movingobjectposition = null;
++                }
++            }
++            // Spigot end
++
+             if (movingobjectposition != null) {
+                 org.bukkit.craftbukkit.event.CraftEventFactory.callProjectileHitEvent(this); // Craftbukkit - Call event
+                 if (movingobjectposition.entity != null) {
+diff --git a/src/main/java/net/minecraft/server/EntityProjectile.java b/src/main/java/net/minecraft/server/EntityProjectile.java
+index 72478be..4460d2d 100644
+--- a/src/main/java/net/minecraft/server/EntityProjectile.java
++++ b/src/main/java/net/minecraft/server/EntityProjectile.java
+@@ -147,6 +147,14 @@ public abstract class EntityProjectile extends Entity implements IProjectile {
+             }
+         }
+ 
++        // Spigot start - Allow projectiles to fly through vanished players the shooter can't see
++        if (movingobjectposition != null && movingobjectposition.entity instanceof EntityPlayer && shooter != null && shooter instanceof EntityPlayer) {
++            if (!((EntityPlayer) shooter).getBukkitEntity().canSee(((EntityPlayer) movingobjectposition.entity).getBukkitEntity())) {
++                movingobjectposition = null;
++            }
++        }
++        // Spigot end
++
+         if (movingobjectposition != null) {
+             if (movingobjectposition.type == MovingObjectPosition.EnumMovingObjectType.BLOCK && this.world.getType(movingobjectposition.a()).getBlock() == Blocks.PORTAL) {
+                 this.d(movingobjectposition.a());
+-- 
+1.8.3.msysgit.0
+
