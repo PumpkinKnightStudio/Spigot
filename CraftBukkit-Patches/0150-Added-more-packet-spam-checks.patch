@@ -1,0 +1,69 @@
+From 98aa260b5c571a1391ada5597efab9a9d8ec9ce0 Mon Sep 17 00:00:00 2001
+From: Zartec <zartec@mccluster.eu>
+Date: Mon, 14 Mar 2016 00:53:17 +0100
+Subject: [PATCH] Added more packet spam checks
+
+
+diff --git a/src/main/java/net/minecraft/server/PlayerConnection.java b/src/main/java/net/minecraft/server/PlayerConnection.java
+index f4e5769..3bcd2eb 100644
+--- a/src/main/java/net/minecraft/server/PlayerConnection.java
++++ b/src/main/java/net/minecraft/server/PlayerConnection.java
+@@ -132,6 +132,13 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+     }
+     private final static HashSet<Integer> invalidItems = new HashSet<Integer>(java.util.Arrays.asList(8, 9, 10, 11, 26, 34, 36, 43, 51, 52, 55, 59, 60, 62, 63, 64, 68, 71, 74, 75, 83, 90, 92, 93, 94, 104, 105, 115, 117, 118, 119, 125, 127, 132, 140, 141, 142, 144)); // TODO: Check after every update.
+     // CraftBukkit end
++    
++    // Spigot start - Added more packet checks
++    private int lastArmSwingTick = MinecraftServer.currentTick;
++    private int armSwingCount = 0;
++    private int lastWindowClickTick = MinecraftServer.currentTick;
++    private int windowClickCount = 0;
++    // Spigot end
+ 
+     public void c() {
+         this.d();
+@@ -1358,6 +1365,20 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+         PlayerConnectionUtils.ensureMainThread(packetplayinarmanimation, this, this.player.x());
+         if (this.player.dead) return; // CraftBukkit
+         this.player.resetIdleTimer();
++        // Spigot start - Check for to many arm swing packets
++        if (this.lastArmSwingTick != MinecraftServer.currentTick) {
++            this.armSwingCount = 0;
++            this.lastArmSwingTick = MinecraftServer.currentTick;
++        }
++        else {
++            this.armSwingCount++;
++            if (armSwingCount >= 5) {
++                LOGGER.warn(this.player.getName() + " swinged his arm too quickly!");
++                this.disconnect("You swinged your arm too quickly (Hacking?)");
++                return;
++            }
++        }
++        // Spigot end
+         // CraftBukkit start - Raytrace to look for 'rogue armswings'
+         float f1 = this.player.pitch;
+         float f2 = this.player.yaw;
+@@ -1626,6 +1647,20 @@ public class PlayerConnection implements PacketListenerPlayIn, ITickable {
+         PlayerConnectionUtils.ensureMainThread(packetplayinwindowclick, this, this.player.x());
+         if (this.player.dead) return; // CraftBukkit
+         this.player.resetIdleTimer();
++        // Spigot start - Check for to many window click packets
++        if (this.lastWindowClickTick != MinecraftServer.currentTick) {
++            this.windowClickCount = 0;
++            this.lastWindowClickTick = MinecraftServer.currentTick;
++        }
++        else {
++            this.windowClickCount++;
++            if (windowClickCount >= 5) {
++                LOGGER.warn(this.player.getName() + " clicked a window too quickly!");
++                this.disconnect("You clicked a window too quickly (Hacking?)");
++                return;
++            }
++        }
++        // Spigot end
+         if (this.player.activeContainer.windowId == packetplayinwindowclick.a() && this.player.activeContainer.c(this.player)) {
+             boolean cancelled = this.player.isSpectator(); // CraftBukkit - see below if
+             if (false/*this.player.isSpectator()*/) { // CraftBukkit
+-- 
+2.1.4
+
