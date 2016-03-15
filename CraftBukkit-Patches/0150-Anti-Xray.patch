@@ -1,0 +1,708 @@
+From b342c19363e65a2443070e4027b81a0758571cbe Mon Sep 17 00:00:00 2001
+From: BuildTools <unconfigured@null.spigotmc.org>
+Date: Tue, 15 Mar 2016 23:41:17 +0100
+Subject: [PATCH] Anti Xray
+
+
+diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
+index 3c67d36..1613ddc 100644
+--- a/src/main/java/net/minecraft/server/Chunk.java
++++ b/src/main/java/net/minecraft/server/Chunk.java
+@@ -116,7 +116,7 @@ public class Chunk {
+                         int j1 = i1 >> 4;
+ 
+                         if (this.sections[j1] == Chunk.a) {
+-                            this.sections[j1] = new ChunkSection(j1 << 4, flag);
++                            this.sections[j1] = new ChunkSection(j1 << 4, flag, world.spigotConfig.antiXrayInstance.getReplacementBlocks(this, j1)); // Spigot - add blocks used for obfuscation to the DataPalette
+                         }
+ 
+                         this.sections[j1].setType(k, i1 & 15, l, iblockdata);
+@@ -458,7 +458,7 @@ public class Chunk {
+                     return null;
+                 }
+ 
+-                chunksection = this.sections[j >> 4] = new ChunkSection(j >> 4 << 4, !this.world.worldProvider.m());
++                chunksection = this.sections[j >> 4] = new ChunkSection(j >> 4 << 4, !this.world.worldProvider.m(), this.world.spigotConfig.antiXrayInstance.getReplacementBlocks(this, j >> 4)); // Spigot - add blocks used for obfuscation to the DataPalette
+                 flag = j >= i1;
+             }
+ 
+@@ -541,7 +541,7 @@ public class Chunk {
+         ChunkSection chunksection = this.sections[k >> 4];
+ 
+         if (chunksection == Chunk.a) {
+-            chunksection = this.sections[k >> 4] = new ChunkSection(k >> 4 << 4, !this.world.worldProvider.m());
++            chunksection = this.sections[k >> 4] = new ChunkSection(k >> 4 << 4, !this.world.worldProvider.m(), this.world.spigotConfig.antiXrayInstance.getReplacementBlocks(this, k >> 4)); // Spigot - add blocks used for obfuscation to the DataPalette
+             this.initLighting();
+         }
+ 
+diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
+index 53b5296..de74da1 100644
+--- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
++++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
+@@ -323,7 +323,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
+         for (int k = 0; k < nbttaglist.size(); ++k) {
+             NBTTagCompound nbttagcompound1 = nbttaglist.get(k);
+             byte b1 = nbttagcompound1.getByte("Y");
+-            ChunkSection chunksection = new ChunkSection(b1 << 4, flag);
++            ChunkSection chunksection = new ChunkSection(b1 << 4, flag, world.spigotConfig.antiXrayInstance.getReplacementBlocks(chunk, b1)); // Spigot - add blocks used for obfuscation to the DataPalette
+             byte[] abyte = nbttagcompound1.getByteArray("Blocks");
+             NibbleArray nibblearray = new NibbleArray(nbttagcompound1.getByteArray("Data"));
+             NibbleArray nibblearray1 = nbttagcompound1.hasKeyOfType("Add", 7) ? new NibbleArray(nbttagcompound1.getByteArray("Add")) : null;
+diff --git a/src/main/java/net/minecraft/server/ChunkSection.java b/src/main/java/net/minecraft/server/ChunkSection.java
+index 6cf71b8..1fc6f0b 100644
+--- a/src/main/java/net/minecraft/server/ChunkSection.java
++++ b/src/main/java/net/minecraft/server/ChunkSection.java
+@@ -9,9 +9,9 @@ public class ChunkSection {
+     private NibbleArray emittedLight;
+     private NibbleArray skyLight;
+ 
+-    public ChunkSection(int i, boolean flag) {
++    public ChunkSection(int i, boolean flag, IBlockData[] predefinedBlockData) { // Spigot - blocks used for obfuscation
+         this.yPos = i;
+-        this.blockIds = new DataPaletteBlock();
++        this.blockIds = new DataPaletteBlock(predefinedBlockData); // Spigot - add blocks used for obfuscation to the DataPalette
+         this.emittedLight = new NibbleArray();
+         if (flag) {
+             this.skyLight = new NibbleArray();
+@@ -20,9 +20,9 @@ public class ChunkSection {
+     }
+ 
+     // CraftBukkit start
+-    public ChunkSection(int y, boolean flag, char[] blockIds) {
++    public ChunkSection(int y, boolean flag, char[] blockIds, IBlockData[] predefinedBlockData) { // Spigot - blocks used for obfuscation
+         this.yPos = y;
+-        this.blockIds = new DataPaletteBlock();
++        this.blockIds = new DataPaletteBlock(predefinedBlockData); // Spigot - add blocks used for obfuscation to the DataPalette
+         for (int i = 0; i < blockIds.length; i++) {
+             int xx = i & 15;
+             int yy = (i >> 8) & 15;
+diff --git a/src/main/java/net/minecraft/server/DataBits.java b/src/main/java/net/minecraft/server/DataBits.java
+index f3a6799..96c256c 100644
+--- a/src/main/java/net/minecraft/server/DataBits.java
++++ b/src/main/java/net/minecraft/server/DataBits.java
+@@ -35,6 +35,40 @@ public class DataBits {
+ 
+     }
+ 
++    // Spigot start
++    public long getData1(int blockIndex, int bits, long data1) { // Spigot - first part of void a(int paramInt1, int paramInt2), sets block but doesn't affect this.a, for obfuscation
++        int k = blockIndex * this.b;
++        int j1 = k % 64;
++
++        return data1 & ~(this.c << j1) | ((long) bits & this.c) << j1;
++    }
++
++    public long getData2(int blockIndex, int bits, long data2) { // Spigot - second part of void a(int paramInt1, int paramInt2), sets block but doesn't affect this.a, for obfuscation
++        int k = blockIndex * this.b;
++        int l = k / 64;
++        int i1 = ((blockIndex + 1) * this.b - 1) / 64;
++        int j1 = k % 64;
++
++        if (l != i1) {
++            int k1 = 64 - j1;
++            int l1 = this.b - k1;
++
++            return data2 >>> l1 << l1 | ((long) bits & this.c) >> k1;
++        }
++
++        return 0L;
++    }
++
++    public int getArrayIndex1(int blockIndex) { // Spigot - returns the first array index for this.a, for obfuscation
++        int k = blockIndex * this.b;
++        return k / 64;
++    }
++
++    public int getArrayIndex2(int blockIndex) { // Spigot - returns the second array index for this.a, for obfuscation
++        return ((blockIndex + 1) * this.b - 1) / 64;
++    }
++    // Spigot end
++
+     public int a(int i) {
+         Validate.inclusiveBetween(0L, (long) (this.d - 1), (long) i);
+         int j = i * this.b;
+diff --git a/src/main/java/net/minecraft/server/DataPaletteBlock.java b/src/main/java/net/minecraft/server/DataPaletteBlock.java
+index 4dea200..0826ee0 100644
+--- a/src/main/java/net/minecraft/server/DataPaletteBlock.java
++++ b/src/main/java/net/minecraft/server/DataPaletteBlock.java
+@@ -7,10 +7,28 @@ public class DataPaletteBlock implements DataPaletteExpandable {
+     protected DataBits b;
+     protected DataPalette c;
+     private int e = 0;
++    private final IBlockData[] predefinedBlockData; // Spigot - blocks used for obfuscation
+ 
+-    public DataPaletteBlock() {
++    // Spigot start
++    /*public DataPaletteBlock() { // Spigot - use other constructor instead
+         this.b(4);
++    }*/
++
++    public DataPaletteBlock(IBlockData[] predefinedBlockData) { // Spigot - add blocks used for obfuscation to the DataPalette
++        this.predefinedBlockData = predefinedBlockData;
++        if (predefinedBlockData == null) { // Spigot - default constructor
++            this.b(4);
++        } else {
++            int maxIndex = predefinedBlockData.length - 1; // Spigot - count bits of the maximum array index
++            int bitCount = 0;
++            while (maxIndex != 0) {
++                maxIndex >>= 1;
++                bitCount++;
++            }
++            this.b(bitCount == 0 ? 4 : bitCount); // Spigot - initialize a DataPalette with bitCount
++        }
+     }
++    // Spigot end
+ 
+     private static int b(int i, int j, int k) {
+         return j << 8 | k << 4 | i;
+@@ -30,6 +48,15 @@ public class DataPaletteBlock implements DataPaletteExpandable {
+             }
+ 
+             this.c.a(DataPaletteBlock.a);
++
++            // Spigot start - add blocks used for obfuscation to the DataPalette
++            if (this.predefinedBlockData != null) {
++                for (IBlockData blockData : this.predefinedBlockData) {
++                    this.c.a(blockData);
++                }
++            }
++            // Spigot end
++
+             this.b = new DataBits(this.e, 4096);
+         }
+     }
+@@ -71,12 +98,20 @@ public class DataPaletteBlock implements DataPaletteExpandable {
+         return iblockdata == null ? DataPaletteBlock.a : iblockdata;
+     }
+ 
+-    public void b(PacketDataSerializer packetdataserializer) {
++    // Spigot start
++    public void serialize(PacketDataSerializer packetdataserializer, Chunk chunk, ChunkSection chunksection) { // Spigot - use this instead of b
+         packetdataserializer.writeByte(this.e);
+         this.c.b(packetdataserializer);
+-        packetdataserializer.a(this.b.a());
++        chunk.world.spigotConfig.antiXrayInstance.obfuscateSync(chunk, chunksection, this.c, this.b, packetdataserializer); // Spigot - serialize and obfuscate DataBits
+     }
+ 
++    /*public void b(PacketDataSerializer packetdataserializer) { // Spigot - use serialize instead
++        packetdataserializer.writeByte(this.e);
++        this.c.b(packetdataserializer);
++        packetdataserializer.a(this.b.a());
++    }*/
++    // Spigot end
++
+     public NibbleArray exportData(byte[] abyte, NibbleArray nibblearray) {
+         NibbleArray nibblearray1 = null;
+ 
+diff --git a/src/main/java/net/minecraft/server/EntityFallingBlock.java b/src/main/java/net/minecraft/server/EntityFallingBlock.java
+index a78d705..e1bddee 100644
+--- a/src/main/java/net/minecraft/server/EntityFallingBlock.java
++++ b/src/main/java/net/minecraft/server/EntityFallingBlock.java
+@@ -68,6 +68,7 @@ public class EntityFallingBlock extends Entity {
+                 blockposition = new BlockPosition(this);
+                 if (this.world.getType(blockposition).getBlock() == block && !CraftEventFactory.callEntityChangeBlockEvent(this, blockposition.getX(), blockposition.getY(), blockposition.getZ(), Blocks.AIR, 0).isCancelled()) {
+                     this.world.setAir(blockposition);
++                    this.world.spigotConfig.antiXrayInstance.updateNearbyBlocks(world, blockposition); // Spigot
+                 } else if (!this.world.isClientSide) {
+                     this.die();
+                     return;
+@@ -101,6 +102,7 @@ public class EntityFallingBlock extends Entity {
+                                     return;
+                                 }
+                                 this.world.setTypeAndData(blockposition, this.block, 3);
++                                this.world.spigotConfig.antiXrayInstance.updateNearbyBlocks(world, blockposition); // Spigot
+                                 // CraftBukkit end
+                                 if (block instanceof BlockFalling) {
+                                     ((BlockFalling) block).a_(this.world, blockposition);
+diff --git a/src/main/java/net/minecraft/server/Explosion.java b/src/main/java/net/minecraft/server/Explosion.java
+index 2d8d862..ff2b7b2 100644
+--- a/src/main/java/net/minecraft/server/Explosion.java
++++ b/src/main/java/net/minecraft/server/Explosion.java
+@@ -220,6 +220,7 @@ public class Explosion {
+                 blockposition = (BlockPosition) iterator.next();
+                 IBlockData iblockdata = this.world.getType(blockposition);
+                 Block block = iblockdata.getBlock();
++                this.world.spigotConfig.antiXrayInstance.updateNearbyBlocks(world, blockposition); // Spigot
+ 
+                 if (flag) {
+                     double d0 = (double) ((float) blockposition.getX() + this.world.random.nextFloat());
+diff --git a/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java b/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java
+index b5dc220..eecc527 100644
+--- a/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java
++++ b/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java
+@@ -69,7 +69,8 @@ public class PacketPlayOutMapChunk implements Packet<PacketListenerPlayOut> {
+ 
+             if (chunksection != Chunk.a && (!flag || !chunksection.a()) && (i & 1 << k) != 0) {
+                 j |= 1 << k;
+-                chunksection.getBlocks().b(packetdataserializer);
++                //chunksection.getBlocks().b(packetdataserializer); // Spigot - use serialize instead
++                chunksection.getBlocks().serialize(packetdataserializer, chunk, chunksection); // Spigot - use this instead of b
+                 packetdataserializer.writeBytes(chunksection.getEmittedLightArray().asBytes());
+                 if (flag1) {
+                     packetdataserializer.writeBytes(chunksection.getSkyLightArray().asBytes());
+diff --git a/src/main/java/net/minecraft/server/PlayerInteractManager.java b/src/main/java/net/minecraft/server/PlayerInteractManager.java
+index 01c9973..e462630 100644
+--- a/src/main/java/net/minecraft/server/PlayerInteractManager.java
++++ b/src/main/java/net/minecraft/server/PlayerInteractManager.java
+@@ -201,6 +201,7 @@ public class PlayerInteractManager {
+             }
+ 
+         }
++        this.world.spigotConfig.antiXrayInstance.updateNearbyBlocks(world, blockposition); // Spigot
+     }
+ 
+     public void a(BlockPosition blockposition) {
+diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
+index 3cb5ab9..584cf3c 100644
+--- a/src/main/java/net/minecraft/server/World.java
++++ b/src/main/java/net/minecraft/server/World.java
+@@ -442,6 +442,18 @@ public abstract class World implements IBlockAccess {
+         return this.setTypeAndData(blockposition, iblockdata, 3);
+     }
+ 
++    // Spigot start - notify from 1.8 for anti xray
++    public void notify(BlockPosition blockposition) {
++        for (int j = 0; j < this.u.size(); ++j) {
++            IWorldAccess access = this.u.get(j);
++            if (access instanceof WorldManager) {
++                access.a(null, blockposition, null, null, 0);
++            }
++        }
++
++    }
++    // Spigot end
++
+     public void notify(BlockPosition blockposition, IBlockData iblockdata, IBlockData iblockdata1, int i) {
+         for (int j = 0; j < this.u.size(); ++j) {
+             ((IWorldAccess) this.u.get(j)).a(this, blockposition, iblockdata, iblockdata1, i);
+@@ -497,6 +509,7 @@ public abstract class World implements IBlockAccess {
+         this.e(blockposition.up(), block);
+         this.e(blockposition.north(), block);
+         this.e(blockposition.south(), block);
++        spigotConfig.antiXrayInstance.updateNearbyBlocks(this, blockposition); // Spigot
+     }
+ 
+     public void a(BlockPosition blockposition, Block block, EnumDirection enumdirection) {
+diff --git a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java b/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
+index aa292e3..b72500c 100644
+--- a/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
++++ b/src/main/java/org/bukkit/craftbukkit/generator/CustomChunkGenerator.java
+@@ -73,7 +73,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
+                 }
+                 // Build chunk section
+                 if (emptyTest != 0) {
+-                    csect[sec] = new ChunkSection(sec << 4, true, section);
++                    csect[sec] = new ChunkSection(sec << 4, true, section, this.world.spigotConfig.antiXrayInstance.getReplacementBlocks(chunk, sec)); // Spigot - add blocks used for obfuscation to the DataPalette
+                 }
+             }
+         }
+@@ -98,7 +98,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
+                         secBlkID[i] = (char) Block.REGISTRY_ID.getId(b.getBlockData());
+                     }
+                     // Build chunk section
+-                    csect[sec] = new ChunkSection(sec << 4, true, secBlkID);
++                    csect[sec] = new ChunkSection(sec << 4, true, secBlkID, this.world.spigotConfig.antiXrayInstance.getReplacementBlocks(chunk, sec)); // Spigot - add blocks used for obfuscation to the DataPalette
+                 }
+             }
+             else { // Else check for byte-per-block section data
+@@ -120,7 +120,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
+                             Block b = Block.getById(btypes[sec][i] & 0xFF);
+                             secBlkID[i] = (char) Block.REGISTRY_ID.getId(b.getBlockData());
+                         }
+-                        csect[sec] = new ChunkSection(sec << 4, true, secBlkID);
++                        csect[sec] = new ChunkSection(sec << 4, true, secBlkID, this.world.spigotConfig.antiXrayInstance.getReplacementBlocks(chunk, sec)); // Spigot - add blocks used for obfuscation to the DataPalette
+                     }
+                 }
+                 else { // Else, fall back to pre 1.2 method
+@@ -160,7 +160,7 @@ public class CustomChunkGenerator extends InternalChunkGenerator {
+                         }
+                         // If section built, finish prepping its state
+                         if (csbytes != null) {
+-                            ChunkSection cs = csect[sec] = new ChunkSection(sec << 4, true, csbytes);
++                            ChunkSection cs = csect[sec] = new ChunkSection(sec << 4, true, csbytes, this.world.spigotConfig.antiXrayInstance.getReplacementBlocks(chunk, sec)); // Spigot - add blocks used for obfuscation to the DataPalette
+                             cs.recalcBlockCounts();
+                         }
+                     }
+diff --git a/src/main/java/org/spigotmc/AntiXray.java b/src/main/java/org/spigotmc/AntiXray.java
+new file mode 100644
+index 0000000..d726965
+--- /dev/null
++++ b/src/main/java/org/spigotmc/AntiXray.java
+@@ -0,0 +1,320 @@
++package org.spigotmc;
++
++import java.util.ArrayList;
++import java.util.List;
++import net.minecraft.server.Block;
++import net.minecraft.server.BlockPosition;
++import net.minecraft.server.Blocks;
++import net.minecraft.server.Chunk;
++import net.minecraft.server.ChunkSection;
++import net.minecraft.server.DataBits;
++import net.minecraft.server.DataPalette;
++import net.minecraft.server.IBlockData;
++import net.minecraft.server.PacketDataSerializer;
++import net.minecraft.server.World;
++
++public class AntiXray
++{
++
++    private static final CustomTimingsHandler update = new CustomTimingsHandler("xray - update");
++    private static final CustomTimingsHandler obfuscate = new CustomTimingsHandler("xray - obfuscate");
++    /*========================================================================*/
++    // Used to keep track of which blocks to obfuscate
++    private final boolean[] obfuscateBlocks = new boolean[Short.MAX_VALUE];
++    // Used to select a random replacement ore
++    private final IBlockData[] replacementOres;
++
++    public AntiXray(SpigotWorldConfig config)
++    {
++        // Set all listed blocks as true to be obfuscated
++        for (int id : (config.engineMode == 1) ? config.hiddenBlocks : config.replaceBlocks)
++        {
++            obfuscateBlocks[id] = true;
++        }
++        // For every block
++        List<IBlockData> replacementOreList = new ArrayList<IBlockData>();
++        for (int id : config.hiddenBlocks)
++        {
++            Block block = Block.getById(id);
++            // Check it exists and is not a tile entity
++            if (block != null && !block.isTileEntity())
++            {
++                // Add it to the list of replacement blocks
++                replacementOreList.add(block.getBlockData());
++            }
++        }
++        replacementOres = replacementOreList.toArray(new IBlockData[replacementOreList.size()]);
++    }
++
++    /**
++     * Returns the replacement blocks for a ChunkSection.
++     * Used when a ChunkSection is created.
++     */
++    public IBlockData[] getReplacementBlocks(Chunk chunk, int chunkY)
++    {
++        if (chunk.world.spigotConfig.antiXray && chunkY <= chunk.world.spigotConfig.maxChunkY)
++        {
++            switch (chunk.world.spigotConfig.engineMode)
++            {
++                case 1:
++                    switch (chunk.world.getWorld().getEnvironment())
++                    {
++                        case NETHER:
++                            return new IBlockData[] {Blocks.NETHERRACK.getBlockData()};
++                        case THE_END:
++                            return new IBlockData[] {Blocks.END_STONE.getBlockData()};
++                        default:
++                            return new IBlockData[] {Blocks.STONE.getBlockData()};
++                    }
++                case 2:
++                case 3:
++                    return replacementOres;
++            }
++        }
++        
++        return null;
++    }
++
++    /**
++     * Starts the timings handler, then updates all blocks within the set radius
++     * of the given coordinate, revealing them if they are hidden ores.
++     */
++    public void updateNearbyBlocks(World world, BlockPosition position)
++    {
++        if (world.spigotConfig.antiXray)
++        {
++            update.startTiming();
++            updateNearbyBlocks(world, position, 2, false); // 2 is the radius, we shouldn't change it as that would make it exponentially slower
++            update.stopTiming();
++        }
++    }
++
++    /**
++     * Starts the timings handler, and then removes all non exposed ores from
++     * the chunk buffer.
++     */
++    public void obfuscateSync(Chunk chunk, ChunkSection chunkSection, DataPalette dataPalette, DataBits dataBits, PacketDataSerializer packetDataSerializer)
++    {
++        if (chunk.world.spigotConfig.antiXray && (chunkSection.getYPosition() >> 4) <= chunk.world.spigotConfig.maxChunkY)
++        {
++            obfuscate.startTiming();
++            obfuscate(chunk, chunkSection, dataPalette, dataBits, packetDataSerializer);
++            obfuscate.stopTiming();
++        }
++        else
++        {
++            packetDataSerializer.a(dataBits.a());
++        }
++    }
++
++    /**
++     * Removes all non exposed ores from the chunk buffer.
++     */
++    public void obfuscate(Chunk chunk, ChunkSection chunkSection, DataPalette dataPalette, DataBits dataBits, PacketDataSerializer packetDataSerializer)
++    {   
++        // Initial radius to search around for air
++        int initialRadius = 1;
++        // The iterator marking which random ore we should use next
++        int randomOre = 0;
++        // Chunk corner X and Z blocks
++        int startX = chunk.locX << 4;
++        int startZ = chunk.locZ << 4;
++
++        int engineMode = chunk.world.spigotConfig.engineMode;
++        boolean engineMode3 = chunk.world.spigotConfig.engineMode == 3;
++        engineMode = engineMode3 ? 2 : engineMode;
++        int increment = engineMode3 ? 3 : 1;
++
++        int replaceWith = 0;
++        int[] replacementOres = null;
++        if (engineMode == 1)
++        {
++            switch (chunk.world.getWorld().getEnvironment())
++            {
++                case NETHER:
++                    replaceWith = dataPalette.a(Blocks.NETHERRACK.getBlockData());
++                    break;
++                case THE_END:
++                    replaceWith = dataPalette.a(Blocks.END_STONE.getBlockData());
++                    break;
++                default:
++                    replaceWith = dataPalette.a(Blocks.STONE.getBlockData());
++                    break;
++            }
++        }
++        else if (engineMode == 2)
++        {
++            replacementOres = new int[this.replacementOres.length];
++            for (int i = 0; i < replacementOres.length; i++)
++            {
++                replacementOres[i] = dataPalette.a(this.replacementOres[i]);
++            }
++        }
++
++        int arrayIndex1 = 0;
++        int arrayIndex2 = 0;
++        long data1 = dataBits.a()[0];
++        long data2 = 0L; 
++
++        packetDataSerializer.b(dataBits.a().length);
++        // Work through all blocks in the chunk, y,z,x
++        for (int y = 0; y < 16; y++)
++        {
++            for (int z = 0; z < 16; z++)
++            {
++                for (int x = engineMode3 ? ((chunk.locX + chunk.locZ + (chunkSection.getYPosition() >> 4) + y + z) % 3) : 0; x < 16; x += increment)
++                {
++                    IBlockData blockData = chunkSection.getType(x, y, z);
++                    // Check if the block should be obfuscated
++                    if (obfuscateBlocks[Block.getId(blockData.getBlock())])
++                    {
++                        BlockPosition position = new BlockPosition(startX + x, chunkSection.getYPosition() + y, startZ + z);
++                        // The world isn't loaded, bail out
++                        if (!isLoaded(chunk.world, position, initialRadius))
++                        {
++                            continue;
++                        }
++                        // On the otherhand, if radius is 0, or the nearby blocks are all non air, we can obfuscate
++                        if (!hasTransparentBlockAdjacent(chunk.world, position, initialRadius))
++                        {
++                            int newBlockData = 0;// = dataPalette.a(blockData);
++                            switch (engineMode)
++                            {
++                                case 1:
++                                    // Replace with replacement material
++                                    newBlockData = replaceWith;
++                                    break;
++                                case 2:
++                                    // Replace with random ore.
++                                    if (randomOre >= replacementOres.length)
++                                    {
++                                        randomOre = 0;
++                                    }
++                                    newBlockData = replacementOres[randomOre++];
++                                    break;
++                            }
++
++                            int blockIndex = y << 8 | z << 4 | x;
++                            int tempArrayIndex1 = dataBits.getArrayIndex1(blockIndex);
++
++                            if (tempArrayIndex1 != arrayIndex1)
++                            {
++                                packetDataSerializer.writeLong(data1);
++                                arrayIndex1++;
++
++                                if (arrayIndex1 == arrayIndex2)
++                                {
++                                    if (arrayIndex1 == tempArrayIndex1)
++                                    {
++                                        data1 = data2;
++                                    }
++                                    else
++                                    {
++                                        packetDataSerializer.writeLong(data2);
++                                        arrayIndex1++;
++                                        data1 = dataBits.a()[tempArrayIndex1];
++                                    }
++                                }
++                                else
++                                {
++                                    data1 = dataBits.a()[tempArrayIndex1];
++                                }
++
++                                while (arrayIndex1 != tempArrayIndex1)
++                                {
++                                    packetDataSerializer.writeLong(dataBits.a()[arrayIndex1]);
++                                    arrayIndex1++;
++                                }
++                            }
++
++                            data1 = dataBits.getData1(blockIndex, newBlockData, data1);
++                            arrayIndex2 = dataBits.getArrayIndex2(blockIndex);
++
++                            if (arrayIndex1 != arrayIndex2)
++                            {
++                                data2 = dataBits.getData2(blockIndex, newBlockData, dataBits.a()[arrayIndex2]);
++                            }
++                        }
++                    }
++                }
++            }
++        }
++
++        packetDataSerializer.writeLong(data1);
++        arrayIndex1++;
++
++        if (arrayIndex1 == arrayIndex2)
++        {
++            packetDataSerializer.writeLong(data2);
++            arrayIndex1++;
++        }
++
++        while (arrayIndex1 < dataBits.a().length)
++        {
++            packetDataSerializer.writeLong(dataBits.a()[arrayIndex1]);
++            arrayIndex1++;
++        }
++    }
++
++    private void updateNearbyBlocks(World world, BlockPosition position, int radius, boolean updateSelf)
++    {
++        // If the block in question is loaded
++        if (world.isLoaded(position))
++        {
++            // Get block id
++            Block block = world.getType(position).getBlock();
++
++            // See if it needs update
++            if (updateSelf && obfuscateBlocks[Block.getId(block)])
++            {
++                // Send the update
++                world.notify(position);
++            }
++
++            // Check other blocks for updates
++            if (radius > 0)
++            {
++                updateNearbyBlocks(world, position.east(), radius - 1, true);
++                updateNearbyBlocks(world, position.west(), radius - 1, true);
++                updateNearbyBlocks(world, position.up(), radius - 1, true);
++                updateNearbyBlocks(world, position.down(), radius - 1, true);
++                updateNearbyBlocks(world, position.south(), radius - 1, true);
++                updateNearbyBlocks(world, position.north(), radius - 1, true);
++            }
++        }
++    }
++
++    private static boolean isLoaded(World world, BlockPosition position, int radius)
++    {
++        return world.isLoaded(position)
++                && (radius == 0 ||
++                (isLoaded(world, position.east(), radius - 1)
++                && isLoaded(world, position.west(), radius - 1)
++                && isLoaded(world, position.up(), radius - 1)
++                && isLoaded(world, position.down(), radius - 1)
++                && isLoaded(world, position.south(), radius - 1)
++                && isLoaded(world, position.north(), radius - 1)));
++    }
++
++    private static boolean hasTransparentBlockAdjacent(World world, BlockPosition position, int radius)
++    {
++        return !isSolidBlock(world.getType(position).getBlock()) /* isSolidBlock */
++                || (radius > 0
++                && (hasTransparentBlockAdjacent(world, position.east(), radius - 1)
++                || hasTransparentBlockAdjacent(world, position.west(), radius - 1)
++                || hasTransparentBlockAdjacent(world, position.up(), radius - 1)
++                || hasTransparentBlockAdjacent(world, position.down(), radius - 1)
++                || hasTransparentBlockAdjacent(world, position.south(), radius - 1)
++                || hasTransparentBlockAdjacent(world, position.north(), radius - 1)));
++    }
++
++    private static boolean isSolidBlock(Block block)
++    {
++        // Mob spawners are treated as solid blocks as far as the
++        // game is concerned for lighting and other tasks but for
++        // rendering they can be seen through therefor we special
++        // case them so that the antixray doesn't show the fake
++        // blocks around them.
++        return block.isOccluding(block.getBlockData()) && block != Blocks.MOB_SPAWNER && block != Blocks.BARRIER;
++    }
++}
+diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+index 43242a8..e9f6989 100644
+--- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
++++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
+@@ -1,5 +1,6 @@
+ package org.spigotmc;
+ 
++import java.util.Arrays;
+ import java.util.List;
+ import org.bukkit.Bukkit;
+ import org.bukkit.configuration.file.YamlConfiguration;
+@@ -204,6 +205,42 @@ public class SpigotWorldConfig
+         log( "Arrow Despawn Rate: " + arrowDespawnRate );
+     }
+ 
++    public boolean antiXray;
++    public int engineMode;
++    public List<Integer> hiddenBlocks;
++    public List<Integer> replaceBlocks;
++    public int maxChunkY;
++    public AntiXray antiXrayInstance;
++    private void antiXray()
++    {
++        antiXray = getBoolean( "anti-xray.enabled", true );
++        log( "Anti X-Ray: " + antiXray );
++
++        engineMode = getInt( "anti-xray.engine-mode", 1 );
++        log( "\tEngine Mode: " + engineMode );
++
++        if ( SpigotConfig.version < 5 )
++        {
++            set( "anti-xray.blocks", null );
++        }
++        hiddenBlocks = getList( "anti-xray.hide-blocks", Arrays.asList( new Integer[]
++        {
++            14, 15, 16, 21, 48, 49, 54, 56, 73, 74, 82, 129, 130
++        } ) );
++        log( "\tHidden Blocks: " + hiddenBlocks );
++
++        replaceBlocks = getList( "anti-xray.replace-blocks", Arrays.asList( new Integer[]
++        {
++            1, 5
++        } ) );
++        log( "\tReplace Blocks: " + replaceBlocks );
++
++        maxChunkY = getInt( "anti-xray.max-chunk-y", 4 );
++        log( "\tMax Chunk Y: " + maxChunkY );
++
++        antiXrayInstance = new AntiXray( this );
++    }
++
+     public boolean zombieAggressiveTowardsVillager;
+     private void zombieAggressiveTowardsVillager()
+     {
+-- 
+1.9.4.msysgit.2
+
