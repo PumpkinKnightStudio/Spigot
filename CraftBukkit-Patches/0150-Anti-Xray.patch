@@ -493,7 +493,7 @@ index 0000000..d726965
 +        {
 +            for (int z = 0; z < 16; z++)
 +            {
-+                for (int x = engineMode3 ? ((chunk.locX + chunk.locZ + (chunkSection.getYPosition() >> 4) + y + z) % 3) : 0; x < 16; x += increment)
++                for (int x = engineMode3 ? (((chunk.locX + chunk.locZ + (chunkSection.getYPosition() >> 4) + y + z) % 3 + 3) % 3) : 0; x < 16; x += increment)
 +                {
 +                    IBlockData blockData = chunkSection.getType(x, y, z);
 +                    // Check if the block should be obfuscated
