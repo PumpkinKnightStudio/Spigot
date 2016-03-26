@@ -1,0 +1,61 @@
+From 6fe495d017f9e07284c5ab0feb52ffdba4bc6a71 Mon Sep 17 00:00:00 2001
+From: Cory Redmond <ace@ac3-servers.eu>
+Date: Sat, 26 Mar 2016 22:26:06 +0000
+Subject: [PATCH] Easy method of getting the client's version number.
+
+
+diff --git a/src/main/java/net/minecraft/server/HandshakeListener.java b/src/main/java/net/minecraft/server/HandshakeListener.java
+index ed20034..2d7d5ee 100644
+--- a/src/main/java/net/minecraft/server/HandshakeListener.java
++++ b/src/main/java/net/minecraft/server/HandshakeListener.java
+@@ -60,6 +60,8 @@ public class HandshakeListener implements PacketHandshakingInListener {
+             } catch (Throwable t) {
+                 org.apache.logging.log4j.LogManager.getLogger().debug("Failed to check connection throttle", t);
+             }
++
++            b.clientVersion = packethandshakinginsetprotocol.b();
+             // CraftBukkit end
+ 
+             if (packethandshakinginsetprotocol.b() > 107) {
+diff --git a/src/main/java/net/minecraft/server/NetworkManager.java b/src/main/java/net/minecraft/server/NetworkManager.java
+index a9ea3f5..1a98d76 100644
+--- a/src/main/java/net/minecraft/server/NetworkManager.java
++++ b/src/main/java/net/minecraft/server/NetworkManager.java
+@@ -69,6 +69,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
+     public java.util.UUID spoofedUUID;
+     public com.mojang.authlib.properties.Property[] spoofedProfile;
+     public boolean preparing = true;
++    protected int clientVersion = -1;
+     // Spigot End
+     private PacketListener m;
+     private IChatBaseComponent n;
+@@ -342,5 +343,9 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
+     {
+         return this.channel.remoteAddress();
+     }
++
++    public int getClientVersion() {
++        return this.clientVersion;
++    }
+     // Spigot End
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+index c137882..3cf23d0 100644
+--- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
+@@ -1531,6 +1531,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+             packet.components = components;
+             getHandle().playerConnection.sendPacket(packet);
+         }
++
++        @Override
++        public int getClientVersion() {
++            if ( getHandle().playerConnection == null ) return -1;
++            return getHandle().playerConnection.networkManager.getClientVersion();
++        }
+     };
+ 
+     public Player.Spigot spigot()
+-- 
+2.6.4.windows.1
+

@@ -1,0 +1,38 @@
+From 9ce416cb86e7e83229597108945688d01e78ca86 Mon Sep 17 00:00:00 2001
+From: Cory Redmond <ace@ac3-servers.eu>
+Date: Sat, 26 Mar 2016 22:26:06 +0000
+Subject: [PATCH] Easy method of getting the client's version number.
+
+
+diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
+index 649cd45..12c0648 100644
+--- a/src/main/java/org/bukkit/entity/Player.java
++++ b/src/main/java/org/bukkit/entity/Player.java
+@@ -1271,7 +1271,7 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+     public <T> void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX, double offsetY, double offsetZ, double extra, T data);
+ 
+     // Spigot start
+-    public class Spigot extends Entity.Spigot
++    public abstract class Spigot extends Entity.Spigot
+     {
+ 
+         /**
+@@ -1356,6 +1356,15 @@ public interface Player extends HumanEntity, Conversable, CommandSender, Offline
+         public void sendMessage(net.md_5.bungee.api.chat.BaseComponent... components) {
+             throw new UnsupportedOperationException("Not supported yet.");
+         }
++
++        /**
++         * Gets the client version of the player.
++         *
++         * @return an int of the protocol version of the player
++         */
++        public int getClientVersion() {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
+     }
+ 
+     Spigot spigot();
+-- 
+2.6.4.windows.1
+
