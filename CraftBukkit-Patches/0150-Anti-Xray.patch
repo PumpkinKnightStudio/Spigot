@@ -142,7 +142,7 @@ index 4dea200..0826ee0 100644
 +        if (predefinedBlockData == null) { // Spigot - default constructor
 +            this.b(4);
 +        } else {
-+            int maxIndex = predefinedBlockData.length - 1; // Spigot - count bits of the maximum array index
++            int maxIndex = predefinedBlockData.length; // Spigot - count bits of the maximum array index (+1 because AIR is also added) -> array length
 +            int bitCount = 0;
 +            while (maxIndex != 0) {
 +                maxIndex >>= 1;
@@ -331,8 +331,8 @@ index 0000000..d726965
 @@ -0,0 +1,320 @@
 +package org.spigotmc;
 +
-+import java.util.ArrayList;
-+import java.util.List;
++import java.util.HashSet;
++import java.util.Set;
 +import net.minecraft.server.Block;
 +import net.minecraft.server.BlockPosition;
 +import net.minecraft.server.Blocks;
@@ -363,7 +363,7 @@ index 0000000..d726965
 +            obfuscateBlocks[id] = true;
 +        }
 +        // For every block
-+        List<IBlockData> replacementOreList = new ArrayList<IBlockData>();
++        Set<IBlockData> replacementOreList = new HashSet<IBlockData>();
 +        for (int id : config.hiddenBlocks)
 +        {
 +            Block block = Block.getById(id);
