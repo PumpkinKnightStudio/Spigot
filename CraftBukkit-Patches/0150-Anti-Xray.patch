@@ -1,6 +1,6 @@
-From b342c19363e65a2443070e4027b81a0758571cbe Mon Sep 17 00:00:00 2001
+From 0008ba5d357afba851f27da395f5c64374b4da71 Mon Sep 17 00:00:00 2001
 From: BuildTools <unconfigured@null.spigotmc.org>
-Date: Tue, 15 Mar 2016 23:41:17 +0100
+Date: Sun, 3 Apr 2016 13:52:11 +0200
 Subject: [PATCH] Anti Xray
 
 
@@ -36,7 +36,7 @@ index 3c67d36..1613ddc 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index 53b5296..de74da1 100644
+index 5d77c92..525b000 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -323,7 +323,7 @@ public class ChunkRegionLoader implements IChunkLoader, IAsyncChunkSaver {
@@ -122,7 +122,7 @@ index f3a6799..96c256c 100644
          Validate.inclusiveBetween(0L, (long) (this.d - 1), (long) i);
          int j = i * this.b;
 diff --git a/src/main/java/net/minecraft/server/DataPaletteBlock.java b/src/main/java/net/minecraft/server/DataPaletteBlock.java
-index 4dea200..0826ee0 100644
+index e29298e..a101c6c 100644
 --- a/src/main/java/net/minecraft/server/DataPaletteBlock.java
 +++ b/src/main/java/net/minecraft/server/DataPaletteBlock.java
 @@ -7,10 +7,28 @@ public class DataPaletteBlock implements DataPaletteExpandable {
@@ -195,7 +195,7 @@ index 4dea200..0826ee0 100644
          NibbleArray nibblearray1 = null;
  
 diff --git a/src/main/java/net/minecraft/server/EntityFallingBlock.java b/src/main/java/net/minecraft/server/EntityFallingBlock.java
-index a78d705..e1bddee 100644
+index 6573634..5ccccc3 100644
 --- a/src/main/java/net/minecraft/server/EntityFallingBlock.java
 +++ b/src/main/java/net/minecraft/server/EntityFallingBlock.java
 @@ -68,6 +68,7 @@ public class EntityFallingBlock extends Entity {
@@ -215,7 +215,7 @@ index a78d705..e1bddee 100644
                                  if (block instanceof BlockFalling) {
                                      ((BlockFalling) block).a_(this.world, blockposition);
 diff --git a/src/main/java/net/minecraft/server/Explosion.java b/src/main/java/net/minecraft/server/Explosion.java
-index 2d8d862..ff2b7b2 100644
+index 69720e8..7783c54 100644
 --- a/src/main/java/net/minecraft/server/Explosion.java
 +++ b/src/main/java/net/minecraft/server/Explosion.java
 @@ -220,6 +220,7 @@ public class Explosion {
@@ -227,7 +227,7 @@ index 2d8d862..ff2b7b2 100644
                  if (flag) {
                      double d0 = (double) ((float) blockposition.getX() + this.world.random.nextFloat());
 diff --git a/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java b/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java
-index b5dc220..eecc527 100644
+index 3f7fde2..9c96c50 100644
 --- a/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java
 +++ b/src/main/java/net/minecraft/server/PacketPlayOutMapChunk.java
 @@ -69,7 +69,8 @@ public class PacketPlayOutMapChunk implements Packet<PacketListenerPlayOut> {
@@ -241,7 +241,7 @@ index b5dc220..eecc527 100644
                  if (flag1) {
                      packetdataserializer.writeBytes(chunksection.getSkyLightArray().asBytes());
 diff --git a/src/main/java/net/minecraft/server/PlayerInteractManager.java b/src/main/java/net/minecraft/server/PlayerInteractManager.java
-index 01c9973..e462630 100644
+index cef986e..a1124d5 100644
 --- a/src/main/java/net/minecraft/server/PlayerInteractManager.java
 +++ b/src/main/java/net/minecraft/server/PlayerInteractManager.java
 @@ -201,6 +201,7 @@ public class PlayerInteractManager {
@@ -253,7 +253,7 @@ index 01c9973..e462630 100644
  
      public void a(BlockPosition blockposition) {
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 3cb5ab9..584cf3c 100644
+index 8299abf..2e509eb 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -442,6 +442,18 @@ public abstract class World implements IBlockAccess {
@@ -325,10 +325,10 @@ index aa292e3..b72500c 100644
                      }
 diff --git a/src/main/java/org/spigotmc/AntiXray.java b/src/main/java/org/spigotmc/AntiXray.java
 new file mode 100644
-index 0000000..d726965
+index 0000000..ad50763
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/AntiXray.java
-@@ -0,0 +1,320 @@
+@@ -0,0 +1,325 @@
 +package org.spigotmc;
 +
 +import java.util.HashSet;
@@ -358,15 +358,20 @@ index 0000000..d726965
 +    public AntiXray(SpigotWorldConfig config)
 +    {
 +        // Set all listed blocks as true to be obfuscated
-+        for (int id : (config.engineMode == 1) ? config.hiddenBlocks : config.replaceBlocks)
++        for (Object id : (config.engineMode == 1) ? config.hiddenBlocks : config.replaceBlocks)
 +        {
-+            obfuscateBlocks[id] = true;
++            Block block = Block.getByName(String.valueOf(id));
++            if (block != null)
++            {
++                int intId = Block.getId(block);
++                obfuscateBlocks[intId] = true;
++            }
 +        }
 +        // For every block
 +        Set<IBlockData> replacementOreList = new HashSet<IBlockData>();
-+        for (int id : config.hiddenBlocks)
++        for (Object id : config.hiddenBlocks)
 +        {
-+            Block block = Block.getById(id);
++            Block block = Block.getByName(String.valueOf(id));
 +            // Check it exists and is not a tile entity
 +            if (block != null && !block.isTileEntity())
 +            {
@@ -487,7 +492,7 @@ index 0000000..d726965
 +        long data1 = dataBits.a()[0];
 +        long data2 = 0L; 
 +
-+        packetDataSerializer.b(dataBits.a().length);
++        packetDataSerializer.d(dataBits.a().length);
 +        // Work through all blocks in the chunk, y,z,x
 +        for (int y = 0; y < 16; y++)
 +        {
@@ -649,8 +654,23 @@ index 0000000..d726965
 +        return block.isOccluding(block.getBlockData()) && block != Blocks.MOB_SPAWNER && block != Blocks.BARRIER;
 +    }
 +}
+diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
+index 374dc38..2c3b235 100644
+--- a/src/main/java/org/spigotmc/SpigotConfig.java
++++ b/src/main/java/org/spigotmc/SpigotConfig.java
+@@ -69,8 +69,8 @@ public class SpigotConfig
+ 
+         commands = new HashMap<String, Command>();
+ 
+-        version = getInt( "config-version", 8 );
+-        set( "config-version", 8 );
++        version = getInt( "config-version", 9 );
++        set( "config-version", 9 );
+         readConfig( SpigotConfig.class, null );
+     }
+ 
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 43242a8..e9f6989 100644
+index 43242a8..b8e8df7 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -1,5 +1,6 @@
@@ -660,41 +680,47 @@ index 43242a8..e9f6989 100644
  import java.util.List;
  import org.bukkit.Bukkit;
  import org.bukkit.configuration.file.YamlConfiguration;
-@@ -204,6 +205,42 @@ public class SpigotWorldConfig
+@@ -204,6 +205,48 @@ public class SpigotWorldConfig
          log( "Arrow Despawn Rate: " + arrowDespawnRate );
      }
  
 +    public boolean antiXray;
 +    public int engineMode;
-+    public List<Integer> hiddenBlocks;
-+    public List<Integer> replaceBlocks;
++    public List<Object> hiddenBlocks;
++    public List<Object> replaceBlocks;
 +    public int maxChunkY;
 +    public AntiXray antiXrayInstance;
 +    private void antiXray()
 +    {
-+        antiXray = getBoolean( "anti-xray.enabled", true );
++        if ( SpigotConfig.version < 9 )
++        {
++            set( "anti-xray.enabled", false );
++            set( "anti-xray.hide-blocks", null );
++            set( "anti-xray.replace-blocks", null );
++        }
++        antiXray = getBoolean( "anti-xray.enabled", false );
 +        log( "Anti X-Ray: " + antiXray );
 +
-+        engineMode = getInt( "anti-xray.engine-mode", 1 );
++        engineMode = getInt( "anti-xray.engine-mode", 3 );
 +        log( "\tEngine Mode: " + engineMode );
 +
 +        if ( SpigotConfig.version < 5 )
 +        {
 +            set( "anti-xray.blocks", null );
 +        }
-+        hiddenBlocks = getList( "anti-xray.hide-blocks", Arrays.asList( new Integer[]
++        hiddenBlocks = getList( "anti-xray.hide-blocks", Arrays.asList( new String[]
 +        {
-+            14, 15, 16, 21, 48, 49, 54, 56, 73, 74, 82, 129, 130
++            "gold_ore", "iron_ore", "coal_ore", "lapis_ore", "mossy_cobblestone", "obsidian", "chest", "diamond_ore", "redstone_ore", "lit_redstone_ore", "clay", "emerald_ore", "ender_chest"
 +        } ) );
 +        log( "\tHidden Blocks: " + hiddenBlocks );
 +
-+        replaceBlocks = getList( "anti-xray.replace-blocks", Arrays.asList( new Integer[]
++        replaceBlocks = getList( "anti-xray.replace-blocks", Arrays.asList( new String[]
 +        {
-+            1, 5
++            "stone", "planks"
 +        } ) );
 +        log( "\tReplace Blocks: " + replaceBlocks );
 +
-+        maxChunkY = getInt( "anti-xray.max-chunk-y", 4 );
++        maxChunkY = getInt( "anti-xray.max-chunk-y", 3 );
 +        log( "\tMax Chunk Y: " + maxChunkY );
 +
 +        antiXrayInstance = new AntiXray( this );
