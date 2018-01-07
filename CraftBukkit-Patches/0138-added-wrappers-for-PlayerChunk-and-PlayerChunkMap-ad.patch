@@ -1,0 +1,335 @@
+From 07dcee54701f6c5eba6914c9ef7c9e8e3cc0596c Mon Sep 17 00:00:00 2001
+From: Axel Uhl <axel.uhl@sap.com>
+Date: Wed, 3 Jan 2018 18:04:42 +0100
+Subject: [PATCH] added wrappers for PlayerChunk and PlayerChunkMap, adjusting
+ World
+
+
+diff --git a/src/main/java/net/minecraft/server/ChatBaseComponent.java b/src/main/java/net/minecraft/server/ChatBaseComponent.java
+index 36989dff..1fcf0e6d 100644
+--- a/src/main/java/net/minecraft/server/ChatBaseComponent.java
++++ b/src/main/java/net/minecraft/server/ChatBaseComponent.java
+@@ -57,7 +57,7 @@ public abstract class ChatBaseComponent implements IChatBaseComponent {
+     }
+ 
+     public Iterator<IChatBaseComponent> iterator() {
+-        return Iterators.concat(Iterators.forArray(new ChatBaseComponent[] { this}), a((Iterable) this.a));
++        return Iterators.concat(Iterators.forArray(new ChatBaseComponent[] { this}), a((Iterable<IChatBaseComponent>) this.a));
+     }
+ 
+     public final String toPlainText() {
+diff --git a/src/main/java/net/minecraft/server/PlayerChunk.java b/src/main/java/net/minecraft/server/PlayerChunk.java
+index 3d30e183..628b5ead 100644
+--- a/src/main/java/net/minecraft/server/PlayerChunk.java
++++ b/src/main/java/net/minecraft/server/PlayerChunk.java
+@@ -34,6 +34,12 @@ public class PlayerChunk {
+             PlayerChunk.this.chunk = PlayerChunk.this.playerChunkMap.getWorld().getChunkProviderServer().getOrLoadChunkAt(location.x, location.z);
+         }
+     };
++    /**
++     * Keeps the player chunk in the PlayerChunkMap and hence ticking even if it contains no players anymore
++     * 
++     * @see #releaseIfEmpty()
++     */
++    private boolean forceTicking;
+     // CraftBukkit end
+ 
+     public PlayerChunk(PlayerChunkMap playerchunkmap, int i, int j) {
+@@ -76,7 +82,7 @@ public class PlayerChunk {
+             if (!this.done) {
+                 this.c.remove(entityplayer);
+ 
+-                if (this.c.isEmpty()) {
++                if (this.c.isEmpty() && !isKeptTickingEvenIfEmpty()) { // Spigot: keep if forced, to cause chunk ticks
+                     ChunkIOExecutor.dropQueuedChunkLoad(this.playerChunkMap.getWorld(), this.location.x, this.location.z, this.loadedRunnable);
+                     this.playerChunkMap.b(this);
+                 }
+@@ -89,12 +95,46 @@ public class PlayerChunk {
+             }
+ 
+             this.c.remove(entityplayer);
+-            if (this.c.isEmpty()) {
++            if (this.c.isEmpty() && !isKeptTickingEvenIfEmpty()) { // Spigot: keep if forced, to cause chunk ticks
+                 this.playerChunkMap.b(this);
+             }
+ 
+         }
+     }
++    
++    // Spigot start - release this PlayerChunk if already empty
++    /**
++	 * @return {@code true} whether this player chunk will remain loaded even if
++	 *         it has no player associated anymore
++	 */
++    public boolean isKeptTickingEvenIfEmpty() {
++    	return forceTicking;
++    }
++    
++    /**
++     * Forces this player chunk to remain in its {@link #playerChunkMap} even if it contains
++     * no player entities anymore.
++     * 
++     * @see #forceTicking
++     * @see #releaseIfEmpty
++     */
++    public void keepTickingEvenIfEmpty() {
++    	forceTicking = true;
++    }
++    
++    /**
++     * Allows the {@link PlayerChunkMap} to release this player chunk if it is empty.
++     * 
++     * @see #forceTicking
++     * @see #keepLoadedEvenIfEmpty
++     */
++    public void releaseIfEmpty() {
++    	forceTicking = false;
++    	if (this.c.isEmpty()) {
++    		this.playerChunkMap.b(this);
++    	}
++    }
++    // Spigot end
+ 
+     public boolean a(boolean flag) {
+         if (this.chunk != null) {
+diff --git a/src/main/java/net/minecraft/server/PlayerChunkMap.java b/src/main/java/net/minecraft/server/PlayerChunkMap.java
+index eeac3499..bc2d68a9 100644
+--- a/src/main/java/net/minecraft/server/PlayerChunkMap.java
++++ b/src/main/java/net/minecraft/server/PlayerChunkMap.java
+@@ -83,7 +83,7 @@ public class PlayerChunkMap {
+                             return chunk;
+                         }
+ 
+-                        if (!playerchunk.a(128.0D, PlayerChunkMap.a)) {
++                        if (!playerchunk.isKeptTickingEvenIfEmpty() && !playerchunk.a(128.0D, PlayerChunkMap.a)) { // Spigot: always return force-ticking chunks
+                             continue;
+                         }
+ 
+@@ -254,6 +254,20 @@ public class PlayerChunkMap {
+     }
+     // CraftBukkit end
+ 
++    // Spigot start - add method
++    /**
++     * Force-loads the chunk at the chunk coordinates specified and marks
++     * the resulting {@link PlayerChunk} with {@link PlayerChunk#keepTickingEvenIfEmpty()}.
++     * Useful for plugins that would like to force chunk ticks even in case they are not
++     * loaded yet, e.g., during plugin start-up.
++     */
++    public PlayerChunk keepPlayerChunkTicking(int x, int z) {
++    	final PlayerChunk result = c(x, z);
++    	result.keepTickingEvenIfEmpty();
++    	return result;
++    }
++    // Spigot end
++
+     public void flagDirty(BlockPosition blockposition) {
+         int i = blockposition.getX() >> 4;
+         int j = blockposition.getZ() >> 4;
+diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
+index d4f25cbf..609696a7 100644
+--- a/src/main/java/net/minecraft/server/WorldServer.java
++++ b/src/main/java/net/minecraft/server/WorldServer.java
+@@ -480,7 +480,7 @@ public class WorldServer extends World implements IAsyncTaskHandler {
+                 chunk.n();
+                 this.methodProfiler.c("tickChunk");
+                 chunk.b(false);
+-                if ( !chunk.areNeighborsLoaded( 1 ) ) continue; // Spigot
++                if ( !chunk.areNeighborsLoaded( 1 ) && !manager.getChunk(chunk.locX, chunk.locZ).isKeptTickingEvenIfEmpty()) continue; // Spigot
+                 this.methodProfiler.c("thunder");
+                 int l;
+                 BlockPosition blockposition;
+diff --git a/src/main/java/org/bukkit/craftbukkit/AbstractWrapper.java b/src/main/java/org/bukkit/craftbukkit/AbstractWrapper.java
+new file mode 100755
+index 00000000..1111083a
+--- /dev/null
++++ b/src/main/java/org/bukkit/craftbukkit/AbstractWrapper.java
+@@ -0,0 +1,45 @@
++package org.bukkit.craftbukkit;
++
++import java.lang.ref.WeakReference;
++
++import net.minecraft.server.WorldServer;
++
++/**
++ * Wraps a Minecraft object of type {@code T}, keeping a weak reference to it,
++ * and a strong reference to the {@link WorldServer}. Access to the referent
++ * happens in the {@link #getHandle} method where the object needs to be
++ * re-resolved starting from the {@link WorldServer} if the weak reference was
++ * had its referent collected in the meantime.
++ * <p>
++ * 
++ * Implementing subclasses have to use their constructor to store context data
++ * such as, e.g., the {@link WorldServer} that provides the context to
++ * {@link #retrieve} the {@code t} object equivalent again at a later point
++ * after the {@code t} object itself was garbage collected.
++ * <p>
++ * 
++ * @param <T>
++ */
++public abstract class AbstractWrapper<T> {
++	private WeakReference<T> handle;
++	
++	protected AbstractWrapper(T t) {
++		handle = new WeakReference<>(t);
++	}
++
++	/**
++	 * Retrieves an object equivalent to the original {@code T} object passed to the constructor, based
++	 * on the context data remembered during the call to {@link #rememberQueryData(Object)} that the
++	 * constructor performs.
++	 */
++	protected abstract T retrieve();
++	
++	protected T getHandle() {
++		T result = handle.get();
++		if (result == null) {
++			result = retrieve();
++			handle = new WeakReference<>(result);
++		}
++		return result;
++	}
++}
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftPlayerChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftPlayerChunk.java
+new file mode 100755
+index 00000000..695a9870
+--- /dev/null
++++ b/src/main/java/org/bukkit/craftbukkit/CraftPlayerChunk.java
+@@ -0,0 +1,60 @@
++package org.bukkit.craftbukkit;
++
++import org.bukkit.Chunk;
++import org.bukkit.PlayerChunk;
++
++import net.minecraft.server.PlayerChunkMap;
++import net.minecraft.server.WorldServer;
++
++public class CraftPlayerChunk extends AbstractWrapper<net.minecraft.server.PlayerChunk> implements PlayerChunk {
++    private final WorldServer world;
++    private final int x;
++    private final int z;
++
++    public CraftPlayerChunk(net.minecraft.server.PlayerChunk playerChunk) {
++        super(playerChunk);
++        world = playerChunk.chunk.world.worldData.world;
++        this.x = playerChunk.chunk.locX;
++        this.z = playerChunk.chunk.locZ;
++    }
++
++    @Override
++    protected net.minecraft.server.PlayerChunk retrieve() {
++        return world.getPlayerChunkMap().getChunk(x, z);
++    }
++
++    @Override
++    public Chunk getChunk() {
++        return new CraftChunk(getHandle().chunk);
++    }
++
++    /**
++     * @return {@code true} whether this player chunk will remain loaded even if it has no player associated anymore
++     */
++    @Override
++    public boolean isKeptTickingEvenIfEmpty() {
++        return getHandle().isKeptTickingEvenIfEmpty();
++    }
++
++    /**
++     * Forces this player chunk to remain in its {@link #playerChunkMap} even if it contains no player entities anymore.
++     * 
++     * @see #forceTicking
++     * @see #releaseIfEmpty
++     */
++    @Override
++    public void keepTickingEvenIfEmpty() {
++        getHandle().keepTickingEvenIfEmpty();
++    }
++
++    /**
++     * Allows the {@link PlayerChunkMap} to release this player chunk if it is empty.
++     * 
++     * @see #forceTicking
++     * @see #keepLoadedEvenIfEmpty
++     */
++    @Override
++    public void releaseIfEmpty() {
++        getHandle().releaseIfEmpty();
++    }
++}
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftPlayerChunkMap.java b/src/main/java/org/bukkit/craftbukkit/CraftPlayerChunkMap.java
+new file mode 100755
+index 00000000..07523906
+--- /dev/null
++++ b/src/main/java/org/bukkit/craftbukkit/CraftPlayerChunkMap.java
+@@ -0,0 +1,31 @@
++package org.bukkit.craftbukkit;
++
++import org.bukkit.PlayerChunk;
++import org.bukkit.PlayerChunkMap;
++
++import net.minecraft.server.WorldServer;
++
++public class CraftPlayerChunkMap extends AbstractWrapper<net.minecraft.server.PlayerChunkMap>
++        implements PlayerChunkMap {
++    private final WorldServer world;
++
++    public CraftPlayerChunkMap(net.minecraft.server.PlayerChunkMap playerChunkMap) {
++        super(playerChunkMap);
++        world = playerChunkMap.getWorld();
++    }
++
++    @Override
++    public PlayerChunk getPlayerChunk(int x, int z) {
++        return new CraftPlayerChunk(getHandle().getChunk(x, z));
++    }
++
++    @Override
++    public void keepPlayerChunkTicking(int x, int z) {
++        getHandle().keepPlayerChunkTicking(x, z);
++    }
++
++    @Override
++    protected net.minecraft.server.PlayerChunkMap retrieve() {
++        return world.getPlayerChunkMap();
++    }
++}
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
+index ef8165da..834a20e2 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
+@@ -23,6 +23,7 @@ import org.bukkit.Difficulty;
+ import org.bukkit.Effect;
+ import org.bukkit.Location;
+ import org.bukkit.Particle;
++import org.bukkit.PlayerChunkMap;
+ import org.bukkit.Sound;
+ import org.bukkit.TreeType;
+ import org.bukkit.World;
+@@ -137,6 +138,11 @@ public class CraftWorld implements World {
+     public Chunk getChunkAt(int x, int z) {
+         return this.world.getChunkProviderServer().getChunkAt(x, z).bukkitChunk;
+     }
++    
++    @Override
++    public PlayerChunkMap getPlayerChunkMap() {
++    	return new CraftPlayerChunkMap(this.world.getPlayerChunkMap());
++    }
+ 
+     public Chunk getChunkAt(Block block) {
+         return getChunkAt(block.getX() >> 4, block.getZ() >> 4);
+diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
+index 1b5158c0..b4ac305f 100644
+--- a/src/main/java/org/spigotmc/SpigotConfig.java
++++ b/src/main/java/org/spigotmc/SpigotConfig.java
+@@ -275,7 +275,7 @@ public class SpigotConfig
+     {
+         commands.put( "tps", new TicksPerSecondCommand( "tps" ) );
+     }
+-
++    
+     public static int playerSample;
+     private static void playerSample()
+     {
+-- 
+2.15.1
+
