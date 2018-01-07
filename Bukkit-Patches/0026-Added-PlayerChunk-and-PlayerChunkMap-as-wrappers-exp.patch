@@ -1,0 +1,83 @@
+From b17c0a8a5fda9d7e8dfc10802088efbecb03bea4 Mon Sep 17 00:00:00 2001
+From: Axel Uhl <axel.uhl@sap.com>
+Date: Fri, 5 Jan 2018 00:17:46 +0100
+Subject: [PATCH] Added PlayerChunk and PlayerChunkMap as wrappers, expose
+ getPlayerChunkMap on World
+
+
+diff --git a/src/main/java/org/bukkit/PlayerChunk.java b/src/main/java/org/bukkit/PlayerChunk.java
+new file mode 100755
+index 00000000..2b4f5ded
+--- /dev/null
++++ b/src/main/java/org/bukkit/PlayerChunk.java
+@@ -0,0 +1,28 @@
++package org.bukkit;
++
++public interface PlayerChunk {
++
++    /**
++     * @return {@code true} whether this player chunk will remain loaded even if it has no player associated anymore
++     */
++    boolean isKeptTickingEvenIfEmpty();
++
++    /**
++     * Forces this player chunk to remain in its {@link #playerChunkMap} even if it contains no player entities anymore.
++     * 
++     * @see #forceTicking
++     * @see #releaseIfEmpty
++     */
++    void keepTickingEvenIfEmpty();
++
++    /**
++     * Allows the {@link PlayerChunkMap} to release this player chunk if it is empty.
++     * 
++     * @see #forceTicking
++     * @see #keepLoadedEvenIfEmpty
++     */
++    void releaseIfEmpty();
++
++    Chunk getChunk();
++
++}
+diff --git a/src/main/java/org/bukkit/PlayerChunkMap.java b/src/main/java/org/bukkit/PlayerChunkMap.java
+new file mode 100755
+index 00000000..63bb9639
+--- /dev/null
++++ b/src/main/java/org/bukkit/PlayerChunkMap.java
+@@ -0,0 +1,13 @@
++package org.bukkit;
++
++public interface PlayerChunkMap {
++
++    PlayerChunk getPlayerChunk(int x, int z);
++
++    /**
++     * Force-loads the chunk at the chunk coordinates specified and marks the resulting {@link PlayerChunk} with
++     * {@link PlayerChunk#keepTickingEvenIfEmpty()}. Useful for plugins that would like to force chunk ticks even in
++     * case they are not loaded yet, e.g., during plugin start-up.
++     */
++    void keepPlayerChunkTicking(int x, int z);
++}
+diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
+old mode 100644
+new mode 100755
+index 9b6eb48f..c8f3c319
+--- a/src/main/java/org/bukkit/World.java
++++ b/src/main/java/org/bukkit/World.java
+@@ -1471,6 +1471,13 @@ public interface World extends PluginMessageRecipient, Metadatable {
+     public <T> void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX, double offsetY, double offsetZ, double extra, T data);
+ 
+     // Spigot start
++    /**
++     * Gets the player chunk map from this world
++     * 
++     * @return the player chunk map from this world
++     */
++    PlayerChunkMap getPlayerChunkMap();
++
+     public class Spigot
+     {
+ 
+-- 
+2.15.1
+
