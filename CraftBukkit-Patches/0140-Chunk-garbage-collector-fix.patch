@@ -1,0 +1,24 @@
+From b9da8c338b245e96c7594e90ef66119a15755c8e Mon Sep 17 00:00:00 2001
+From: Dablakbandit <ashle.thew@gmail.com>
+Date: Sat, 21 Apr 2018 02:36:38 +1200
+Subject: [PATCH] Chunk-garbage-collector-fix
+
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
+index ef8165da..d8449fde 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
+@@ -1553,7 +1553,9 @@ public class CraftWorld implements World {
+         }
+ 
+         ChunkProviderServer cps = world.getChunkProviderServer();
+-        for (net.minecraft.server.Chunk chunk : cps.chunks.values()) {
++        Set<net.minecraft.server.Chunk> chunks = new HashSet<net.minecraft.server.Chunk>();
++        chunks.addAll(cps.chunks.values());
++        for (net.minecraft.server.Chunk chunk : chunks) {
+             // If in use, skip it
+             if (isChunkInUse(chunk.locX, chunk.locZ)) {
+                 continue;
+-- 
+2.16.1.windows.4
+
