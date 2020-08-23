@@ -1,0 +1,40 @@
+From 53a2975555a66b5fcd751673ff35b951c769b0c0 Mon Sep 17 00:00:00 2001
+From: Parker Hawke <hawkeboyz2@hotmail.com>
+Date: Sat, 22 Aug 2020 22:55:13 -0400
+Subject: [PATCH] Item hover component API
+
+
+diff --git a/src/main/java/org/bukkit/inventory/ItemFactory.java b/src/main/java/org/bukkit/inventory/ItemFactory.java
+index 4ff149fd..60477c83 100644
+--- a/src/main/java/org/bukkit/inventory/ItemFactory.java
++++ b/src/main/java/org/bukkit/inventory/ItemFactory.java
+@@ -141,4 +141,26 @@ public interface ItemFactory {
+     @Deprecated
+     @NotNull
+     Material updateMaterial(@NotNull final ItemMeta meta, @NotNull final Material material) throws IllegalArgumentException;
++
++    // Spigot start
++    public class Spigot {
++
++        /**
++         * Creates a new hover component for the specified item.
++         *
++         * @param item the item for which to create a component
++         *
++         * @return the component
++         */
++        @NotNull
++        public net.md_5.bungee.api.chat.hover.content.Item asComponent(@NotNull ItemStack item) {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
++
++    }
++
++    @NotNull
++    Spigot spigot();
++    // Spigot end
++
+ }
+-- 
+2.28.0.windows.1
+

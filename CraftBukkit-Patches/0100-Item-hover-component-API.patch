@@ -1,0 +1,48 @@
+From b86f0d2c6d4f23121f59e725cf06d0efbcbc87a6 Mon Sep 17 00:00:00 2001
+From: Parker Hawke <hawkeboyz2@hotmail.com>
+Date: Sat, 22 Aug 2020 22:55:24 -0400
+Subject: [PATCH] Item hover component API
+
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
+index 89a36170..ab5b2328 100644
+--- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
++++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftItemFactory.java
+@@ -8,6 +8,10 @@ import org.bukkit.craftbukkit.util.CraftLegacy;
+ import org.bukkit.inventory.ItemFactory;
+ import org.bukkit.inventory.ItemStack;
+ import org.bukkit.inventory.meta.ItemMeta;
++// Spigot start
++import net.md_5.bungee.api.chat.ItemTag;
++import net.md_5.bungee.api.chat.hover.content.Item;
++// Spigot end
+ 
+ public final class CraftItemFactory implements ItemFactory {
+     static final Color DEFAULT_LEATHER_COLOR = Color.fromRGB(0xA06540);
+@@ -334,4 +338,23 @@ public final class CraftItemFactory implements ItemFactory {
+     public Material updateMaterial(ItemMeta meta, Material material) throws IllegalArgumentException {
+         return ((CraftMetaItem) meta).updateMaterial(material);
+     }
++
++    // Spigot start
++    private final ItemFactory.Spigot spigot = new ItemFactory.Spigot() {
++
++        @Override
++        public Item asComponent( ItemStack item ) {
++            Validate.isTrue( item != null, "item cannot be null" );
++
++            String nbt = CraftItemStack.asNMSCopy( item ).getOrCreateTag().asString();
++            return new Item( item.getType().getKey().toString(), item.getAmount(), ItemTag.ofNbt( nbt ));
++        }
++
++    };
++
++    @Override
++    public ItemFactory.Spigot spigot() {
++        return spigot;
++    }
++    // Spigot end
+ }
+-- 
+2.28.0.windows.1
+
