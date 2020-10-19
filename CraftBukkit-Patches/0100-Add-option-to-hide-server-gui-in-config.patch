@@ -1,0 +1,171 @@
+From 60fa0e78d9b84de6c6add699a33137ce2f0b8c6e Mon Sep 17 00:00:00 2001
+From: JRoy <joshroy126@gmail.com>
+Date: Mon, 19 Oct 2020 00:11:07 -0400
+Subject: [PATCH] Add option to hide server gui in config
+
+Has to move config loading up the call stack in order to access
+config in time for gui start
+
+diff --git a/src/main/java/net/minecraft/server/DedicatedServer.java b/src/main/java/net/minecraft/server/DedicatedServer.java
+index 87045e72..93d2377e 100644
+--- a/src/main/java/net/minecraft/server/DedicatedServer.java
++++ b/src/main/java/net/minecraft/server/DedicatedServer.java
+@@ -142,7 +142,6 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+         }
+         // Spigot start
+         this.a((PlayerList) (new DedicatedPlayerList(this, this.customRegistry, this.worldNBTStorage)));
+-        org.spigotmc.SpigotConfig.init((java.io.File) options.valueOf("spigot-settings"));
+         org.spigotmc.SpigotConfig.registerCommands();
+         // Spigot end
+
+diff --git a/src/main/java/net/minecraft/server/Main.java b/src/main/java/net/minecraft/server/Main.java
+index 4da97dbc..b42d4dcf 100644
+--- a/src/main/java/net/minecraft/server/Main.java
++++ b/src/main/java/net/minecraft/server/Main.java
+@@ -166,6 +166,7 @@ public class Main {
+
+             convertable_conversionsession.a((IRegistryCustom) iregistrycustom_dimension, (SaveData) object);
+             */
++            org.spigotmc.SpigotConfig.init((java.io.File) optionset.valueOf("spigot-settings")); // Spigot
+             final DedicatedServer dedicatedserver = (DedicatedServer) MinecraftServer.a((thread) -> {
+                 DedicatedServer dedicatedserver1 = new DedicatedServer(optionset, datapackconfiguration1, thread, iregistrycustom_dimension, convertable_conversionsession, resourcepackrepository, datapackresources, null, dedicatedserversettings, DataConverterRegistry.a(), minecraftsessionservice, gameprofilerepository, usercache, WorldLoadListenerLogger::new);
+
+@@ -175,7 +176,7 @@ public class Main {
+                 dedicatedserver1.c(optionset.has(optionspec2));
+                 dedicatedserver1.b((String) optionset.valueOf(optionspec12));
+                 */
+-                boolean flag1 = !optionset.has("nogui") && !optionset.nonOptionArguments().contains("nogui");
++                boolean flag1 = !optionset.has("nogui") && !optionset.nonOptionArguments().contains("nogui") && !org.spigotmc.SpigotConfig.hideServerGui; // Spigot
+
+                 if (flag1 && !GraphicsEnvironment.isHeadless()) {
+                     dedicatedserver1.bc();
+diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
+index ff1ddfcf..a630f186 100644
+--- a/src/main/java/org/spigotmc/SpigotConfig.java
++++ b/src/main/java/org/spigotmc/SpigotConfig.java
+@@ -13,6 +13,8 @@ import java.util.List;
+ import java.util.Map;
+ import java.util.Set;
+ import java.util.logging.Level;
++import java.util.logging.Logger;
++
+ import net.minecraft.server.AttributeRanged;
+ import net.minecraft.server.GenericAttributes;
+ import net.minecraft.server.IRegistry;
+@@ -21,7 +23,6 @@ import net.minecraft.server.MinecraftServer;
+ import org.apache.logging.log4j.LogManager;
+ import org.apache.logging.log4j.core.LoggerContext;
+ import org.apache.logging.log4j.core.config.Configuration;
+-import org.bukkit.Bukkit;
+ import org.bukkit.ChatColor;
+ import org.bukkit.command.Command;
+ import org.bukkit.configuration.ConfigurationSection;
+@@ -31,6 +32,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
+ public class SpigotConfig
+ {
+
++    private final static Logger LOGGER = Logger.getLogger("Minecraft");
+     private static File CONFIG_FILE;
+     private static final String HEADER = "This is the main configuration file for Spigot.\n"
+             + "As you can see, there's tons to configure. Some options may impact gameplay, so use\n"
+@@ -61,7 +63,7 @@ public class SpigotConfig
+         {
+         } catch ( InvalidConfigurationException ex )
+         {
+-            Bukkit.getLogger().log( Level.SEVERE, "Could not load spigot.yml, please correct your syntax errors", ex );
++            LOGGER.log( Level.SEVERE, "Could not load spigot.yml, please correct your syntax errors", ex );
+             throw Throwables.propagate( ex );
+         }
+
+@@ -91,7 +93,7 @@ public class SpigotConfig
+                 metrics.start();
+             } catch ( IOException ex )
+             {
+-                Bukkit.getServer().getLogger().log( Level.SEVERE, "Could not start metrics service", ex );
++                LOGGER.log( Level.SEVERE, "Could not start metrics service", ex );
+             }
+         }
+     }
+@@ -113,7 +115,7 @@ public class SpigotConfig
+                         throw Throwables.propagate( ex.getCause() );
+                     } catch ( Exception ex )
+                     {
+-                        Bukkit.getLogger().log( Level.SEVERE, "Error invoking " + method, ex );
++                        LOGGER.log( Level.SEVERE, "Error invoking " + method, ex );
+                     }
+                 }
+             }
+@@ -124,7 +126,7 @@ public class SpigotConfig
+             config.save( CONFIG_FILE );
+         } catch ( IOException ex )
+         {
+-            Bukkit.getLogger().log( Level.SEVERE, "Could not save " + CONFIG_FILE, ex );
++            LOGGER.log( Level.SEVERE, "Could not save " + CONFIG_FILE, ex );
+         }
+     }
+
+@@ -240,7 +242,7 @@ public class SpigotConfig
+     {
+         int count = getInt( "settings.netty-threads", 4 );
+         System.setProperty( "io.netty.eventLoopThreads", Integer.toString( count ) );
+-        Bukkit.getLogger().log( Level.INFO, "Using {0} threads for Netty based IO", count );
++        LOGGER.log( Level.INFO, "Using {0} threads for Netty based IO", count );
+     }
+
+     public static boolean disableStatSaving;
+@@ -263,13 +265,13 @@ public class SpigotConfig
+                     MinecraftKey key = new MinecraftKey( name );
+                     if ( IRegistry.CUSTOM_STAT.get( key ) == null )
+                     {
+-                        Bukkit.getLogger().log(Level.WARNING, "Ignoring non existent stats.forced-stats " + name);
++                        LOGGER.log(Level.WARNING, "Ignoring non existent stats.forced-stats " + name);
+                         continue;
+                     }
+                     forcedStats.put( key, section.getInt( name ) );
+                 } catch (Exception ex)
+                 {
+-                    Bukkit.getLogger().log(Level.WARNING, "Ignoring invalid stats.forced-stats " + name);
++                    LOGGER.log(Level.WARNING, "Ignoring invalid stats.forced-stats " + name);
+                 }
+             }
+         }
+@@ -373,10 +375,10 @@ public class SpigotConfig
+
+         if ( LogManager.getRootLogger().isTraceEnabled() )
+         {
+-            Bukkit.getLogger().info( "Debug logging is enabled" );
++            LOGGER.info( "Debug logging is enabled" );
+         } else
+         {
+-            Bukkit.getLogger().info( "Debug logging is disabled" );
++            LOGGER.info( "Debug logging is disabled" );
+         }
+     }
+
+@@ -391,4 +393,9 @@ public class SpigotConfig
+     private static void logVillagerDeaths() {
+         logVillagerDeaths = getBoolean("settings.log-villager-deaths", true);
+     }
++
++    public static boolean hideServerGui;
++    private static void hideServerGui() {
++        hideServerGui = getBoolean("settings.hide-server-gui", false);
++    }
+ }
+diff --git a/src/main/java/org/spigotmc/WatchdogThread.java b/src/main/java/org/spigotmc/WatchdogThread.java
+index 54fa83c1..a75c7c13 100644
+--- a/src/main/java/org/spigotmc/WatchdogThread.java
++++ b/src/main/java/org/spigotmc/WatchdogThread.java
+@@ -59,6 +59,10 @@ public class WatchdogThread extends Thread
+             //
+             if ( lastTick != 0 && monotonicMillis() > lastTick + timeoutTime )
+             {
++                // SpigotConfig is started pre-init and before the server is set, wait until post-init bukkit.
++                if (Bukkit.getServer() == null) {
++                    continue;
++                }
+                 Logger log = Bukkit.getServer().getLogger();
+                 log.log( Level.SEVERE, "------------------------------" );
+                 log.log( Level.SEVERE, "The server has stopped responding! This is (probably) not a Spigot bug." );
+--
+2.20.1.windows.1
