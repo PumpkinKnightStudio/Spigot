@@ -1,0 +1,48 @@
+From bb99dcf9f36b018b4f17b1c8d0263004854793a1 Mon Sep 17 00:00:00 2001
+From: Anmol B <ceezuns@gmail.com>
+Date: Thu, 11 Mar 2021 15:18:33 -0500
+Subject: [PATCH] Add new methods to drop multiple items in the World
+ interface.
+
+
+diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
+index b8a33ac5..0845d731 100644
+--- a/src/main/java/org/bukkit/World.java
++++ b/src/main/java/org/bukkit/World.java
+@@ -471,6 +471,16 @@ public interface World extends PluginMessageRecipient, Metadatable {
+     @NotNull
+     public Item dropItem(@NotNull Location location, @NotNull ItemStack item);
+ 
++    /**
++     * Drops multiple items at the specified {@link Location}
++     *
++     * @param location Location to drop the item
++     * @param items ItemStack's to drop
++     * @return ItemDrop entities created as a result of this method.
++     */
++    @NotNull
++    public Item[] dropItems(@NotNull Location location, @NotNull ItemStack... items);
++
+     /**
+      * Drops an item at the specified {@link Location} with a random offset
+      *
+@@ -481,6 +491,16 @@ public interface World extends PluginMessageRecipient, Metadatable {
+     @NotNull
+     public Item dropItemNaturally(@NotNull Location location, @NotNull ItemStack item);
+ 
++    /**
++     * Drops multiple items at the specified {@link Location} with a random offset
++     *
++     * @param location Location to drop the item
++     * @param items ItemStack's to drop
++     * @return ItemDrop entities created as a result of this method.
++     */
++    @NotNull
++    public Item[] dropItemsNaturally(@NotNull Location location, @NotNull ItemStack... items);
++
+     /**
+      * Creates an {@link Arrow} entity at the given {@link Location}
+      *
+-- 
+2.29.2
+
