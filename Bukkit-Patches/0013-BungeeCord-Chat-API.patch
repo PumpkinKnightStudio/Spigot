@@ -1,4 +1,4 @@
-From e2323d648d6f13a0d416d09e8125a2fa1feea5f8 Mon Sep 17 00:00:00 2001
+From 8a3ac156459a3c9c7d3e6c19e82c54c20786e566 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 02:59:14 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -293,10 +293,10 @@ index 427368a7..44d597d7 100644
       * Gets the char value associated with this color
       *
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 6a461792..bde7c164 100644
+index da98908e..2a200c73 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1343,6 +1343,24 @@ public interface Server extends PluginMessageRecipient {
+@@ -1363,6 +1363,24 @@ public interface Server extends PluginMessageRecipient {
          public org.bukkit.configuration.file.YamlConfiguration getConfig() {
              throw new UnsupportedOperationException("Not supported yet.");
          }
@@ -370,7 +370,7 @@ index 6d9708dc..ac772bf3 100644
  
      @NotNull
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 15e93e75..7d2e96fa 100644
+index 15e93e75..e8a1b5d7 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -1,6 +1,7 @@
@@ -381,7 +381,7 @@ index 15e93e75..7d2e96fa 100644
  import org.bukkit.DyeColor;
  import org.bukkit.Effect;
  import org.bukkit.GameMode;
-@@ -1343,6 +1344,58 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1343,6 +1344,77 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
          public java.util.Set<Player> getHiddenPlayers() {
              throw new UnsupportedOperationException("Not supported yet.");
          }
@@ -435,6 +435,25 @@ index 15e93e75..7d2e96fa 100644
 +         * @param components the components to send
 +         */
 +        public void sendMessage(@NotNull net.md_5.bungee.api.ChatMessageType position, @Nullable UUID sender, @NotNull net.md_5.bungee.api.chat.BaseComponent... components) {
++            throw new UnsupportedOperationException("Not supported yet.");
++        }
++
++        /**
++         * Sends a title and a subtitle message to the player. If either of these
++         * values are null, they will not be sent and the display will remain
++         * unchanged. If they are empty, the display will be updated as
++         * such. If they contain a new line, only the first line will be
++         * sent. All timings values may take a value of -1 to indicate that they
++         * will use the last value sent (or the defaults if no title has been
++         * displayed).
++         *
++         * @param title    Title components
++         * @param subtitle Subtitle components
++         * @param fadeIn   time in ticks for titles to fade in. Defaults to 10.
++         * @param stay     time in ticks for titles to stay. Defaults to 70.
++         * @param fadeOut  time in ticks for titles to fade out. Defaults to 20.
++         */
++        public void sendTitle(@Nullable net.md_5.bungee.api.chat.BaseComponent[] title, @Nullable net.md_5.bungee.api.chat.BaseComponent[] subtitle, int fadeIn, int stay, int fadeOut) {
 +            throw new UnsupportedOperationException("Not supported yet.");
 +        }
      }
@@ -524,5 +543,5 @@ index f740bebe..94852d50 100644
  
      @NotNull
 -- 
-2.25.1
+2.32.0.windows.1
 
