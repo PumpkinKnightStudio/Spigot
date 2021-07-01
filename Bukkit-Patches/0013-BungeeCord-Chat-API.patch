@@ -1,4 +1,4 @@
-From 8a3ac156459a3c9c7d3e6c19e82c54c20786e566 Mon Sep 17 00:00:00 2001
+From dad0b1e772e2218bbb99eed36589135436e6f5b0 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 02:59:14 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -542,6 +542,65 @@ index f740bebe..94852d50 100644
      }
  
      @NotNull
+diff --git a/src/main/java/org/bukkit/scoreboard/Team.java b/src/main/java/org/bukkit/scoreboard/Team.java
+index da01d292..f5b525c4 100644
+--- a/src/main/java/org/bukkit/scoreboard/Team.java
++++ b/src/main/java/org/bukkit/scoreboard/Team.java
+@@ -336,4 +336,54 @@ public interface Team {
+          */
+         FOR_OWN_TEAM;
+     }
++
++    // Spigot start
++    public interface Spigot {
++
++        /**
++         * Gets the prefix prepended to the display of entries on this team.
++         *
++         * @return Team prefix
++         * @throws IllegalStateException if this team has been unregistered
++         */
++        @NotNull
++        net.md_5.bungee.api.chat.BaseComponent[] getPrefix() throws IllegalStateException;
++
++        /**
++         * Sets the prefix prepended to the display of entries on this team.
++         *
++         * @param prefix New prefix
++         * @throws IllegalArgumentException if prefix is null
++         * @throws IllegalArgumentException if prefix is longer than 64
++         *     characters
++         * @throws IllegalStateException if this team has been unregistered
++         */
++        void setPrefix(@NotNull net.md_5.bungee.api.chat.BaseComponent[] prefix) throws IllegalStateException, IllegalArgumentException;
++
++        /**
++         * Gets the suffix appended to the display of entries on this team.
++         *
++         * @return the team's current suffix
++         * @throws IllegalStateException if this team has been unregistered
++         */
++        @NotNull
++        net.md_5.bungee.api.chat.BaseComponent[] getSuffix() throws IllegalStateException;
++
++        /**
++         * Sets the suffix appended to the display of entries on this team.
++         *
++         * @param suffix the new suffix for this team.
++         * @throws IllegalArgumentException if suffix is null
++         * @throws IllegalArgumentException if suffix is longer than 64
++         *     characters
++         * @throws IllegalStateException if this team has been unregistered
++         */
++        void setSuffix(@NotNull net.md_5.bungee.api.chat.BaseComponent[] suffix) throws IllegalStateException, IllegalArgumentException;
++
++    }
++
++    @NotNull
++    public Team.Spigot spigot();
++    // Spigot end
++
+ }
 -- 
 2.32.0.windows.1
 

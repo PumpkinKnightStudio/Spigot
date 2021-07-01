@@ -1,4 +1,4 @@
-From dd573a47078499c1fca7070df366c916e0ff4227 Mon Sep 17 00:00:00 2001
+From 2702147d0f6954dc415adeae6559423dcfa18d2c Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -425,6 +425,62 @@ index 2d403ad21..4cdc504df 100644
      };
  
      @Override
+diff --git a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftTeam.java b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftTeam.java
+index a213c2e3b..a33d0fc45 100644
+--- a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftTeam.java
++++ b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftTeam.java
+@@ -1,7 +1,12 @@
+ package org.bukkit.craftbukkit.scoreboard;
+ 
+ import com.google.common.collect.ImmutableSet;
++
+ import java.util.Set;
++
++import net.md_5.bungee.api.chat.BaseComponent;
++import net.md_5.bungee.api.chat.TextComponent;
++import net.md_5.bungee.chat.ComponentSerializer;
+ import net.minecraft.world.scores.ScoreboardTeam;
+ import net.minecraft.world.scores.ScoreboardTeamBase;
+ import net.minecraft.world.scores.ScoreboardTeamBase.EnumNameTagVisibility;
+@@ -312,4 +317,38 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
+         return !(this.team != other.team && (this.team == null || !this.team.equals(other.team)));
+     }
+ 
++    // Spigot start
++    private final Team.Spigot spigot = new Spigot() {
++        @Override
++        public BaseComponent[] getPrefix() throws IllegalStateException {
++            return TextComponent.fromLegacyText(CraftChatMessage.fromComponent(team.getPrefix()));
++        }
++
++        @Override
++        public void setPrefix(BaseComponent[] prefix) throws IllegalStateException, IllegalArgumentException {
++            Validate.notNull(prefix, "Prefix cannot be null");
++            Validate.isTrue(BaseComponent.toPlainText(prefix).length() <= 64, "Prefix is longer than the limit of 64 characters");
++
++            team.setPrefix(CraftChatMessage.fromJSONOrNull(ComponentSerializer.toString(prefix)));
++        }
++
++        @Override
++        public BaseComponent[] getSuffix() throws IllegalStateException {
++            return TextComponent.fromLegacyText(CraftChatMessage.fromComponent(team.getSuffix()));
++        }
++
++        @Override
++        public void setSuffix(BaseComponent[] suffix) throws IllegalStateException, IllegalArgumentException {
++            Validate.notNull(suffix, "Suffix cannot be null");
++            Validate.isTrue(BaseComponent.toPlainText(suffix).length() <= 64, "Suffix is longer than the limit of 64 characters");
++
++            team.setSuffix(CraftChatMessage.fromJSONOrNull(ComponentSerializer.toString(suffix)));
++        }
++    };
++
++    @Override
++    public Team.Spigot spigot() {
++        return spigot;
++    }
++    // Spigot end
+ }
 -- 
 2.32.0.windows.1
 
