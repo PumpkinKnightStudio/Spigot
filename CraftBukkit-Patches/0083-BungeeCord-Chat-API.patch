@@ -1,4 +1,4 @@
-From c74b473204e72cbd8cf883a67349c05ebf32e648 Mon Sep 17 00:00:00 2001
+From 38a0c6f4bf98ffe11f1064506c20e5fd184e793b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -426,7 +426,7 @@ index 2d403ad21..4cdc504df 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftTeam.java b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftTeam.java
-index a213c2e3b..aab672275 100644
+index a213c2e3b..e7ebc0ab3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftTeam.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scoreboard/CraftTeam.java
 @@ -1,7 +1,9 @@
@@ -439,7 +439,7 @@ index a213c2e3b..aab672275 100644
  import net.minecraft.world.scores.ScoreboardTeam;
  import net.minecraft.world.scores.ScoreboardTeamBase;
  import net.minecraft.world.scores.ScoreboardTeamBase.EnumNameTagVisibility;
-@@ -312,4 +314,38 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
+@@ -312,4 +314,42 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
          return !(this.team != other.team && (this.team == null || !this.team.equals(other.team)));
      }
  
@@ -447,6 +447,7 @@ index a213c2e3b..aab672275 100644
 +    private final Team.Spigot spigot = new Spigot() {
 +        @Override
 +        public net.md_5.bungee.api.chat.BaseComponent[] getPrefix() throws IllegalStateException {
++            checkState();
 +            return net.md_5.bungee.api.chat.TextComponent.fromLegacyText(CraftChatMessage.fromComponent(team.getPrefix()));
 +        }
 +
@@ -454,12 +455,14 @@ index a213c2e3b..aab672275 100644
 +        public void setPrefix(net.md_5.bungee.api.chat.BaseComponent[] prefix) throws IllegalStateException, IllegalArgumentException {
 +            Validate.notNull(prefix, "Prefix cannot be null");
 +            Validate.isTrue(net.md_5.bungee.api.chat.BaseComponent.toPlainText(prefix).length() <= 64, "Prefix is longer than the limit of 64 characters");
++            checkState();
 +
 +            team.setPrefix(CraftChatMessage.fromJSONOrNull(net.md_5.bungee.chat.ComponentSerializer.toString(prefix)));
 +        }
 +
 +        @Override
 +        public net.md_5.bungee.api.chat.BaseComponent[] getSuffix() throws IllegalStateException {
++            checkState();
 +            return net.md_5.bungee.api.chat.TextComponent.fromLegacyText(CraftChatMessage.fromComponent(team.getSuffix()));
 +        }
 +
@@ -467,6 +470,7 @@ index a213c2e3b..aab672275 100644
 +        public void setSuffix(net.md_5.bungee.api.chat.BaseComponent[] suffix) throws IllegalStateException, IllegalArgumentException {
 +            Validate.notNull(suffix, "Suffix cannot be null");
 +            Validate.isTrue(net.md_5.bungee.api.chat.BaseComponent.toPlainText(suffix).length() <= 64, "Suffix is longer than the limit of 64 characters");
++            checkState();
 +
 +            team.setSuffix(CraftChatMessage.fromJSONOrNull(net.md_5.bungee.chat.ComponentSerializer.toString(suffix)));
 +        }
