@@ -1,4 +1,4 @@
-From 2c8560c7164433d6d3b77f0aa3b5a86f19a2f833 Mon Sep 17 00:00:00 2001
+From 36b6af00046577797f475e180eeec47af45b5a94 Mon Sep 17 00:00:00 2001
 From: Doc <nachito94@msn.com>
 Date: Thu, 4 Nov 2021 10:35:39 -0300
 Subject: [PATCH] Configurable-Message-BungeeIpForwarding
@@ -18,20 +18,19 @@ index 331371fd2..75ee43802 100644
                              this.connection.close(chatmessage);
                              return;
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index f3d75d19c..cd8eb7dfa 100644
+index f3d75d19c..f8b69bc78 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
-@@ -193,6 +193,9 @@ public class SpigotConfig
+@@ -193,6 +193,8 @@ public class SpigotConfig
      public static String serverFullMessage;
      public static String outdatedClientMessage = "Outdated client! Please use {0}";
      public static String outdatedServerMessage = "Outdated server! I\'m still on {0}";
-+    public static String bungeeIpForwardingMessage;
 +    public static String bungeeIpForwardingMessage;
 +
      private static String transform(String s)
      {
          return ChatColor.translateAlternateColorCodes( '&', s ).replaceAll( "\\\\n", "\n" );
-@@ -210,6 +213,7 @@ public class SpigotConfig
+@@ -210,6 +212,7 @@ public class SpigotConfig
          serverFullMessage = transform( getString( "messages.server-full", "The server is full!" ) );
          outdatedClientMessage = transform( getString( "messages.outdated-client", outdatedClientMessage ) );
          outdatedServerMessage = transform( getString( "messages.outdated-server", outdatedServerMessage ) );
