@@ -1,0 +1,41 @@
+From 1a0996ec6387c9b59245b80a0095d08e9437eb64 Mon Sep 17 00:00:00 2001
+From: Doc <nachito94@msn.com>
+Date: Tue, 30 Nov 2021 11:11:34 -0300
+Subject: [PATCH] Add-config-for-reduce-gameprofile-username-for-logs
+
+
+diff --git a/src/main/java/net/minecraft/server/network/LoginListener.java b/src/main/java/net/minecraft/server/network/LoginListener.java
+index 85291b4fd..c6dcb2aa6 100644
+--- a/src/main/java/net/minecraft/server/network/LoginListener.java
++++ b/src/main/java/net/minecraft/server/network/LoginListener.java
+@@ -199,6 +199,11 @@ public class LoginListener implements PacketLoginInListener {
+     }
+ 
+     public String getUserName() {
++        // Spigot start - reduce info for gameprofile using config
++        if (org.spigotmc.SpigotConfig.reduceUserNameInGameProfileForLogin) {
++            return this.gameProfile != null ? "(" + this.gameProfile.getName() + "/" + this.gameProfile.getId() + ")" + " (" + this.connection.getRemoteAddress() + ")" : String.valueOf(this.connection.getRemoteAddress());
++        }
++        // Spigot end
+         return this.gameProfile != null ? this.gameProfile + " (" + this.connection.getRemoteAddress() + ")" : String.valueOf(this.connection.getRemoteAddress());
+     }
+ 
+diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
+index 59c6ed862..1db1d3444 100644
+--- a/src/main/java/org/spigotmc/SpigotConfig.java
++++ b/src/main/java/org/spigotmc/SpigotConfig.java
+@@ -394,6 +394,11 @@ public class SpigotConfig
+         logNamedDeaths = getBoolean("settings.log-named-deaths", true);
+     }
+ 
++    public static boolean reduceUserNameInGameProfileForLogin;
++    private static void reduceUserNameInGameProfileForLogin() {
++        reduceUserNameInGameProfileForLogin = getBoolean("settings.reduce-username-for-gameprofile-in-logs", false);
++    }
++
+     public static boolean disablePlayerDataSaving;
+     private static void disablePlayerDataSaving() {
+         disablePlayerDataSaving = getBoolean("players.disable-saving", false);
+-- 
+2.34.1.windows.1
+
