@@ -70,14 +70,14 @@ index fb9c4fc78..8c855cf9b 100644
 +    public double itemMerge;
 +    private void itemMerge()
 +    {
-+        itemMerge = getDouble("merge-radius.item", 2.5 );
++        itemMerge = getDouble("merge-radius.item", 0.5D );
 +        log( "Item Merge Radius: " + itemMerge );
 +    }
 +
 +    public double expMerge;
 +    private void expMerge()
 +    {
-+        expMerge = getDouble("merge-radius.exp", 3.0 );
++        expMerge = getDouble("merge-radius.exp", 0.0D );
 +        log( "Experience Merge Radius: " + expMerge );
 +    }
  }
