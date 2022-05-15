@@ -25,8 +25,7 @@ index 26ccf8d33..2e93c1e67 100644
          ItemStack itemstack1 = entityitem.getItem();
  
          if (Objects.equals(this.getOwner(), entityitem.getOwner()) && areMergable(itemstack, itemstack1)) {
--            if (itemstack1.getCount() < itemstack.getCount()) {
-+            if (true || itemstack1.getCount() < itemstack.getCount()) { // Spigot
+             if (itemstack1.getCount() < itemstack.getCount()) {
                  merge(this, itemstack, entityitem, itemstack1);
              } else {
                  merge(entityitem, itemstack1, this, itemstack);
