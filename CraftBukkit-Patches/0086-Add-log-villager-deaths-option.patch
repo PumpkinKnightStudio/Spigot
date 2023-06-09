@@ -1,4 +1,4 @@
-From 3a124e7a93a6530c8094972d271551f4fc6c1a48 Mon Sep 17 00:00:00 2001
+From 877dfc3a2928c20f1f7f99acad37ed412425d33d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 14 Dec 2019 10:26:52 +1100
 Subject: [PATCH] Add log-villager-deaths option
