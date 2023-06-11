@@ -1,4 +1,4 @@
-From feb7df98c989257d171e9572743369bac3b2de78 Mon Sep 17 00:00:00 2001
+From 666e092764d84b6b1e2c351b0267c67ea0d7924e Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -157,7 +157,7 @@ index 137ae32ab..b4d844780 100644
      public void handleInteract(PacketPlayInUseEntity packetplayinuseentity) {
          PlayerConnectionUtils.ensureRunningOnSameThread(packetplayinuseentity, this, this.player.serverLevel());
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index c08461b7f..db7878edc 100644
+index e478c20f9..8d86eb05b 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -596,7 +596,7 @@ public abstract class PlayerList {
@@ -170,10 +170,10 @@ index c08461b7f..db7878edc 100644
          if (getBans().isBanned(gameprofile) && !getBans().get(gameprofile).hasExpired()) {
              GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.bans.get(gameprofile);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index e747597b4..fd9653f4e 100644
+index 598dbfab9..de8710c43 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -744,7 +744,13 @@ public final class CraftServer implements Server {
+@@ -751,7 +751,13 @@ public final class CraftServer implements Server {
  
      @Override
      public long getConnectionThrottle() {

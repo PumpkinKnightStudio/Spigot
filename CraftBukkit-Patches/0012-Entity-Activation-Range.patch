@@ -1,4 +1,4 @@
-From 97f6abd93cca20f1c0c5bdf5474a07be76975209 Mon Sep 17 00:00:00 2001
+From e80ddc0cc7230ef0aa6bd0640a95a1424f9e5c37 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -35,7 +35,7 @@ index dc84b6954..52957c25e 100644
          entity.setOldPosAndRot();
          GameProfilerFiller gameprofilerfiller = this.getProfiler();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index a4d0c7e9c..84b17c7a1 100644
+index 9a8a317a6..4c7f98f27 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -310,6 +310,12 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
@@ -263,7 +263,7 @@ index aff7b6b43..d3328a695 100644
      public static final HashMap<String, CustomTimingsHandler> pluginTaskTimingMap = new HashMap<String, CustomTimingsHandler>();
 diff --git a/src/main/java/org/spigotmc/ActivationRange.java b/src/main/java/org/spigotmc/ActivationRange.java
 new file mode 100644
-index 000000000..adc48318e
+index 000000000..c5688dd14
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ActivationRange.java
 @@ -0,0 +1,262 @@
@@ -437,7 +437,7 @@ index 000000000..adc48318e
 +    public static boolean checkEntityImmunities(Entity entity)
 +    {
 +        // quick checks.
-+        if ( entity.wasTouchingWater || entity.remainingFireTicks > 0 )
++        if ( entity.wasTouchingWater || entity.getRemainingFireTicks() > 0 )
 +        {
 +            return true;
 +        }
