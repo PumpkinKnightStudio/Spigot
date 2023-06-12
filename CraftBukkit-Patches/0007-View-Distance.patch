@@ -1,4 +1,4 @@
-From 4d9855ebf0d8aee929b13c04dc4bde754f4cdb79 Mon Sep 17 00:00:00 2001
+From 12431c238ae3348f18c25a31034a7a9015d51659 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -44,10 +44,10 @@ index 7c673e0ea..5b8b8aede 100644
          entityplayer1.unsetRemoved();
          entityplayer1.connection.teleport(CraftLocation.toBukkit(entityplayer1.position(), worldserver1.getWorld(), entityplayer1.getYRot(), entityplayer1.getXRot()));
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 42b960f17..3c4c5792d 100644
+index 62edfb463..2fc4b138c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1937,6 +1937,18 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -1932,6 +1932,18 @@ public class CraftWorld extends CraftRegionAccessor implements World {
          }
      }
  
