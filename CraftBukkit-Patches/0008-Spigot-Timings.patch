@@ -1,4 +1,4 @@
-From e6a8075b1a152f0dfb7081f34f9d64a2054d5a9b Mon Sep 17 00:00:00 2001
+From 501ad86a19c42b4cae150b3e2f07693717a2711c Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -282,7 +282,7 @@ index 06d5cfc28..dc84b6954 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index ca9f69cbe..d863811db 100644
+index c1062f73c..5586c4dc0 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
 @@ -340,6 +340,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
@@ -301,7 +301,7 @@ index ca9f69cbe..d863811db 100644
  
      }
  
-@@ -2100,6 +2102,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
+@@ -2103,6 +2105,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
      }
  
      private void handleCommand(String s) {
@@ -309,7 +309,7 @@ index ca9f69cbe..d863811db 100644
          this.LOGGER.info(this.player.getScoreboardName() + " issued server command: " + s);
  
          CraftPlayer player = this.getCraftPlayer();
-@@ -2108,6 +2111,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
+@@ -2111,6 +2114,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
          this.cserver.getPluginManager().callEvent(event);
  
          if (event.isCancelled()) {
@@ -317,7 +317,7 @@ index ca9f69cbe..d863811db 100644
              return;
          }
  
-@@ -2119,6 +2123,8 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
+@@ -2122,6 +2126,8 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
              player.sendMessage(org.bukkit.ChatColor.RED + "An internal error occurred while attempting to perform this command");
              java.util.logging.Logger.getLogger(PlayerConnection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
              return;
@@ -591,10 +591,10 @@ index 570f62854..c66df1e7a 100644
          };
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index d50979f02..b0cfe7245 100644
+index 2fe42a4fc..0fa8fff3d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2347,6 +2347,11 @@ public final class CraftServer implements Server {
+@@ -2354,6 +2354,11 @@ public final class CraftServer implements Server {
      private final org.bukkit.Server.Spigot spigot = new org.bukkit.Server.Spigot()
      {
  
@@ -773,7 +773,7 @@ index 000000000..aff7b6b43
 +    }
 +}
 diff --git a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
-index cd43b4551..4f8a30657 100644
+index 1fb9b4582..e90ec26a0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
 +++ b/src/main/java/org/bukkit/craftbukkit/scheduler/CraftScheduler.java
 @@ -411,7 +411,9 @@ public class CraftScheduler implements BukkitScheduler {

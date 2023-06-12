@@ -1,4 +1,4 @@
-From 80517c61a32f2001f886c923a127488c093e94c3 Mon Sep 17 00:00:00 2001
+From df74c59a086d20ebf634026fe14ad686e04fb92c Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
@@ -20,7 +20,7 @@ index 16b3a6a56..e6313cb64 100644
              }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index 967d5ba30..82c1487db 100644
+index 03b576455..dfde2c619 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 @@ -20,6 +20,10 @@ import org.bukkit.craftbukkit.util.CraftChatMessage;
@@ -58,10 +58,10 @@ index 967d5ba30..82c1487db 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 2d10c1c02..853402b3d 100644
+index a584c1a03..a866f5308 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -78,6 +78,10 @@ import org.bukkit.inventory.meta.Repairable;
+@@ -77,6 +77,10 @@ import org.bukkit.inventory.meta.Repairable;
  import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
  import org.bukkit.persistence.PersistentDataContainer;
  
@@ -72,7 +72,7 @@ index 2d10c1c02..853402b3d 100644
  /**
   * Children must include the following:
   *
-@@ -332,18 +336,18 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -331,18 +335,18 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
              NBTTagCompound display = tag.getCompound(DISPLAY.NBT);
  
              if (display.contains(NAME.NBT)) {

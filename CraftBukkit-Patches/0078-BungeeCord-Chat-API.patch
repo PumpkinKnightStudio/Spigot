@@ -1,4 +1,4 @@
-From 4dbc39d13100a482496c19720643267a53eb7468 Mon Sep 17 00:00:00 2001
+From f1630a45fb381b0577b9af1329e8555093b69c8a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -37,10 +37,10 @@ index b5a12f0de..03a73f00f 100644
      }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 8efe5e151..35bac2e24 100644
+index 84ddb0d99..5454707d9 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -260,6 +260,8 @@ import org.yaml.snakeyaml.Yaml;
+@@ -259,6 +259,8 @@ import org.yaml.snakeyaml.Yaml;
  import org.yaml.snakeyaml.constructor.SafeConstructor;
  import org.yaml.snakeyaml.error.MarkedYAMLException;
  
@@ -49,7 +49,7 @@ index 8efe5e151..35bac2e24 100644
  public final class CraftServer implements Server {
      private final String serverName = "CraftBukkit";
      private final String serverVersion;
-@@ -2388,6 +2390,20 @@ public final class CraftServer implements Server {
+@@ -2395,6 +2397,20 @@ public final class CraftServer implements Server {
          public void restart() {
              org.spigotmc.RestartCommand.restart();
          }
@@ -105,7 +105,7 @@ index 74558e852..13008357b 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 7a7e77651..3c78bbb96 100644
+index 620f9f893..31bacd44e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -194,6 +194,8 @@ import org.bukkit.util.BoundingBox;
@@ -117,7 +117,7 @@ index 7a7e77651..3c78bbb96 100644
  public abstract class CraftEntity implements org.bukkit.entity.Entity {
      private static PermissibleBase perm;
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
-@@ -1155,6 +1157,26 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -1148,6 +1150,26 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
      // Spigot start
      private final org.bukkit.entity.Entity.Spigot spigot = new org.bukkit.entity.Entity.Spigot()
      {
@@ -145,10 +145,10 @@ index 7a7e77651..3c78bbb96 100644
  
      public org.bukkit.entity.Entity.Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 9c30e3da4..8c33dd622 100644
+index 9c11a1140..cb88e4714 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -165,6 +165,8 @@ import org.bukkit.profile.PlayerProfile;
+@@ -164,6 +164,8 @@ import org.bukkit.profile.PlayerProfile;
  import org.bukkit.scoreboard.Scoreboard;
  import org.jetbrains.annotations.NotNull;
  
@@ -157,7 +157,7 @@ index 9c30e3da4..8c33dd622 100644
  @DelegateDeserialization(CraftOfflinePlayer.class)
  public class CraftPlayer extends CraftHumanEntity implements Player {
      private long firstPlayed = 0;
-@@ -2160,6 +2162,48 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2102,6 +2104,48 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
              return java.util.Collections.unmodifiableSet( ret );
          }
@@ -207,7 +207,7 @@ index 9c30e3da4..8c33dd622 100644
  
      public Player.Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index 82c1487db..ea96eab4e 100644
+index dfde2c619..4a9465510 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 @@ -22,6 +22,9 @@ import org.bukkit.inventory.meta.BookMeta;
@@ -220,7 +220,7 @@ index 82c1487db..ea96eab4e 100644
  // Spigot end
  
  @DelegateDeserialization(SerializableMeta.class)
-@@ -431,6 +434,94 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+@@ -428,6 +431,94 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
      // Spigot start
      private BookMeta.Spigot spigot = new SpigotMeta();
      private class SpigotMeta extends BookMeta.Spigot {
@@ -249,7 +249,7 @@ index 82c1487db..ea96eab4e 100644
 +
 +        @Override
 +        public BaseComponent[] getPage(final int page) {
-+            Validate.isTrue(isValidPage(page), "Invalid page number");
++            Preconditions.checkArgument(isValidPage(page), "Invalid page number");
 +            return ComponentSerializer.parse(pageToJSON(pages.get(page - 1)));
 +        }
 +
