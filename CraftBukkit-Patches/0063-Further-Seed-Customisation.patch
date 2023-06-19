@@ -1,4 +1,4 @@
-From f16c672ea2c3c1112304968d0a47e932edb2cc15 Mon Sep 17 00:00:00 2001
+From 7da2d3e5f7d185d80056eca3123f60b8e27c5717 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -32,7 +32,7 @@ index 2a7dc359f..410d0d588 100644
              if (randomsource.nextInt(10) == 0 && flag && blockposition.getY() < 40) {
                  return checkMobSpawnRules(entitytypes, generatoraccess, enummobspawn, blockposition, randomsource);
 diff --git a/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java b/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java
-index 0acb3c204..02ea712e7 100644
+index ca310d23a..ca53783c4 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java
 @@ -102,8 +102,8 @@ public abstract class ChunkGenerator {
@@ -170,10 +170,10 @@ index 6d6b3abd1..926848b82 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index a66c5162d..58a611551 100644
+index 404255bd8..7d898b0b6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-@@ -215,7 +215,7 @@ public class CraftChunk implements Chunk {
+@@ -216,7 +216,7 @@ public class CraftChunk implements Chunk {
      @Override
      public boolean isSlimeChunk() {
          // 987234911L is deterimined in EntitySlime when seeing if a slime can spawn in a chunk

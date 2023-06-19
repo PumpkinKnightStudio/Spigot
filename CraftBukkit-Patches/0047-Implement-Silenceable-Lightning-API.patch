@@ -1,4 +1,4 @@
-From 4f820bcb71c3dc11f8cc39c372544a265d30d096 Mon Sep 17 00:00:00 2001
+From 9f3270db330bf21107c427ae62561d8bbc84be8d Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sun, 23 Feb 2014 16:16:59 -0400
 Subject: [PATCH] Implement Silenceable Lightning API
@@ -26,10 +26,10 @@ index eb3832011..8d3a182b2 100644
                  this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEffects.LIGHTNING_BOLT_THUNDER, SoundCategory.WEATHER, 10000.0F, 0.8F + this.random.nextFloat() * 0.2F, false);
                  this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEffects.LIGHTNING_BOLT_IMPACT, SoundCategory.WEATHER, 2.0F, 0.5F + this.random.nextFloat() * 0.2F, false);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 2fc4b138c..5d19ee113 100644
+index 71030b17d..4491f31d3 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1947,6 +1947,27 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -1942,6 +1942,27 @@ public class CraftWorld extends CraftRegionAccessor implements World {
      // Spigot start
      private final org.bukkit.World.Spigot spigot = new org.bukkit.World.Spigot()
      {
@@ -58,10 +58,10 @@ index 2fc4b138c..5d19ee113 100644
  
      public org.bukkit.World.Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
-index e63833dcd..8819f7684 100644
+index 75d1cc7b1..d3f5d4acc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
-@@ -33,6 +33,11 @@ public class CraftLightningStrike extends CraftEntity implements LightningStrike
+@@ -27,6 +27,11 @@ public class CraftLightningStrike extends CraftEntity implements LightningStrike
      // Spigot start
      private final LightningStrike.Spigot spigot = new LightningStrike.Spigot() {
  

@@ -1,4 +1,4 @@
-From 704099493e403a10deac15f9db10ebbfff922c9c Mon Sep 17 00:00:00 2001
+From 7c505ae8e7a486464ebca46977603b7272c07fca Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -282,7 +282,7 @@ index 06d5cfc28..dc84b6954 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index c1062f73c..5586c4dc0 100644
+index 62646cb02..519f62a88 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
 @@ -340,6 +340,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
@@ -591,10 +591,10 @@ index 570f62854..c66df1e7a 100644
          };
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 223f399cd..698570c89 100644
+index 09b866104..b4e9489d0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2351,6 +2351,11 @@ public final class CraftServer implements Server {
+@@ -2366,6 +2366,11 @@ public final class CraftServer implements Server {
      private final org.bukkit.Server.Spigot spigot = new org.bukkit.Server.Spigot()
      {
  

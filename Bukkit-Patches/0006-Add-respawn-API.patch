@@ -1,14 +1,14 @@
-From 3367c4d3ccc1a32ad7103e7c06ede7961227572e Mon Sep 17 00:00:00 2001
+From 9791351c0414b040d3e68b8c70cb94a0e9efa42e Mon Sep 17 00:00:00 2001
 From: ninja- <xninja@openmailbox.org>
 Date: Tue, 8 Oct 2013 14:35:58 +0200
 Subject: [PATCH] Add respawn API.
 
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index c7751be8..94865c2a 100644
+index b015143d..0d2d0685 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1812,6 +1812,13 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1800,6 +1800,13 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
          public InetSocketAddress getRawAddress() {
              throw new UnsupportedOperationException("Not supported yet.");
          }
