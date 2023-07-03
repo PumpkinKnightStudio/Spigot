@@ -1,14 +1,14 @@
-From d7dde62dc33f0a50bb4c56a3eeef628a859003e3 Mon Sep 17 00:00:00 2001
+From a0e7c0b7683f3090e1765fa83035e603b2b20314 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:20:49 +1000
 Subject: [PATCH] BungeeCord Support
 
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index d5d28a5b..c7751be8 100644
+index d0dd094b..d221558f 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1802,6 +1802,16 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1859,6 +1859,16 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
      // Spigot start
      public class Spigot extends Entity.Spigot {
  
@@ -88,5 +88,5 @@ index 498f0be8..084ca8cf 100644
       * Gets the current result of the login, as an enum
       *
 -- 
-2.40.1
+2.41.0
 
