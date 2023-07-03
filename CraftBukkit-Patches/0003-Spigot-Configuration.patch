@@ -1,4 +1,4 @@
-From 9046bd418efb32243dc011618a92965573dc0061 Mon Sep 17 00:00:00 2001
+From caa994e3df7e81cc49ee32c6e9c084199d941d49 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -51,10 +51,10 @@ index 63b48cf02..8610cb15f 100644
          this.world = new CraftWorld((WorldServer) this, gen, biomeProvider, env);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index c1fa8876c..5640ce302 100644
+index 14c524c2c..5f09d40be 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -891,6 +891,7 @@ public final class CraftServer implements Server {
+@@ -893,6 +893,7 @@ public final class CraftServer implements Server {
              logger.log(Level.WARNING, "Failed to load banned-players.json, " + ex.getMessage());
          }
  
@@ -62,7 +62,7 @@ index c1fa8876c..5640ce302 100644
          for (WorldServer world : console.getAllLevels()) {
              world.serverLevelData.setDifficulty(config.difficulty);
              world.setSpawnSettings(config.spawnMonsters, config.spawnAnimals);
-@@ -905,11 +906,13 @@ public final class CraftServer implements Server {
+@@ -907,11 +908,13 @@ public final class CraftServer implements Server {
                      }
                  }
              }
@@ -77,7 +77,7 @@ index c1fa8876c..5640ce302 100644
          ignoreVanillaPermissions = commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 67dfba2ef..e96c36ce4 100644
+index 9fce8518b..8e7f6cf99 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -133,6 +133,14 @@ public class Main {
@@ -380,5 +380,5 @@ index 000000000..1cce14866
 +    }
 +}
 -- 
-2.40.1
+2.34.1
 
