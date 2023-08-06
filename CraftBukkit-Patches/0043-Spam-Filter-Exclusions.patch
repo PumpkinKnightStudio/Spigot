@@ -1,14 +1,14 @@
-From cca8c70350f43f534e8397324692e7ef93e172ed Mon Sep 17 00:00:00 2001
+From 525919ed53ef5469747cd2bc99bbfca63eabe7b8 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 8 Feb 2014 08:13:40 +0000
 Subject: [PATCH] Spam Filter Exclusions
 
 
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index f8e36797e..636ca570a 100644
+index 6e203c9535..f064a44ea3 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-@@ -1900,7 +1900,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
+@@ -1901,7 +1901,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
                      // CraftBukkit end
  
                      this.performChatCommand(serverboundchatcommandpacket, (LastSeenMessages) optional.get());
@@ -17,7 +17,7 @@ index f8e36797e..636ca570a 100644
                  });
              }
  
-@@ -2167,11 +2167,22 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
+@@ -2168,11 +2168,22 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
          }
          // this.server.getPlayerList().broadcastChatMessage(playerchatmessage, this.player, ChatMessageType.bind(ChatMessageType.CHAT, (Entity) this.player));
          // CraftBukkit end
@@ -43,7 +43,7 @@ index f8e36797e..636ca570a 100644
          if (this.chatSpamTickCount.addAndGet(20) > 200 && !this.server.getPlayerList().isOp(this.player.getGameProfile())) {
              // CraftBukkit end
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index cf7c624bc..4f9b55c71 100644
+index cf7c624bc5..4f9b55c713 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -6,6 +6,7 @@ import java.io.IOException;

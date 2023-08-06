@@ -1,11 +1,11 @@
-From ef15fa56842588300ea30b78cba8fcf9125e3eb0 Mon Sep 17 00:00:00 2001
+From a4935b33f85879b4b43d41a8ad42b67f95415d81 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 22 Jul 2015 19:04:37 +1000
 Subject: [PATCH] Clear Packet Queue on Disconnect
 
 
 diff --git a/src/main/java/net/minecraft/network/NetworkManager.java b/src/main/java/net/minecraft/network/NetworkManager.java
-index af05a27ee..926042561 100644
+index af05a27ee8..9260425613 100644
 --- a/src/main/java/net/minecraft/network/NetworkManager.java
 +++ b/src/main/java/net/minecraft/network/NetworkManager.java
 @@ -462,6 +462,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
@@ -17,10 +17,10 @@ index af05a27ee..926042561 100644
  
          }
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index 8ae6305a6..9cfa07b63 100644
+index 565ed0525a..3db4ea997b 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-@@ -1819,7 +1819,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
+@@ -1820,7 +1820,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
  
      public void send(Packet<?> packet, @Nullable PacketSendListener packetsendlistener) {
          // CraftBukkit start
