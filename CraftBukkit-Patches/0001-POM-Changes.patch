@@ -1,4 +1,4 @@
-From 1ad015bd33a41d2eb9e07cf7c1d35b762526d1f7 Mon Sep 17 00:00:00 2001
+From d35e96f6ffdcbc45072c961a27dce07abfc4a0cc Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 2 Jul 2013 13:07:39 +1000
 Subject: [PATCH] POM Changes
@@ -6,7 +6,7 @@ Subject: [PATCH] POM Changes
 Basic changes to the build system which mark the artifact as Spigot, and the necessary code changes to ensure proper functionality. Also disables the auto updater provided by CraftBukkit as it is useless to us.
 
 diff --git a/checkstyle.xml b/checkstyle.xml
-index 63914723e..01319e4f7 100644
+index 63914723e1..01319e4f75 100644
 --- a/checkstyle.xml
 +++ b/checkstyle.xml
 @@ -25,6 +25,9 @@
@@ -34,7 +34,7 @@ index 63914723e..01319e4f7 100644
          <!-- See http://checkstyle.sourceforge.net/config_imports.html -->
          <module name="AvoidStarImport">
 diff --git a/pom.xml b/pom.xml
-index 809a1b66a..57d28be37 100644
+index 92ac3af705..3a914c909c 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,13 +1,20 @@
@@ -61,7 +61,7 @@ index 809a1b66a..57d28be37 100644
      <properties>
          <skipTests>true</skipTests>
          <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-@@ -28,8 +35,8 @@
+@@ -29,8 +36,8 @@
  
      <dependencies>
          <dependency>
@@ -72,10 +72,10 @@ index 809a1b66a..57d28be37 100644
              <version>${project.version}</version>
              <scope>compile</scope>
          </dependency>
-@@ -284,11 +291,26 @@
+@@ -285,11 +292,26 @@
                  <groupId>net.md-5</groupId>
                  <artifactId>scriptus</artifactId>
-                 <version>0.4.1</version>
+                 <version>0.5.0</version>
 -                <configuration>
 -                    <format>${bt.name}-Bukkit-%s</format>
 -                </configuration>
@@ -102,7 +102,7 @@ index 809a1b66a..57d28be37 100644
                          <phase>initialize</phase>
                          <goals>
                              <goal>describe</goal>
-@@ -321,7 +343,7 @@
+@@ -322,7 +344,7 @@
                          <manifestEntries>
                              <Main-Class>org.bukkit.craftbukkit.Main</Main-Class>
                              <Implementation-Title>CraftBukkit</Implementation-Title>
@@ -112,7 +112,7 @@ index 809a1b66a..57d28be37 100644
                              <Specification-Title>Bukkit</Specification-Title>
                              <Specification-Version>${api.version}</Specification-Version>
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
-index f905d17b6..93046379d 100644
+index f905d17b6b..93046379d0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 @@ -11,7 +11,7 @@ public final class Versioning {
@@ -125,5 +125,5 @@ index f905d17b6..93046379d 100644
  
          if (stream != null) {
 -- 
-2.40.1
+2.41.0
 

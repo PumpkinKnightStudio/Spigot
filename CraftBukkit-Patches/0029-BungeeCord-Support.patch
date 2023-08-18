@@ -1,4 +1,4 @@
-From 5bd5198d71dc44cb6799e262c1f9c1f6fb4c70bd Mon Sep 17 00:00:00 2001
+From dd18c9c3d836debef04b1e04813445691f707534 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -6,7 +6,7 @@ Subject: [PATCH] BungeeCord Support
 Provides support for IP forwarding via BungeeCord.
 
 diff --git a/src/main/java/net/minecraft/network/NetworkManager.java b/src/main/java/net/minecraft/network/NetworkManager.java
-index dd0f05b5e..dac406ba7 100644
+index dd0f05b5e0..dac406ba70 100644
 --- a/src/main/java/net/minecraft/network/NetworkManager.java
 +++ b/src/main/java/net/minecraft/network/NetworkManager.java
 @@ -76,6 +76,10 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
@@ -21,7 +21,7 @@ index dd0f05b5e..dac406ba7 100644
      private IChatBaseComponent disconnectedReason;
      private boolean encrypted;
 diff --git a/src/main/java/net/minecraft/network/protocol/handshake/PacketHandshakingInSetProtocol.java b/src/main/java/net/minecraft/network/protocol/handshake/PacketHandshakingInSetProtocol.java
-index e992a972d..786314a9b 100644
+index e992a972d5..786314a9b7 100644
 --- a/src/main/java/net/minecraft/network/protocol/handshake/PacketHandshakingInSetProtocol.java
 +++ b/src/main/java/net/minecraft/network/protocol/handshake/PacketHandshakingInSetProtocol.java
 @@ -23,7 +23,7 @@ public class PacketHandshakingInSetProtocol implements Packet<PacketHandshakingI
@@ -34,7 +34,7 @@ index e992a972d..786314a9b 100644
          this.intention = EnumProtocol.getById(packetdataserializer.readVarInt());
      }
 diff --git a/src/main/java/net/minecraft/server/network/HandshakeListener.java b/src/main/java/net/minecraft/server/network/HandshakeListener.java
-index 587e00148..7dc98346f 100644
+index 587e00148a..7dc98346fb 100644
 --- a/src/main/java/net/minecraft/server/network/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/network/HandshakeListener.java
 @@ -18,6 +18,11 @@ import java.util.HashMap;
@@ -82,7 +82,7 @@ index 587e00148..7dc98346f 100644
                  break;
              case STATUS:
 diff --git a/src/main/java/net/minecraft/server/network/LoginListener.java b/src/main/java/net/minecraft/server/network/LoginListener.java
-index 40f03ce23..ac36c73e1 100644
+index 40f03ce23e..ac36c73e11 100644
 --- a/src/main/java/net/minecraft/server/network/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/network/LoginListener.java
 @@ -115,7 +115,25 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
@@ -113,10 +113,10 @@ index 40f03ce23..ac36c73e1 100644
  
      public void handleAcceptedLogin() {
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index b22850f80..34fedf8c4 100644
+index 28cdabe30c..7b3f89c42f 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-@@ -2057,10 +2057,10 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
+@@ -2060,7 +2060,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
  
                          String message = String.format(queueEvent.getFormat(), queueEvent.getPlayer().getDisplayName(), queueEvent.getMessage());
                          if (((LazyPlayerSet) queueEvent.getRecipients()).isLazy()) {
@@ -124,22 +124,14 @@ index b22850f80..34fedf8c4 100644
 +                            if (!org.spigotmc.SpigotConfig.bungee && originalFormat.equals(queueEvent.getFormat()) && originalMessage.equals(queueEvent.getMessage()) && queueEvent.getPlayer().getName().equalsIgnoreCase(queueEvent.getPlayer().getDisplayName())) { // Spigot
                                  PlayerConnection.this.server.getPlayerList().broadcastChatMessage(original, PlayerConnection.this.player, ChatMessageType.bind(ChatMessageType.CHAT, (Entity) PlayerConnection.this.player));
                                  return null;
--                            } else if (CraftChatMessage.fromComponent(original.decoratedContent()).equals(message)) {
-+                            } else if (!org.spigotmc.SpigotConfig.bungee && CraftChatMessage.fromComponent(original.decoratedContent()).equals(message)) { // Spigot
-                                 PlayerConnection.this.server.getPlayerList().broadcastChatMessage(original, PlayerConnection.this.player, ChatMessageType.bind(ChatMessageType.RAW, (Entity) PlayerConnection.this.player));
-                                 return null;
                              }
-@@ -2096,10 +2096,10 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
+@@ -2096,7 +2096,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
  
                  s = String.format(event.getFormat(), event.getPlayer().getDisplayName(), event.getMessage());
                  if (((LazyPlayerSet) event.getRecipients()).isLazy()) {
 -                    if (originalFormat.equals(event.getFormat()) && originalMessage.equals(event.getMessage()) && event.getPlayer().getName().equalsIgnoreCase(event.getPlayer().getDisplayName())) {
 +                    if (!org.spigotmc.SpigotConfig.bungee && originalFormat.equals(event.getFormat()) && originalMessage.equals(event.getMessage()) && event.getPlayer().getName().equalsIgnoreCase(event.getPlayer().getDisplayName())) { // Spigot
                          PlayerConnection.this.server.getPlayerList().broadcastChatMessage(original, PlayerConnection.this.player, ChatMessageType.bind(ChatMessageType.CHAT, (Entity) PlayerConnection.this.player));
-                         return;
--                    } else if (CraftChatMessage.fromComponent(original.decoratedContent()).equals(s)) {
-+                    } else if (!org.spigotmc.SpigotConfig.bungee && CraftChatMessage.fromComponent(original.decoratedContent()).equals(s)) { // Spigot
-                         PlayerConnection.this.server.getPlayerList().broadcastChatMessage(original, PlayerConnection.this.player, ChatMessageType.bind(ChatMessageType.RAW, (Entity) PlayerConnection.this.player));
                          return;
                      }
 @@ -2353,6 +2353,13 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
@@ -157,7 +149,7 @@ index b22850f80..34fedf8c4 100644
      public void handleInteract(PacketPlayInUseEntity packetplayinuseentity) {
          PlayerConnectionUtils.ensureRunningOnSameThread(packetplayinuseentity, this, this.player.serverLevel());
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index e478c20f9..8d86eb05b 100644
+index e478c20f92..8d86eb05b8 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -596,7 +596,7 @@ public abstract class PlayerList {
@@ -170,10 +162,10 @@ index e478c20f9..8d86eb05b 100644
          if (getBans().isBanned(gameprofile) && !getBans().get(gameprofile).hasExpired()) {
              GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.bans.get(gameprofile);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 2cf782c75..1d7986842 100644
+index 7d73a49ef1..ded8263e83 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -763,7 +763,13 @@ public final class CraftServer implements Server {
+@@ -767,7 +767,13 @@ public final class CraftServer implements Server {
  
      @Override
      public long getConnectionThrottle() {
@@ -189,10 +181,10 @@ index 2cf782c75..1d7986842 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 091ef478d..4a63b8fe7 100644
+index cc8707007d..5b5f210121 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -2097,6 +2097,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2166,6 +2166,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      private final Player.Spigot spigot = new Player.Spigot()
      {
  
@@ -206,7 +198,7 @@ index 091ef478d..4a63b8fe7 100644
          public void respawn()
          {
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 130016282..3bb51f452 100644
+index 130016282a..3bb51f4528 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -214,4 +214,14 @@ public class SpigotConfig
@@ -225,5 +217,5 @@ index 130016282..3bb51f452 100644
 +    }
  }
 -- 
-2.40.1
+2.41.0
 

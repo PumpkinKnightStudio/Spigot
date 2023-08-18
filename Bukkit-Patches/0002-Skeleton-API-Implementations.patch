@@ -1,14 +1,14 @@
-From c6225a474447e228c4e4bc072cb6049f13161c23 Mon Sep 17 00:00:00 2001
+From 6cc427dac678f9130e3748120781f5278b78d3e9 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 3ad77d2c..e0602329 100644
+index 8b637e012..94ab2c0d0 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
-@@ -1987,4 +1987,9 @@ public final class Bukkit {
+@@ -2011,4 +2011,9 @@ public final class Bukkit {
      public static UnsafeValues getUnsafe() {
          return server.getUnsafe();
      }
@@ -19,10 +19,10 @@ index 3ad77d2c..e0602329 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 24aee14c..44b8cfe2 100644
+index 11b5760c2..1c1d232c0 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1693,4 +1693,13 @@ public interface Server extends PluginMessageRecipient {
+@@ -1713,4 +1713,13 @@ public interface Server extends PluginMessageRecipient {
      @Deprecated
      @NotNull
      UnsafeValues getUnsafe();
@@ -37,7 +37,7 @@ index 24aee14c..44b8cfe2 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 50e74378..e0eb74c4 100644
+index 50e74378b..e0eb74c44 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
 @@ -2618,6 +2618,15 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
@@ -57,7 +57,7 @@ index 50e74378..e0eb74c4 100644
       * Finds the nearest raid close to the given location.
       *
 diff --git a/src/main/java/org/bukkit/command/CommandSender.java b/src/main/java/org/bukkit/command/CommandSender.java
-index a7a2587b..4b6b9540 100644
+index a7a2587b4..4b6b95404 100644
 --- a/src/main/java/org/bukkit/command/CommandSender.java
 +++ b/src/main/java/org/bukkit/command/CommandSender.java
 @@ -53,4 +53,13 @@ public interface CommandSender extends Permissible {
@@ -75,7 +75,7 @@ index a7a2587b..4b6b9540 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 1d6adae8..2417f0d5 100644
+index 1d6adae8d..2417f0d50 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
 @@ -700,4 +700,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
@@ -94,7 +94,7 @@ index 1d6adae8..2417f0d5 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/LightningStrike.java b/src/main/java/org/bukkit/entity/LightningStrike.java
-index 76aad05f..4d308c5a 100644
+index 76aad05f4..4d308c5a6 100644
 --- a/src/main/java/org/bukkit/entity/LightningStrike.java
 +++ b/src/main/java/org/bukkit/entity/LightningStrike.java
 @@ -1,5 +1,7 @@
@@ -120,10 +120,10 @@ index 76aad05f..4d308c5a 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 5a5ac318..1cc6da4e 100644
+index 11a16d987..e4da91eff 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1786,4 +1786,14 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1909,4 +1909,14 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       * @return whether the player allows server listings
       */
      public boolean isAllowingServerListings();
@@ -139,7 +139,7 @@ index 5a5ac318..1cc6da4e 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/inventory/meta/BookMeta.java b/src/main/java/org/bukkit/inventory/meta/BookMeta.java
-index 12a1e0fd..111228fd 100644
+index 12a1e0fd2..111228fd1 100644
 --- a/src/main/java/org/bukkit/inventory/meta/BookMeta.java
 +++ b/src/main/java/org/bukkit/inventory/meta/BookMeta.java
 @@ -185,4 +185,13 @@ public interface BookMeta extends ItemMeta {
@@ -157,5 +157,5 @@ index 12a1e0fd..111228fd 100644
 +    // Spigot end
  }
 -- 
-2.40.1
+2.41.0
 
