@@ -1,48 +1,28 @@
-From 36640fab9bfbaf938c9f7cdf2e1663a27b2ba22c Mon Sep 17 00:00:00 2001
+From 6ce2cf6a4c18a88152a28b0d72061699413de0ab Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 18 Dec 2013 13:32:10 +1100
 Subject: [PATCH] Fire PreLogin Events in Offline Mode
 
 
 diff --git a/src/main/java/net/minecraft/server/network/LoginListener.java b/src/main/java/net/minecraft/server/network/LoginListener.java
-index c406943f1..40f03ce23 100644
+index 678a4f0529..6f1d3a94d0 100644
 --- a/src/main/java/net/minecraft/server/network/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/network/LoginListener.java
-@@ -112,9 +112,16 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
- 
-     }
- 
-+    // Spigot start
-+    public void initUUID()
-+    {
-+        this.gameProfile = this.createFakeProfile(this.gameProfile);
-+    }
-+
-     public void handleAcceptedLogin() {
--        if (!this.gameProfile.isComplete()) {
--            this.gameProfile = this.createFakeProfile(this.gameProfile);
-+        if (!this.server.usesAuthentication()) {
-+            // this.gameProfile = this.createFakeProfile(this.gameProfile); // Spigot - Moved to initUUID
-+            // Spigot end
-         }
- 
-         // CraftBukkit start - fire PlayerLoginEvent
-@@ -182,7 +189,21 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
+@@ -140,7 +140,20 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
                  this.state = LoginListener.EnumProtocolState.KEY;
                  this.connection.send(new PacketLoginOutEncryptionBegin("", this.server.getKeyPair().getPublic().getEncoded(), this.challenge));
              } else {
--                this.state = LoginListener.EnumProtocolState.READY_TO_ACCEPT;
+-                this.startClientVerification(createOfflineProfile(this.requestedUsername));
 +                // Spigot start
 +                new Thread("User Authenticator #" + LoginListener.UNIQUE_THREAD_ID.incrementAndGet()) {
 +
 +                    @Override
 +                    public void run() {
 +                        try {
-+                            initUUID();
-+                            new LoginHandler().fireEvents();
++                            new LoginHandler().fireEvents(createOfflineProfile(LoginListener.this.requestedUsername));
 +                        } catch (Exception ex) {
 +                            disconnect("Failed to verify username!");
-+                            server.server.getLogger().log(java.util.logging.Level.WARNING, "Exception verifying " + gameProfile.getName(), ex);
++                            server.server.getLogger().log(java.util.logging.Level.WARNING, "Exception verifying " + LoginListener.this.requestedUsername, ex);
 +                        }
 +                    }
 +                }.start();
@@ -50,13 +30,13 @@ index c406943f1..40f03ce23 100644
              }
  
          }
-@@ -230,40 +251,7 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
+@@ -227,40 +240,7 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
                              return;
                          }
  
--                        String playerName = gameProfile.getName();
+-                        String playerName = gameprofile.getName();
 -                        java.net.InetAddress address = ((java.net.InetSocketAddress) connection.getRemoteAddress()).getAddress();
--                        java.util.UUID uniqueId = gameProfile.getId();
+-                        java.util.UUID uniqueId = gameprofile.getId();
 -                        final org.bukkit.craftbukkit.CraftServer server = LoginListener.this.server.server;
 -
 -                        AsyncPlayerPreLoginEvent asyncEvent = new AsyncPlayerPreLoginEvent(playerName, address, uniqueId);
@@ -86,24 +66,23 @@ index c406943f1..40f03ce23 100644
 -                            }
 -                        }
 -                        // CraftBukkit end
--                        LoginListener.LOGGER.info("UUID of player {} is {}", LoginListener.this.gameProfile.getName(), LoginListener.this.gameProfile.getId());
--                        LoginListener.this.state = LoginListener.EnumProtocolState.READY_TO_ACCEPT;
-+                        new LoginHandler().fireEvents();
+-                        LoginListener.LOGGER.info("UUID of player {} is {}", gameprofile.getName(), gameprofile.getId());
+-                        LoginListener.this.startClientVerification(gameprofile);
++                        new LoginHandler().fireEvents(gameprofile);
                      } else if (LoginListener.this.server.isSingleplayer()) {
                          LoginListener.LOGGER.warn("Failed to verify username but will let them in anyway!");
-                         LoginListener.this.gameProfile = gameprofile;
-@@ -302,7 +290,48 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
+                         LoginListener.this.startClientVerification(LoginListener.createOfflineProfile(s1));
+@@ -297,6 +277,48 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
          thread.start();
      }
  
--    @Override
 +    // Spigot start
 +    public class LoginHandler {
 +
-+        public void fireEvents() throws Exception {
-+                        String playerName = gameProfile.getName();
++        public void fireEvents(GameProfile gameprofile) throws Exception {
++                        String playerName = gameprofile.getName();
 +                        java.net.InetAddress address = ((java.net.InetSocketAddress) connection.getRemoteAddress()).getAddress();
-+                        java.util.UUID uniqueId = gameProfile.getId();
++                        java.util.UUID uniqueId = gameprofile.getId();
 +                        final org.bukkit.craftbukkit.CraftServer server = LoginListener.this.server.server;
 +
 +                        AsyncPlayerPreLoginEvent asyncEvent = new AsyncPlayerPreLoginEvent(playerName, address, uniqueId);
@@ -133,15 +112,15 @@ index c406943f1..40f03ce23 100644
 +                            }
 +                        }
 +                        // CraftBukkit end
-+                        LoginListener.LOGGER.info("UUID of player {} is {}", LoginListener.this.gameProfile.getName(), LoginListener.this.gameProfile.getId());
-+                        LoginListener.this.state = LoginListener.EnumProtocolState.READY_TO_ACCEPT;
++                        LoginListener.LOGGER.info("UUID of player {} is {}", gameprofile.getName(), gameprofile.getId());
++                        LoginListener.this.startClientVerification(gameprofile);
 +        }
 +    }
 +    // Spigot end
 +
-     public void handleCustomQueryPacket(PacketLoginInCustomPayload packetloginincustompayload) {
-         this.disconnect(IChatBaseComponent.translatable("multiplayer.disconnect.unexpected_query_response"));
-     }
+     @Override
+     public void handleCustomQueryPacket(ServerboundCustomQueryAnswerPacket serverboundcustomqueryanswerpacket) {
+         this.disconnect(LoginListener.DISCONNECT_UNEXPECTED_QUERY);
 -- 
-2.40.1
+2.42.0
 

@@ -1,4 +1,4 @@
-From fe78a4ab7f7784e16b6d248408740cb78d54c7a9 Mon Sep 17 00:00:00 2001
+From 7c101d97ab383f67d4d1c5ff44d8849ac50246ec Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 19 May 2013 18:29:48 +1000
 Subject: [PATCH] Remove -o Option
@@ -6,7 +6,7 @@ Subject: [PATCH] Remove -o Option
 Serves no purpose other than to confuse users.
 
 diff --git a/src/main/java/net/minecraft/server/dedicated/PropertyManager.java b/src/main/java/net/minecraft/server/dedicated/PropertyManager.java
-index 870e22a52..419d09c4a 100644
+index 6bd96dd6d4..a9840e7479 100644
 --- a/src/main/java/net/minecraft/server/dedicated/PropertyManager.java
 +++ b/src/main/java/net/minecraft/server/dedicated/PropertyManager.java
 @@ -39,7 +39,7 @@ public abstract class PropertyManager<T extends PropertyManager<T>> {
@@ -19,5 +19,5 @@ index 870e22a52..419d09c4a 100644
          }
  
 -- 
-2.40.1
+2.42.0
 

@@ -1,4 +1,4 @@
-From 88e82475879f98a0a5147b46aca742fe555936cd Mon Sep 17 00:00:00 2001
+From 5aca1358237fa555bda8b7ff2eb2241a4a669ae2 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -157,5 +157,5 @@ index d650da50..f740bebe 100644
 +    // Spigot end
  }
 -- 
-2.41.0
+2.42.0
 

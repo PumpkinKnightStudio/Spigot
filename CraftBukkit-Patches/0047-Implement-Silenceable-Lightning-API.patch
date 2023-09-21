@@ -1,11 +1,11 @@
-From fc3ea4e9d6c48bd4010639f4d892e72ea60674e3 Mon Sep 17 00:00:00 2001
+From 85f130a5810f0e316013967a8208d85dce9216d3 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sun, 23 Feb 2014 16:16:59 -0400
 Subject: [PATCH] Implement Silenceable Lightning API
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/EntityLightning.java b/src/main/java/net/minecraft/world/entity/EntityLightning.java
-index eb3832011d..8d3a182b26 100644
+index e3ce1c8b2f..a56130c834 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityLightning.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityLightning.java
 @@ -46,6 +46,7 @@ public class EntityLightning extends Entity {
@@ -74,5 +74,5 @@ index 75d1cc7b1f..d3f5d4acc2 100644
  
      @Override
 -- 
-2.41.0
+2.42.0
 

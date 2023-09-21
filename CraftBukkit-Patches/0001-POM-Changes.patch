@@ -1,4 +1,4 @@
-From b0c6bc60707504e5dbf19151d9d3d16a24cc7f1d Mon Sep 17 00:00:00 2001
+From 182a25f6fb5dc98ba668a6bc5e1edb1a8db14564 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 2 Jul 2013 13:07:39 +1000
 Subject: [PATCH] POM Changes
@@ -6,7 +6,7 @@ Subject: [PATCH] POM Changes
 Basic changes to the build system which mark the artifact as Spigot, and the necessary code changes to ensure proper functionality. Also disables the auto updater provided by CraftBukkit as it is useless to us.
 
 diff --git a/checkstyle.xml b/checkstyle.xml
-index 63914723e..01319e4f7 100644
+index 63914723e1..01319e4f75 100644
 --- a/checkstyle.xml
 +++ b/checkstyle.xml
 @@ -25,6 +25,9 @@
@@ -34,7 +34,7 @@ index 63914723e..01319e4f7 100644
          <!-- See http://checkstyle.sourceforge.net/config_imports.html -->
          <module name="AvoidStarImport">
 diff --git a/pom.xml b/pom.xml
-index e0818920e..241fad1f1 100644
+index 24dea13783..5e98dccdfb 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,13 +1,20 @@
@@ -46,7 +46,7 @@ index e0818920e..241fad1f1 100644
 +    <groupId>org.spigotmc</groupId>
 +    <artifactId>spigot</artifactId>
      <packaging>jar</packaging>
-     <version>1.20.1-R0.1-SNAPSHOT</version>
+     <version>1.20.2-R0.1-SNAPSHOT</version>
 -    <name>CraftBukkit</name>
 +    <name>Spigot</name>
      <url>https://www.spigotmc.org/</url>
@@ -112,7 +112,7 @@ index e0818920e..241fad1f1 100644
                              <Specification-Title>Bukkit</Specification-Title>
                              <Specification-Version>${api.version}</Specification-Version>
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
-index f905d17b6..93046379d 100644
+index f905d17b6b..93046379d0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 @@ -11,7 +11,7 @@ public final class Versioning {
@@ -125,5 +125,5 @@ index f905d17b6..93046379d 100644
  
          if (stream != null) {
 -- 
-2.41.0
+2.42.0
 

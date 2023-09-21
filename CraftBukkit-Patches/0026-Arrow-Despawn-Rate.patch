@@ -1,11 +1,11 @@
-From db7cc523c30cdfd09e63e7df5c0931b8a7dfc062 Mon Sep 17 00:00:00 2001
+From fcae71d1e312cfcd4e02da1454e1909ed8785ae8 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Mon, 14 Oct 2013 19:20:10 +1100
 Subject: [PATCH] Arrow Despawn Rate
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java b/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java
-index 0a1d35692..7f551fa46 100644
+index fc775f5da6..51b5749c93 100644
 --- a/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java
 +++ b/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java
 @@ -314,7 +314,7 @@ public abstract class EntityArrow extends IProjectile {
@@ -18,7 +18,7 @@ index 0a1d35692..7f551fa46 100644
          }
  
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index cec948a05..4894096ae 100644
+index cec948a055..4894096ae1 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -246,4 +246,13 @@ public class SpigotWorldConfig
@@ -36,5 +36,5 @@ index cec948a05..4894096ae 100644
 +    }
  }
 -- 
-2.40.1
+2.42.0
 

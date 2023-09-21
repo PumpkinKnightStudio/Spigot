@@ -1,14 +1,14 @@
-From a83c7126bed9fb73a078ef47fa26cdb5bac17fc5 Mon Sep 17 00:00:00 2001
+From 915a98d080dbbe1426b038455610cf2428c29d9d Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 5 Aug 2014 17:20:19 +0100
 Subject: [PATCH] Watchdog Thread.
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 83934abe5e..8ccd952138 100644
+index a7171e995e..977e2c6fa3 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1014,6 +1014,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -996,6 +996,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
                      this.services.profileCache().clearExecutor();
                  }
  
@@ -16,16 +16,16 @@ index 83934abe5e..8ccd952138 100644
                  // CraftBukkit start - Restore terminal to original settings
                  try {
                      reader.getTerminal().restore();
-@@ -1179,6 +1180,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -1161,6 +1162,7 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
  
-         this.frameTimer.logFrameDuration(k - i);
+         this.logTickTime(k - i);
          this.profiler.pop();
 +        org.spigotmc.WatchdogThread.tick(); // Spigot
          SpigotTimings.serverTickTimer.stopTiming(); // Spigot
          org.spigotmc.CustomTimingsHandler.tick(); // Spigot
      }
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index e026dacece..a06073f62b 100644
+index 76d7daee26..b40e34e819 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -259,7 +259,7 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -38,10 +38,10 @@ index e026dacece..a06073f62b 100644
  
                  thread1.setUncaughtExceptionHandler(new ThreadNamedUncaughtExceptionHandler(DedicatedServer.LOGGER));
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 0926523287..c1d6eef0fc 100644
+index 329ded6be1..ad80074180 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -1973,7 +1973,7 @@ public final class CraftServer implements Server {
+@@ -1978,7 +1978,7 @@ public final class CraftServer implements Server {
  
      @Override
      public boolean isPrimaryThread() {
@@ -50,7 +50,7 @@ index 0926523287..c1d6eef0fc 100644
      }
  
      @Override
-@@ -2378,6 +2378,11 @@ public final class CraftServer implements Server {
+@@ -2383,6 +2383,11 @@ public final class CraftServer implements Server {
          {
              return org.spigotmc.SpigotConfig.config;
          }

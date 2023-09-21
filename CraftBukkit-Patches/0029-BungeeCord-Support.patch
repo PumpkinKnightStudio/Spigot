@@ -1,4 +1,4 @@
-From e3394a6654a5b1ba4ddd66845f8c93ab6acac431 Mon Sep 17 00:00:00 2001
+From 5a3d3a67940d5417e419fc979240f7ecc3abaec8 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -6,35 +6,36 @@ Subject: [PATCH] BungeeCord Support
 Provides support for IP forwarding via BungeeCord.
 
 diff --git a/src/main/java/net/minecraft/network/NetworkManager.java b/src/main/java/net/minecraft/network/NetworkManager.java
-index dd0f05b5e0..dac406ba70 100644
+index c512c2b9cd..2c4e85749a 100644
 --- a/src/main/java/net/minecraft/network/NetworkManager.java
 +++ b/src/main/java/net/minecraft/network/NetworkManager.java
-@@ -76,6 +76,10 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
-     private final Queue<NetworkManager.QueuedPacket> queue = Queues.newConcurrentLinkedQueue();
+@@ -87,6 +87,10 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
+     private final Queue<Consumer<NetworkManager>> pendingActions = Queues.newConcurrentLinkedQueue();
      public Channel channel;
      public SocketAddress address;
 +    // Spigot Start
 +    public java.util.UUID spoofedUUID;
 +    public com.mojang.authlib.properties.Property[] spoofedProfile;
 +    // Spigot End
-     private PacketListener packetListener;
-     private IChatBaseComponent disconnectedReason;
-     private boolean encrypted;
+     @Nullable
+     private volatile PacketListener disconnectListener;
+     @Nullable
 diff --git a/src/main/java/net/minecraft/network/protocol/handshake/PacketHandshakingInSetProtocol.java b/src/main/java/net/minecraft/network/protocol/handshake/PacketHandshakingInSetProtocol.java
-index e992a972d5..786314a9b7 100644
+index 78a7dc329d..c3347013f2 100644
 --- a/src/main/java/net/minecraft/network/protocol/handshake/PacketHandshakingInSetProtocol.java
 +++ b/src/main/java/net/minecraft/network/protocol/handshake/PacketHandshakingInSetProtocol.java
-@@ -23,7 +23,7 @@ public class PacketHandshakingInSetProtocol implements Packet<PacketHandshakingI
+@@ -10,7 +10,8 @@ public record PacketHandshakingInSetProtocol(int protocolVersion, String hostNam
+     private static final int MAX_HOST_LENGTH = 255;
  
      public PacketHandshakingInSetProtocol(PacketDataSerializer packetdataserializer) {
-         this.protocolVersion = packetdataserializer.readVarInt();
--        this.hostName = packetdataserializer.readUtf(255);
-+        this.hostName = packetdataserializer.readUtf(Short.MAX_VALUE); // Spigot
-         this.port = packetdataserializer.readUnsignedShort();
-         this.intention = EnumProtocol.getById(packetdataserializer.readVarInt());
+-        this(packetdataserializer.readVarInt(), packetdataserializer.readUtf(255), packetdataserializer.readUnsignedShort(), ClientIntent.byId(packetdataserializer.readVarInt()));
++        // Spigot - increase max hostName length
++        this(packetdataserializer.readVarInt(), packetdataserializer.readUtf(Short.MAX_VALUE), packetdataserializer.readUnsignedShort(), ClientIntent.byId(packetdataserializer.readVarInt()));
      }
+ 
+     @Override
 diff --git a/src/main/java/net/minecraft/server/network/HandshakeListener.java b/src/main/java/net/minecraft/server/network/HandshakeListener.java
-index 587e00148a..7dc98346fb 100644
+index 708f162e84..e5b997068b 100644
 --- a/src/main/java/net/minecraft/server/network/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/network/HandshakeListener.java
 @@ -18,6 +18,11 @@ import java.util.HashMap;
@@ -54,12 +55,12 @@ index 587e00148a..7dc98346fb 100644
                  } else {
                      this.connection.setListener(new LoginListener(this.server, this.connection));
 +                    // Spigot Start
-+                    String[] split = packethandshakinginsetprotocol.hostName.split("\00");
++                    String[] split = packethandshakinginsetprotocol.hostName().split("\00");
 +                    if (org.spigotmc.SpigotConfig.bungee) {
 +                        if ( ( split.length == 3 || split.length == 4 ) && ( HOST_PATTERN.matcher( split[1] ).matches() ) ) {
-+                            packethandshakinginsetprotocol.hostName = split[0];
++                            connection.hostname = split[0];
 +                            connection.address = new java.net.InetSocketAddress(split[1], ((java.net.InetSocketAddress) connection.getRemoteAddress()).getPort());
-+                            connection.spoofedUUID = com.mojang.util.UUIDTypeAdapter.fromString( split[2] );
++                            connection.spoofedUUID = com.mojang.util.UndashedUuid.fromStringLenient( split[2] );
 +                        } else
 +                        {
 +                            IChatBaseComponent chatmessage = IChatBaseComponent.literal("If you wish to use IP forwarding, please enable it in your BungeeCord config as well!");
@@ -82,41 +83,66 @@ index 587e00148a..7dc98346fb 100644
                  break;
              case STATUS:
 diff --git a/src/main/java/net/minecraft/server/network/LoginListener.java b/src/main/java/net/minecraft/server/network/LoginListener.java
-index 40f03ce23e..ac36c73e11 100644
+index 6f1d3a94d0..8c55672b11 100644
 --- a/src/main/java/net/minecraft/server/network/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/network/LoginListener.java
-@@ -115,7 +115,25 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
-     // Spigot start
-     public void initUUID()
-     {
--        this.gameProfile = this.createFakeProfile(this.gameProfile);
+@@ -243,7 +243,7 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
+                         new LoginHandler().fireEvents(gameprofile);
+                     } else if (LoginListener.this.server.isSingleplayer()) {
+                         LoginListener.LOGGER.warn("Failed to verify username but will let them in anyway!");
+-                        LoginListener.this.startClientVerification(LoginListener.createOfflineProfile(s1));
++                        LoginListener.this.startClientVerification(LoginListener.this.createOfflineProfile(s1)); // Spigot
+                     } else {
+                         LoginListener.this.disconnect(IChatBaseComponent.translatable("multiplayer.disconnect.unverified_username"));
+                         LoginListener.LOGGER.error("Username '{}' tried to join with an invalid session", s1);
+@@ -251,7 +251,7 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
+                 } catch (AuthenticationUnavailableException authenticationunavailableexception) {
+                     if (LoginListener.this.server.isSingleplayer()) {
+                         LoginListener.LOGGER.warn("Authentication servers are down but will let them in anyway!");
+-                        LoginListener.this.startClientVerification(LoginListener.createOfflineProfile(s1));
++                        LoginListener.this.startClientVerification(LoginListener.this.createOfflineProfile(s1)); // Spigot
+                     } else {
+                         LoginListener.this.disconnect(IChatBaseComponent.translatable("multiplayer.disconnect.authservers_down"));
+                         LoginListener.LOGGER.error("Couldn't verify username because servers are unavailable");
+@@ -335,10 +335,30 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
+         this.state = LoginListener.EnumProtocolState.ACCEPTED;
+     }
+ 
+-    protected static GameProfile createOfflineProfile(String s) {
+-        UUID uuid = UUIDUtil.createOfflinePlayerUUID(s);
++    // Spigot start
++    protected GameProfile createOfflineProfile(String s) {
 +        UUID uuid;
 +        if ( connection.spoofedUUID != null )
 +        {
 +            uuid = connection.spoofedUUID;
 +        } else
 +        {
-+            uuid = UUIDUtil.createOfflinePlayerUUID( this.gameProfile.getName() );
++            uuid = UUIDUtil.createOfflinePlayerUUID( s );
 +        }
 +
-+        this.gameProfile = new GameProfile( uuid, this.gameProfile.getName() );
++        GameProfile gameProfile = new GameProfile( uuid, s );
 +
 +        if (connection.spoofedProfile != null)
 +        {
 +            for ( com.mojang.authlib.properties.Property property : connection.spoofedProfile )
 +            {
-+                if ( !HandshakeListener.PROP_PATTERN.matcher( property.getName() ).matches() ) continue;
-+                this.gameProfile.getProperties().put( property.getName(), property );
++                if ( !HandshakeListener.PROP_PATTERN.matcher( property.name()).matches() ) continue;
++                gameProfile.getProperties().put( property.name(), property );
 +            }
 +        }
+ 
+-        return new GameProfile(uuid, s);
++        return gameProfile;
++        // Spigot end
      }
  
-     public void handleAcceptedLogin() {
+     private static enum EnumProtocolState {
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index 86da0e04be..6e203c9535 100644
+index cb346fff85..f4df3a902e 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-@@ -2059,7 +2059,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
+@@ -1924,7 +1924,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
  
                          String message = String.format(queueEvent.getFormat(), queueEvent.getPlayer().getDisplayName(), queueEvent.getMessage());
                          if (((LazyPlayerSet) queueEvent.getRecipients()).isLazy()) {
@@ -125,7 +151,7 @@ index 86da0e04be..6e203c9535 100644
                                  PlayerConnection.this.server.getPlayerList().broadcastChatMessage(original, PlayerConnection.this.player, ChatMessageType.bind(ChatMessageType.CHAT, (Entity) PlayerConnection.this.player));
                                  return null;
                              }
-@@ -2095,7 +2095,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
+@@ -1960,7 +1960,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
  
                  s = String.format(event.getFormat(), event.getPlayer().getDisplayName(), event.getMessage());
                  if (((LazyPlayerSet) event.getRecipients()).isLazy()) {
@@ -134,7 +160,7 @@ index 86da0e04be..6e203c9535 100644
                          PlayerConnection.this.server.getPlayerList().broadcastChatMessage(original, PlayerConnection.this.player, ChatMessageType.bind(ChatMessageType.CHAT, (Entity) PlayerConnection.this.player));
                          return;
                      }
-@@ -2352,6 +2352,13 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
+@@ -2217,6 +2217,13 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
          return this.connection.getRemoteAddress();
      }
  
@@ -145,16 +171,16 @@ index 86da0e04be..6e203c9535 100644
 +    }
 +    // Spigot End
 +
-     @Override
-     public void handleInteract(PacketPlayInUseEntity packetplayinuseentity) {
-         PlayerConnectionUtils.ensureRunningOnSameThread(packetplayinuseentity, this, this.player.serverLevel());
+     public void switchToConfig() {
+         this.waitingForSwitchToConfig = true;
+         this.removePlayerFromWorld();
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index e478c20f92..8d86eb05b8 100644
+index 24d3bd8aad..2dd66075d1 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -596,7 +596,7 @@ public abstract class PlayerList {
+@@ -584,7 +584,7 @@ public abstract class PlayerList {
  
-         EntityPlayer entity = new EntityPlayer(this.server, this.server.getLevel(World.OVERWORLD), gameprofile);
+         EntityPlayer entity = new EntityPlayer(this.server, this.server.getLevel(World.OVERWORLD), gameprofile, ClientInformation.createDefault());
          Player player = entity.getBukkitEntity();
 -        PlayerLoginEvent event = new PlayerLoginEvent(player, loginlistener.connection.hostname, ((java.net.InetSocketAddress) socketaddress).getAddress());
 +        PlayerLoginEvent event = new PlayerLoginEvent(player, loginlistener.connection.hostname, ((java.net.InetSocketAddress) socketaddress).getAddress(), ((java.net.InetSocketAddress) loginlistener.connection.channel.remoteAddress()).getAddress());
@@ -162,10 +188,10 @@ index e478c20f92..8d86eb05b8 100644
          if (getBans().isBanned(gameprofile) && !getBans().get(gameprofile).hasExpired()) {
              GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.bans.get(gameprofile);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index c1d6eef0fc..6f0661e664 100644
+index ad80074180..cee17e7076 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -755,7 +755,13 @@ public final class CraftServer implements Server {
+@@ -760,7 +760,13 @@ public final class CraftServer implements Server {
  
      @Override
      public long getConnectionThrottle() {
@@ -181,10 +207,10 @@ index c1d6eef0fc..6f0661e664 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index bc014cd721..d7d5e3e69b 100644
+index 3f55e81485..8075fb784e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -2143,6 +2143,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2159,6 +2159,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      private final Player.Spigot spigot = new Player.Spigot()
      {
  
@@ -217,5 +243,5 @@ index 130016282a..3bb51f4528 100644
 +    }
  }
 -- 
-2.41.0
+2.42.0
 

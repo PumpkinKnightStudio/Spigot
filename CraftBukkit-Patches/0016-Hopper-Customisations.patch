@@ -1,4 +1,4 @@
-From b685a562b777808425aff6dc7407d454e3a9522d Mon Sep 17 00:00:00 2001
+From 1b4b6fac53cb77e93309d874960d213ba0068e7a Mon Sep 17 00:00:00 2001
 From: erocs <github@erocs.org>
 Date: Sun, 8 Sep 2013 12:06:15 -0700
 Subject: [PATCH] Hopper Customisations
@@ -6,7 +6,7 @@ Subject: [PATCH] Hopper Customisations
 Allows editing hopper cooldowns and amount transferred per tick.
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java b/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java
-index 39c0c9722..6cea69ce8 100644
+index f2ccf0d254..3417dfa2f0 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/TileEntityHopper.java
 @@ -143,9 +143,14 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper {
@@ -111,7 +111,7 @@ index 39c0c9722..6cea69ce8 100644
              iinventory.setItem(i, itemstack1);
          }
  
-@@ -430,6 +439,11 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper {
+@@ -431,6 +440,11 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper {
              boolean flag1 = iinventory1.isEmpty();
  
              if (itemstack1.isEmpty()) {
@@ -123,7 +123,7 @@ index 39c0c9722..6cea69ce8 100644
                  iinventory1.setItem(i, itemstack);
                  itemstack = ItemStack.EMPTY;
                  flag = true;
-@@ -457,7 +471,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper {
+@@ -458,7 +472,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper {
                              }
                          }
  
@@ -132,7 +132,7 @@ index 39c0c9722..6cea69ce8 100644
                      }
                  }
  
-@@ -519,6 +533,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper {
+@@ -520,6 +534,7 @@ public class TileEntityHopper extends TileEntityLootable implements IHopper {
      private static IInventory getContainerAt(World world, double d0, double d1, double d2) {
          Object object = null;
          BlockPosition blockposition = BlockPosition.containing(d0, d1, d2);
@@ -141,7 +141,7 @@ index 39c0c9722..6cea69ce8 100644
          Block block = iblockdata.getBlock();
  
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index ab984b210..cec948a05 100644
+index ab984b2109..cec948a055 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -228,4 +228,22 @@ public class SpigotWorldConfig
@@ -168,5 +168,5 @@ index ab984b210..cec948a05 100644
 +    }
  }
 -- 
-2.40.1
+2.42.0
 

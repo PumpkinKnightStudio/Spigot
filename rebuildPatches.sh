@@ -29,7 +29,7 @@ savePatches() {
     target=$2
     branch=$3
     cd "$basedir/$target"
-    git format-patch --no-stat -N -o "../${what}-Patches/" $branch
+    git format-patch --no-stat --minimal -N -o "../${what}-Patches/" $branch
     cd "$basedir"
     git add -A "${what}-Patches"
     if [ "$clean" != "clean" ]; then
