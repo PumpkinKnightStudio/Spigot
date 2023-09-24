@@ -1,11 +1,11 @@
-From b9f5cf80f893f8534be4b90427398b7b2b8a7c73 Mon Sep 17 00:00:00 2001
+From 8a49ba9aba0335e4c79f39cce4032908b943170f Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 22 Sep 2013 19:10:53 +1000
 Subject: [PATCH] Item Despawn Rate
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/item/EntityItem.java b/src/main/java/net/minecraft/world/entity/item/EntityItem.java
-index 15d0290ba7..8e26d92c47 100644
+index acb5448b1..5ebfa14c1 100644
 --- a/src/main/java/net/minecraft/world/entity/item/EntityItem.java
 +++ b/src/main/java/net/minecraft/world/entity/item/EntityItem.java
 @@ -189,7 +189,7 @@ public class EntityItem extends Entity implements TraceableEntity {
@@ -17,7 +17,7 @@ index 15d0290ba7..8e26d92c47 100644
                  // CraftBukkit start - fire ItemDespawnEvent
                  if (CraftEventFactory.callItemDespawnEvent(this).isCancelled()) {
                      this.age = 0;
-@@ -518,7 +518,7 @@ public class EntityItem extends Entity implements TraceableEntity {
+@@ -517,7 +517,7 @@ public class EntityItem extends Entity implements TraceableEntity {
  
      public void makeFakeItem() {
          this.setNeverPickUp();
@@ -27,7 +27,7 @@ index 15d0290ba7..8e26d92c47 100644
  
      public float getSpin(float f) {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 0c0c29efe5..e3682d28ca 100644
+index 0c0c29efe..e3682d28c 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -187,4 +187,11 @@ public class SpigotWorldConfig
