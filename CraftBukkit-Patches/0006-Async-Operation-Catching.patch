@@ -1,4 +1,4 @@
-From dc27483b312bc81ea55fa1b20ce7084896237d2a Mon Sep 17 00:00:00 2001
+From e761eaa4630a5fc89569fc13f464cf2ce41fcfba Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -186,10 +186,10 @@ index 90c826fe3..8a23c7441 100644
          boolean oldSave = world.noSave;
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 3cbf01c7b..5c48c439a 100644
+index e89ef7b7a..efd781c34 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -568,6 +568,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -567,6 +567,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
      @Override
      public List<org.bukkit.entity.Entity> getNearbyEntities(double x, double y, double z) {
          Preconditions.checkState(!entity.generation, "Cannot get nearby entities during world generation");

@@ -1,11 +1,11 @@
-From 5aca1358237fa555bda8b7ff2eb2241a4a669ae2 Mon Sep 17 00:00:00 2001
+From 99090624fe335b1b2d2e5bb86bcaaf83fe6da6e0 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index d0532011..3ed50a5f 100644
+index d0532011a..3ed50a5fc 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
 @@ -2007,4 +2007,9 @@ public final class Bukkit {
@@ -19,7 +19,7 @@ index d0532011..3ed50a5f 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index e0df9253..5a0d6ec5 100644
+index e0df92531..5a0d6ec51 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
 @@ -1709,4 +1709,13 @@ public interface Server extends PluginMessageRecipient {
@@ -37,7 +37,7 @@ index e0df9253..5a0d6ec5 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index be376fa7..f0e437cc 100644
+index e9a009310..361d3a4f9 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
 @@ -2638,6 +2638,15 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
@@ -57,7 +57,7 @@ index be376fa7..f0e437cc 100644
       * Finds the nearest raid close to the given location.
       *
 diff --git a/src/main/java/org/bukkit/command/CommandSender.java b/src/main/java/org/bukkit/command/CommandSender.java
-index a7a2587b..4b6b9540 100644
+index a7a2587b4..4b6b95404 100644
 --- a/src/main/java/org/bukkit/command/CommandSender.java
 +++ b/src/main/java/org/bukkit/command/CommandSender.java
 @@ -53,4 +53,13 @@ public interface CommandSender extends Permissible {
@@ -75,10 +75,10 @@ index a7a2587b..4b6b9540 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index b75436ce..f3afe67f 100644
+index 764c502c6..ead9a9aaa 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -700,4 +700,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
+@@ -714,4 +714,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
       */
      @NotNull
      SpawnCategory getSpawnCategory();
@@ -94,20 +94,20 @@ index b75436ce..f3afe67f 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/LightningStrike.java b/src/main/java/org/bukkit/entity/LightningStrike.java
-index 76aad05f..4d308c5a 100644
+index 158ac20f8..d913298ea 100644
 --- a/src/main/java/org/bukkit/entity/LightningStrike.java
 +++ b/src/main/java/org/bukkit/entity/LightningStrike.java
-@@ -1,5 +1,7 @@
- package org.bukkit.entity;
+@@ -2,6 +2,7 @@ package org.bukkit.entity;
  
+ import org.bukkit.GameEvent;
+ import org.bukkit.enchantments.Enchantment;
 +import org.jetbrains.annotations.NotNull;
-+
+ import org.jetbrains.annotations.Nullable;
+ 
  /**
-  * Represents an instance of a lightning strike. May or may not do damage.
-  */
-@@ -12,4 +14,13 @@ public interface LightningStrike extends Entity {
+@@ -82,4 +83,13 @@ public interface LightningStrike extends Entity {
       */
-     public boolean isEffect();
+     public void setCausingPlayer(@Nullable Player player);
  
 +    // Spigot start
 +    public class Spigot extends Entity.Spigot {
@@ -120,7 +120,7 @@ index 76aad05f..4d308c5a 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index de462c23..76bf37b5 100644
+index de462c239..76bf37b54 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -1921,4 +1921,14 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
@@ -139,7 +139,7 @@ index de462c23..76bf37b5 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/inventory/meta/BookMeta.java b/src/main/java/org/bukkit/inventory/meta/BookMeta.java
-index d650da50..f740bebe 100644
+index d650da50e..f740bebee 100644
 --- a/src/main/java/org/bukkit/inventory/meta/BookMeta.java
 +++ b/src/main/java/org/bukkit/inventory/meta/BookMeta.java
 @@ -185,4 +185,13 @@ public interface BookMeta extends ItemMeta {

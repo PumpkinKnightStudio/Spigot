@@ -1,4 +1,4 @@
-From 7ab53bfa5e24039a3b5fb897f39d3ced019a0a45 Mon Sep 17 00:00:00 2001
+From cd906899f1c8bd83a6f2077d0f25201fdf675d1d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -105,10 +105,10 @@ index 74558e852..13008357b 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 5c48c439a..e3fecc561 100644
+index efd781c34..8ce861ac0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -197,6 +197,8 @@ import org.bukkit.util.BoundingBox;
+@@ -196,6 +196,8 @@ import org.bukkit.util.BoundingBox;
  import org.bukkit.util.NumberConversions;
  import org.bukkit.util.Vector;
  
@@ -117,7 +117,7 @@ index 5c48c439a..e3fecc561 100644
  public abstract class CraftEntity implements org.bukkit.entity.Entity {
      private static PermissibleBase perm;
      private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
-@@ -1158,6 +1160,26 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -1174,6 +1176,26 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
      // Spigot start
      private final org.bukkit.entity.Entity.Spigot spigot = new org.bukkit.entity.Entity.Spigot()
      {
