@@ -1,4 +1,4 @@
-From 99090624fe335b1b2d2e5bb86bcaaf83fe6da6e0 Mon Sep 17 00:00:00 2001
+From 46d52484ca3e267f64100d3526ed82665dde88ff Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -37,10 +37,10 @@ index e0df92531..5a0d6ec51 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index e9a009310..361d3a4f9 100644
+index aecb77d0a..b9b32cb9f 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -2638,6 +2638,15 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
+@@ -2639,6 +2639,15 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
      @Nullable
      StructureSearchResult locateNearestStructure(@NotNull Location origin, @NotNull Structure structure, int radius, boolean findUnexplored);
  
@@ -54,8 +54,8 @@ index e9a009310..361d3a4f9 100644
 +    // Spigot end
 +
      /**
-      * Finds the nearest raid close to the given location.
-      *
+      * Find the closest nearby location with a biome matching the provided
+      * {@link Biome}(s). Finding biomes can, and will, block if the world is looking
 diff --git a/src/main/java/org/bukkit/command/CommandSender.java b/src/main/java/org/bukkit/command/CommandSender.java
 index a7a2587b4..4b6b95404 100644
 --- a/src/main/java/org/bukkit/command/CommandSender.java

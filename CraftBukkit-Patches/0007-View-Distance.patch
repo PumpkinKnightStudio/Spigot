@@ -1,4 +1,4 @@
-From 5c999cb746470abd3401df0dd11c8bcb623d3b2a Mon Sep 17 00:00:00 2001
+From 811e9bf62593a4f7b107c4585eeea0d63cbce0ec Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -44,10 +44,10 @@ index 7b1dd5edbd..1fc1e46e73 100644
          entityplayer1.connection.send(new PacketPlayOutSpawnPosition(worldserver1.getSharedSpawnPos(), worldserver1.getSharedSpawnAngle()));
          entityplayer1.connection.send(new PacketPlayOutServerDifficulty(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 8621c949e7..f15c5e41dc 100644
+index ab20f5e109..0a509f85f5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1932,6 +1932,18 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -1956,6 +1956,18 @@ public class CraftWorld extends CraftRegionAccessor implements World {
          }
      }
  

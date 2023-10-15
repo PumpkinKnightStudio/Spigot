@@ -1,4 +1,4 @@
-From 930b0cb0224377361be7b99f7fb4a938f8c795bf Mon Sep 17 00:00:00 2001
+From 0c25806143c80239ecf6daac196fd444e806d531 Mon Sep 17 00:00:00 2001
 From: Spottedleaf <Spottedleaf@users.noreply.github.com>
 Date: Tue, 30 Jul 2019 13:47:34 -0700
 Subject: [PATCH] View Distance
@@ -6,10 +6,10 @@ Subject: [PATCH] View Distance
 This commit allows the retrieval of per world view distances.
 
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 33cffe3f..c4d2a13d 100644
+index dcd8feda6..5c9d74a5d 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -2638,6 +2638,22 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
+@@ -2639,6 +2639,22 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
      @Nullable
      StructureSearchResult locateNearestStructure(@NotNull Location origin, @NotNull Structure structure, int radius, boolean findUnexplored);
  
