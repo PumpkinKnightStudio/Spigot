@@ -1,4 +1,4 @@
-From 600da633026455b6a1609eca27e63cdfe808b17e Mon Sep 17 00:00:00 2001
+From 416f33d6ebb703545d1b9fea91b8bab6e559fda1 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -6,10 +6,10 @@ Subject: [PATCH] Skeleton API Implementations
 This contains the basic, empty implementations for some Spigot-API extensions. They are included early in the patching progress so that compilation will still succeed midway despite the APIs only being provided by subsequent patches.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 54e0ceaa4d..6469311570 100644
+index 76e17bc35f..7c628dc46e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2372,4 +2372,16 @@ public final class CraftServer implements Server {
+@@ -2377,4 +2377,16 @@ public final class CraftServer implements Server {
      public UnsafeValues getUnsafe() {
          return CraftMagicNumbers.INSTANCE;
      }
@@ -27,10 +27,10 @@ index 54e0ceaa4d..6469311570 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 4ffda252e5..893858ac3f 100644
+index 88a4725171..0fe7f61704 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1920,4 +1920,15 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -1948,4 +1948,15 @@ public class CraftWorld extends CraftRegionAccessor implements World {
              this.persistentDataContainer.putAll((NBTTagCompound) c);
          }
      }
@@ -84,12 +84,12 @@ index 7fa2588b89..e0acbada89 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index b36020df4a..c563386a47 100644
+index 80abe8d4ff..e74bbf419f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -1158,4 +1158,15 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
-     protected IRegistryCustom getRegistryAccess() {
-         return CraftRegistry.getMinecraftRegistry();
+@@ -1170,4 +1170,15 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+         }
+         return perm;
      }
 +
 +    // Spigot start
@@ -104,10 +104,10 @@ index b36020df4a..c563386a47 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
-index 381f448b01..75d1cc7b1f 100644
+index 3a4fb14bff..3a68e1cf5c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftLightningStrike.java
-@@ -23,4 +23,15 @@ public class CraftLightningStrike extends CraftEntity implements LightningStrike
+@@ -50,4 +50,15 @@ public class CraftLightningStrike extends CraftEntity implements LightningStrike
      public String toString() {
          return "CraftLightningStrike";
      }
@@ -124,10 +124,10 @@ index 381f448b01..75d1cc7b1f 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 946b4b2e4f..3118a1dad8 100644
+index 407312d96f..afb5b489ad 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -2160,4 +2160,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2181,4 +2181,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      public boolean isAllowingServerListings() {
          return getHandle().allowsListing();
      }
@@ -172,5 +172,5 @@ index e28177b7a7..977d6b6a86 100644
 +    // Spigot end
  }
 -- 
-2.41.0
+2.42.0
 

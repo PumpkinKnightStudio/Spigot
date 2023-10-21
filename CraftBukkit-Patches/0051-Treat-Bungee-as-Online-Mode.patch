@@ -1,11 +1,11 @@
-From 7a65efa4080b39e200702b06d568bb338ea0e498 Mon Sep 17 00:00:00 2001
+From 7e86237fa589fbd26469d30518cf87b1c15aaf06 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 12 Apr 2014 21:23:58 +1000
 Subject: [PATCH] Treat Bungee as Online Mode
 
 
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 7208f3b1c..898b71aa9 100644
+index b40e34e819..f7eb78cab9 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -223,7 +223,14 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -25,18 +25,18 @@ index 7208f3b1c..898b71aa9 100644
          }
  
 diff --git a/src/main/java/net/minecraft/server/players/NameReferencingFileConverter.java b/src/main/java/net/minecraft/server/players/NameReferencingFileConverter.java
-index d498b61ca..060f66af1 100644
+index cbf3f915bd..37b5f05124 100644
 --- a/src/main/java/net/minecraft/server/players/NameReferencingFileConverter.java
 +++ b/src/main/java/net/minecraft/server/players/NameReferencingFileConverter.java
-@@ -68,7 +68,7 @@ public class NameReferencingFileConverter {
+@@ -67,7 +67,7 @@ public class NameReferencingFileConverter {
              return new String[i];
          });
  
 -        if (minecraftserver.usesAuthentication()) {
 +        if (minecraftserver.usesAuthentication() || org.spigotmc.SpigotConfig.bungee) { // Spigot: bungee = online mode, for now.
-             minecraftserver.getProfileRepository().findProfilesByNames(astring, Agent.MINECRAFT, profilelookupcallback);
+             minecraftserver.getProfileRepository().findProfilesByNames(astring, profilelookupcallback);
          } else {
              String[] astring1 = astring;
 -- 
-2.40.1
+2.42.0
 

@@ -1,14 +1,14 @@
-From e1df3ad6e63189cc710c7a7d6d4cccbc94d742e3 Mon Sep 17 00:00:00 2001
+From 38c32d8550bba1681cce854b0a8b72de9cbaec83 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 8 Feb 2014 08:13:40 +0000
 Subject: [PATCH] Spam Filter Exclusions
 
 
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index 7b3f89c42f..b0aaca5229 100644
+index bb54454c5f..366121b593 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-@@ -1902,7 +1902,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
+@@ -1766,7 +1766,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
                      // CraftBukkit end
  
                      this.performChatCommand(serverboundchatcommandpacket, (LastSeenMessages) optional.get());
@@ -17,7 +17,7 @@ index 7b3f89c42f..b0aaca5229 100644
                  });
              }
  
-@@ -2169,11 +2169,22 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
+@@ -2033,11 +2033,22 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
          }
          // this.server.getPlayerList().broadcastChatMessage(playerchatmessage, this.player, ChatMessageType.bind(ChatMessageType.CHAT, (Entity) this.player));
          // CraftBukkit end
@@ -69,5 +69,5 @@ index cf7c624bc5..4f9b55c713 100644
 +    }
  }
 -- 
-2.41.0
+2.42.0
 

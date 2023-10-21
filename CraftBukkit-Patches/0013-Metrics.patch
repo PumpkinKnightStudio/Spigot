@@ -1,4 +1,4 @@
-From 3fa889ffad8ff4e1d899c1f0c0b0dcd8f146fdc2 Mon Sep 17 00:00:00 2001
+From 233c998e8ff7a3a91aa487714f1fa199743d68a8 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Feb 2013 08:58:35 +1100
 Subject: [PATCH] Metrics
@@ -6,7 +6,7 @@ Subject: [PATCH] Metrics
 
 diff --git a/src/main/java/org/spigotmc/Metrics.java b/src/main/java/org/spigotmc/Metrics.java
 new file mode 100644
-index 000000000..c25cbfa7a
+index 0000000000..c25cbfa7a4
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/Metrics.java
 @@ -0,0 +1,641 @@
@@ -652,7 +652,7 @@ index 000000000..c25cbfa7a
 +    }
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 9ee0b4a1e..7f14cbc63 100644
+index 9ee0b4a1e7..7f14cbc63b 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -36,6 +36,7 @@ public class SpigotConfig
@@ -683,5 +683,5 @@ index 9ee0b4a1e..7f14cbc63 100644
  
      static void readConfig(Class<?> clazz, Object instance)
 -- 
-2.40.1
+2.42.0
 

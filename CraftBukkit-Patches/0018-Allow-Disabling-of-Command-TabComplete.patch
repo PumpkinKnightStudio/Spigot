@@ -1,14 +1,14 @@
-From a660d900369297b36d2cdc4d1a13b4ce8eb29c53 Mon Sep 17 00:00:00 2001
+From 2669048fe5936a046ae4dcb43a437e62b838aedd Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 18:05:54 +1000
 Subject: [PATCH] Allow Disabling of Command TabComplete
 
 
 diff --git a/src/main/java/net/minecraft/commands/CommandDispatcher.java b/src/main/java/net/minecraft/commands/CommandDispatcher.java
-index c04d308a2d..6b85d4ae93 100644
+index 5a4d3a494a..64d43456bb 100644
 --- a/src/main/java/net/minecraft/commands/CommandDispatcher.java
 +++ b/src/main/java/net/minecraft/commands/CommandDispatcher.java
-@@ -373,6 +373,7 @@ public class CommandDispatcher {
+@@ -379,6 +379,7 @@ public class CommandDispatcher {
      }
  
      public void sendCommands(EntityPlayer entityplayer) {
@@ -16,7 +16,7 @@ index c04d308a2d..6b85d4ae93 100644
          // CraftBukkit start
          // Register Vanilla commands into builtRoot as before
          Map<CommandNode<CommandListenerWrapper>, CommandNode<ICompletionProvider>> map = Maps.newIdentityHashMap(); // Use identity to prevent aliasing issues
-@@ -411,6 +412,7 @@ public class CommandDispatcher {
+@@ -417,6 +418,7 @@ public class CommandDispatcher {
  
          while (iterator.hasNext()) {
              CommandNode<CommandListenerWrapper> commandnode2 = (CommandNode) iterator.next();
@@ -25,10 +25,10 @@ index c04d308a2d..6b85d4ae93 100644
              if (commandnode2.canUse(commandlistenerwrapper)) {
                  ArgumentBuilder argumentbuilder = commandnode2.createBuilder(); // CraftBukkit - decompile error
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 0547a43fe6..02b428e6f4 100644
+index 057db3b135..df186ca1de 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2023,6 +2023,13 @@ public final class CraftServer implements Server {
+@@ -2028,6 +2028,13 @@ public final class CraftServer implements Server {
      }
  
      public List<String> tabCompleteCommand(Player player, String message, WorldServer world, Vec3D pos) {
@@ -71,5 +71,5 @@ index bc9fbcc584..fc352ecf10 100644
 +    }
  }
 -- 
-2.41.0
+2.42.0
 

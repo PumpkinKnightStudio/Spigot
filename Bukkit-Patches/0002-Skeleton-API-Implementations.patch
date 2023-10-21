@@ -1,11 +1,11 @@
-From 6cc427dac678f9130e3748120781f5278b78d3e9 Mon Sep 17 00:00:00 2001
+From 5f4fd09b964639d2e17a49eaee017d68fe354e80 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 8b637e012..94ab2c0d0 100644
+index db3142f06..dc6356db5 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
 @@ -2011,4 +2011,9 @@ public final class Bukkit {
@@ -19,7 +19,7 @@ index 8b637e012..94ab2c0d0 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 11b5760c2..1c1d232c0 100644
+index 680f39882..548e11064 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
 @@ -1713,4 +1713,13 @@ public interface Server extends PluginMessageRecipient {
@@ -37,10 +37,10 @@ index 11b5760c2..1c1d232c0 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 50e74378b..e0eb74c44 100644
+index 60261b280..6b27758b0 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -2618,6 +2618,15 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
+@@ -2619,6 +2619,15 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
      @Nullable
      StructureSearchResult locateNearestStructure(@NotNull Location origin, @NotNull Structure structure, int radius, boolean findUnexplored);
  
@@ -54,8 +54,8 @@ index 50e74378b..e0eb74c44 100644
 +    // Spigot end
 +
      /**
-      * Finds the nearest raid close to the given location.
-      *
+      * Find the closest nearby location with a biome matching the provided
+      * {@link Biome}(s). Finding biomes can, and will, block if the world is looking
 diff --git a/src/main/java/org/bukkit/command/CommandSender.java b/src/main/java/org/bukkit/command/CommandSender.java
 index a7a2587b4..4b6b95404 100644
 --- a/src/main/java/org/bukkit/command/CommandSender.java
@@ -75,10 +75,10 @@ index a7a2587b4..4b6b95404 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 1d6adae8d..2417f0d50 100644
+index 26631b6d9..3c3c1d823 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -700,4 +700,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
+@@ -714,4 +714,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
       */
      @NotNull
      SpawnCategory getSpawnCategory();
@@ -94,20 +94,20 @@ index 1d6adae8d..2417f0d50 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/LightningStrike.java b/src/main/java/org/bukkit/entity/LightningStrike.java
-index 76aad05f4..4d308c5a6 100644
+index 158ac20f8..d913298ea 100644
 --- a/src/main/java/org/bukkit/entity/LightningStrike.java
 +++ b/src/main/java/org/bukkit/entity/LightningStrike.java
-@@ -1,5 +1,7 @@
- package org.bukkit.entity;
+@@ -2,6 +2,7 @@ package org.bukkit.entity;
  
+ import org.bukkit.GameEvent;
+ import org.bukkit.enchantments.Enchantment;
 +import org.jetbrains.annotations.NotNull;
-+
+ import org.jetbrains.annotations.Nullable;
+ 
  /**
-  * Represents an instance of a lightning strike. May or may not do damage.
-  */
-@@ -12,4 +14,13 @@ public interface LightningStrike extends Entity {
+@@ -82,4 +83,13 @@ public interface LightningStrike extends Entity {
       */
-     public boolean isEffect();
+     public void setCausingPlayer(@Nullable Player player);
  
 +    // Spigot start
 +    public class Spigot extends Entity.Spigot {
@@ -157,5 +157,5 @@ index 12a1e0fd2..111228fd1 100644
 +    // Spigot end
  }
 -- 
-2.41.0
+2.42.0
 

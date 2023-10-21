@@ -1,11 +1,11 @@
-From 591bd1810ec45d1da3d35b312da77c8c4831bb41 Mon Sep 17 00:00:00 2001
+From 26363cec306b859f4ce23cb62ad12c7a67389ef8 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 02:59:14 +0100
 Subject: [PATCH] BungeeCord Chat API
 
 
 diff --git a/pom.xml b/pom.xml
-index a5e094f55..a740c37ca 100644
+index 3cecd45ca..3d93ac6e4 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -52,6 +52,13 @@
@@ -22,14 +22,6 @@ index a5e094f55..a740c37ca 100644
          <dependency>
              <groupId>org.yaml</groupId>
              <artifactId>snakeyaml</artifactId>
-@@ -195,6 +202,7 @@
-                         <link>https://guava.dev/releases/31.1-jre/api/docs/</link>
-                         <link>https://javadoc.io/doc/org.yaml/snakeyaml/2.0/</link>
-                         <link>https://javadoc.io/doc/org.jetbrains/annotations-java5/24.0.1/</link>
-+                        <link>https://javadoc.io/doc/net.md-5/bungeecord-chat/1.20-R0.1/</link>
-                     </links>
-                     <tags>
-                         <tag>
 diff --git a/src/main/java/org/bukkit/ChatColor.java b/src/main/java/org/bukkit/ChatColor.java
 index 6149c77df..e3f185dc9 100644
 --- a/src/main/java/org/bukkit/ChatColor.java
@@ -293,7 +285,7 @@ index 6149c77df..e3f185dc9 100644
       * Gets the char value associated with this color
       *
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 22cb70a20..72fa01684 100644
+index d8c9d38fd..19b0ccde5 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
 @@ -1721,6 +1721,24 @@ public interface Server extends PluginMessageRecipient {
@@ -516,5 +508,5 @@ index 111228fd1..315fd06a0 100644
  
      @NotNull
 -- 
-2.41.0
+2.42.0
 

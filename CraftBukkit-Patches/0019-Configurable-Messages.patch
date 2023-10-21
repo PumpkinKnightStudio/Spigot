@@ -1,17 +1,17 @@
-From 74b64081f9c9dc60e4419085a36459b8af705f2d Mon Sep 17 00:00:00 2001
+From f0e464870dff807d8b5c15cdeb092924d38ed4a9 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
 
 
 diff --git a/src/main/java/net/minecraft/server/network/HandshakeListener.java b/src/main/java/net/minecraft/server/network/HandshakeListener.java
-index 4c79b0f0b2..587e00148a 100644
+index e9ec3fd8c5..708f162e84 100644
 --- a/src/main/java/net/minecraft/server/network/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/network/HandshakeListener.java
 @@ -75,9 +75,9 @@ public class HandshakeListener implements PacketHandshakingInListener {
                      IChatMutableComponent ichatmutablecomponent;
  
-                     if (packethandshakinginsetprotocol.getProtocolVersion() < 754) {
+                     if (packethandshakinginsetprotocol.protocolVersion() < 754) {
 -                        ichatmutablecomponent = IChatBaseComponent.translatable("multiplayer.disconnect.outdated_client", SharedConstants.getCurrentVersion().getName());
 +                        ichatmutablecomponent = IChatBaseComponent.literal( java.text.MessageFormat.format( org.spigotmc.SpigotConfig.outdatedClientMessage.replaceAll("'", "''"), SharedConstants.getCurrentVersion().getName() ) ); // Spigot
                      } else {
@@ -21,10 +21,10 @@ index 4c79b0f0b2..587e00148a 100644
  
                      this.connection.send(new PacketLoginOutDisconnect(ichatmutablecomponent));
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 5b8b8aede2..66a6c8656e 100644
+index 16dcde6b3d..3be73be932 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -610,7 +610,7 @@ public abstract class PlayerList {
+@@ -598,7 +598,7 @@ public abstract class PlayerList {
              event.disallow(PlayerLoginEvent.Result.KICK_BANNED, CraftChatMessage.fromComponent(ichatmutablecomponent));
          } else if (!this.isWhiteListed(gameprofile)) {
              ichatmutablecomponent = IChatBaseComponent.translatable("multiplayer.disconnect.not_whitelisted");
@@ -33,7 +33,7 @@ index 5b8b8aede2..66a6c8656e 100644
          } else if (getIpBans().isBanned(socketaddress) && !getIpBans().get(socketaddress).hasExpired()) {
              IpBanEntry ipbanentry = this.ipBans.get(socketaddress);
  
-@@ -624,7 +624,7 @@ public abstract class PlayerList {
+@@ -612,7 +612,7 @@ public abstract class PlayerList {
          } else {
              // return this.players.size() >= this.maxPlayers && !this.canBypassPlayerLimit(gameprofile) ? IChatBaseComponent.translatable("multiplayer.disconnect.server_full") : null;
              if (this.players.size() >= this.maxPlayers && !this.canBypassPlayerLimit(gameprofile)) {
@@ -43,10 +43,10 @@ index 5b8b8aede2..66a6c8656e 100644
          }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 02b428e6f4..fba1b7c95d 100644
+index df186ca1de..976e13e79c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -868,11 +868,11 @@ public final class CraftServer implements Server {
+@@ -872,11 +872,11 @@ public final class CraftServer implements Server {
              return true;
          }
  
@@ -104,5 +104,5 @@ index fc352ecf10..8ad8b25894 100644
 +    }
  }
 -- 
-2.41.0
+2.42.0
 

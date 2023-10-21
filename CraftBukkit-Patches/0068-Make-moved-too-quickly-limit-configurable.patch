@@ -1,14 +1,14 @@
-From b088b5b10304b62da25489cd41d8f2b4a6ff50f8 Mon Sep 17 00:00:00 2001
+From 59bbaf749510ef191ff64960957318f8021aeaae Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Tue, 22 Jul 2014 15:59:01 +0200
 Subject: [PATCH] Make "moved too quickly" limit configurable
 
 
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index 3013ed1b21..9246f47bbb 100644
+index f98fb60059..cadc3c9edb 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-@@ -597,7 +597,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
+@@ -503,7 +503,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
                  }
                  speed *= 2f; // TODO: Get the speed of the vehicle instead of the player
  
@@ -16,8 +16,8 @@ index 3013ed1b21..9246f47bbb 100644
 +                if (d10 - d9 > Math.max(100.0D, Math.pow((double) (org.spigotmc.SpigotConfig.movedTooQuicklyMultiplier * (float) i * speed), 2)) && !this.isSingleplayerOwner()) {
                  // CraftBukkit end
                      PlayerConnection.LOGGER.warn("{} (vehicle of {}) moved too quickly! {},{},{}", new Object[]{entity.getName().getString(), this.player.getName().getString(), d6, d7, d8});
-                     this.connection.send(new PacketPlayOutVehicleMove(entity));
-@@ -1273,7 +1273,7 @@ public class PlayerConnection implements ServerPlayerConnection, TickablePacketL
+                     this.send(new PacketPlayOutVehicleMove(entity));
+@@ -1179,7 +1179,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
                              if (!this.player.isChangingDimension() && (!this.player.level().getGameRules().getBoolean(GameRules.RULE_DISABLE_ELYTRA_MOVEMENT_CHECK) || !this.player.isFallFlying())) {
                                  float f2 = this.player.isFallFlying() ? 300.0F : 100.0F;
  
@@ -42,5 +42,5 @@ index 9e34d30271..08f6ef8d48 100644
 +    }
  }
 -- 
-2.41.0
+2.42.0
 
