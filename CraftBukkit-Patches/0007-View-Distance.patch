@@ -1,4 +1,4 @@
-From 3c14f625027c09a49b5c1577784964013fa76fef Mon Sep 17 00:00:00 2001
+From 5497e02e5844709e4273ee7762f0a76d68b5da19 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,7 +6,7 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 2437fc257..bce7deb65 100644
+index cf587a21c..76aa7eea4 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -279,8 +279,8 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -44,10 +44,10 @@ index f836b07ca..16dcde6b3 100644
          entityplayer1.connection.send(new PacketPlayOutSpawnPosition(worldserver1.getSharedSpawnPos(), worldserver1.getSharedSpawnAngle()));
          entityplayer1.connection.send(new PacketPlayOutServerDifficulty(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 648a24402..bbce80b7b 100644
+index 7886cc85e..7f646490c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1958,6 +1958,18 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -1990,6 +1990,18 @@ public class CraftWorld extends CraftRegionAccessor implements World {
          }
      }
  

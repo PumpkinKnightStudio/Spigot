@@ -1,4 +1,4 @@
-From 1029626ed6052d978d64c3f475fc7a44eb0e3369 Mon Sep 17 00:00:00 2001
+From 5a0694a9d43b7c0bbfa5213b15e8bc67e702412d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -37,10 +37,10 @@ index 130c169f..d00bdede 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 682854c0..46fda0b4 100644
+index 16feb5ef..d89e047d 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -2639,6 +2639,15 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
+@@ -2721,6 +2721,15 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
      @Nullable
      StructureSearchResult locateNearestStructure(@NotNull Location origin, @NotNull Structure structure, int radius, boolean findUnexplored);
  
@@ -75,13 +75,13 @@ index a7a2587b..4b6b9540 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 764c502c..ead9a9aa 100644
+index dafb5d28..3b772500 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -714,4 +714,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
-      */
+@@ -756,4 +756,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
      @NotNull
-     SpawnCategory getSpawnCategory();
+     @ApiStatus.Experimental
+     Entity copy(@NotNull Location to);
 +
 +    // Spigot start
 +    public class Spigot extends CommandSender.Spigot {
@@ -120,10 +120,10 @@ index 158ac20f..d913298e 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index de462c23..76bf37b5 100644
+index 3cf31b08..1c89efaf 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
-@@ -1921,4 +1921,14 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
+@@ -1982,4 +1982,14 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
       * @return whether the player allows server listings
       */
      public boolean isAllowingServerListings();
