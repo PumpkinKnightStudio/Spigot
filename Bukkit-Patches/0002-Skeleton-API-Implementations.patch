@@ -1,11 +1,11 @@
-From 5a0694a9d43b7c0bbfa5213b15e8bc67e702412d Mon Sep 17 00:00:00 2001
+From 736cb515533d3f0f1555b668a615fde7dd2c341c Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 15 May 2017 15:16:15 +1000
 Subject: [PATCH] Skeleton API Implementations
 
 
 diff --git a/src/main/java/org/bukkit/Bukkit.java b/src/main/java/org/bukkit/Bukkit.java
-index 001703ba..0646994e 100644
+index 001703ba1..0646994ea 100644
 --- a/src/main/java/org/bukkit/Bukkit.java
 +++ b/src/main/java/org/bukkit/Bukkit.java
 @@ -2083,4 +2083,9 @@ public final class Bukkit {
@@ -19,7 +19,7 @@ index 001703ba..0646994e 100644
 +    }
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 130c169f..d00bdede 100644
+index 130c169fb..d00bdedea 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
 @@ -1778,4 +1778,13 @@ public interface Server extends PluginMessageRecipient {
@@ -37,7 +37,7 @@ index 130c169f..d00bdede 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index 16feb5ef..d89e047d 100644
+index 16feb5ef2..d89e047dd 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
 @@ -2721,6 +2721,15 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
@@ -57,7 +57,7 @@ index 16feb5ef..d89e047d 100644
       * Find the closest nearby location with a biome matching the provided
       * {@link Biome}(s). Finding biomes can, and will, block if the world is looking
 diff --git a/src/main/java/org/bukkit/command/CommandSender.java b/src/main/java/org/bukkit/command/CommandSender.java
-index a7a2587b..4b6b9540 100644
+index a7a2587b4..4b6b95404 100644
 --- a/src/main/java/org/bukkit/command/CommandSender.java
 +++ b/src/main/java/org/bukkit/command/CommandSender.java
 @@ -53,4 +53,13 @@ public interface CommandSender extends Permissible {
@@ -75,10 +75,10 @@ index a7a2587b..4b6b9540 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index dafb5d28..3b772500 100644
+index 69ba14b64..8532b8484 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -756,4 +756,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
+@@ -758,4 +758,14 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
      @NotNull
      @ApiStatus.Experimental
      Entity copy(@NotNull Location to);
@@ -94,7 +94,7 @@ index dafb5d28..3b772500 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/LightningStrike.java b/src/main/java/org/bukkit/entity/LightningStrike.java
-index 158ac20f..d913298e 100644
+index 158ac20f8..d913298ea 100644
 --- a/src/main/java/org/bukkit/entity/LightningStrike.java
 +++ b/src/main/java/org/bukkit/entity/LightningStrike.java
 @@ -2,6 +2,7 @@ package org.bukkit.entity;
@@ -120,7 +120,7 @@ index 158ac20f..d913298e 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 3cf31b08..1c89efaf 100644
+index 3cf31b08c..1c89efafb 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -1982,4 +1982,14 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
@@ -139,7 +139,7 @@ index 3cf31b08..1c89efaf 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/inventory/meta/BookMeta.java b/src/main/java/org/bukkit/inventory/meta/BookMeta.java
-index d650da50..f740bebe 100644
+index d650da50e..f740bebee 100644
 --- a/src/main/java/org/bukkit/inventory/meta/BookMeta.java
 +++ b/src/main/java/org/bukkit/inventory/meta/BookMeta.java
 @@ -185,4 +185,13 @@ public interface BookMeta extends ItemMeta {
@@ -157,5 +157,5 @@ index d650da50..f740bebe 100644
 +    // Spigot end
  }
 -- 
-2.42.0
+2.43.0
 
