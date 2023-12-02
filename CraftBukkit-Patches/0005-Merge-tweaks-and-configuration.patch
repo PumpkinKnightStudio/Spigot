@@ -1,4 +1,4 @@
-From db1aa3864945f3dff4cf7e56dd5202ec1125c7cc Mon Sep 17 00:00:00 2001
+From 3215acde3f3679ac2b53ee57daee397f9f052ce6 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:46:33 +1100
 Subject: [PATCH] Merge tweaks and configuration
@@ -31,22 +31,20 @@ index 475990969..acb5448b1 100644
              } else {
                  merge(entityitem, itemstack1, this, itemstack);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index ca50697b5..5f4c690ab 100644
+index ca50697b5..7cfd88f1b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -693,6 +693,23 @@ public class CraftEventFactory {
-                 return true;
-             }
-             event = CraftEventFactory.callLightningStrikeEvent((LightningStrike) entity.getBukkitEntity(), cause);
-+        // Spigot start
-+        } else if (entity instanceof EntityExperienceOrb) {
-+            EntityExperienceOrb xp = (EntityExperienceOrb) entity;
+@@ -709,6 +709,23 @@ public class CraftEventFactory {
+             return false;
+         }
+ 
++        // Spigot start - SPIGOT-7523: Merge after spawn event and only merge if the event was not cancelled (gets checked above)
++        if (entity instanceof EntityExperienceOrb xp) {
 +            double radius = world.spigotConfig.expMerge;
 +            if (radius > 0) {
 +                List<Entity> entities = world.getEntities(entity, entity.getBoundingBox().inflate(radius, radius, radius));
 +                for (Entity e : entities) {
-+                    if (e instanceof EntityExperienceOrb) {
-+                        EntityExperienceOrb loopItem = (EntityExperienceOrb) e;
++                    if (e instanceof EntityExperienceOrb loopItem) {
 +                        if (!loopItem.isRemoved()) {
 +                            xp.value += loopItem.value;
 +                            loopItem.discard();
@@ -54,10 +52,12 @@ index ca50697b5..5f4c690ab 100644
 +                    }
 +                }
 +            }
++        }
 +        // Spigot end
-         } else if (!(entity instanceof EntityPlayer)) {
-             event = CraftEventFactory.callEntitySpawnEvent(entity);
-         }
++
+         return true;
+     }
+ 
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 index f42972427..5ff085b9e 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
@@ -82,5 +82,5 @@ index f42972427..5ff085b9e 100644
 +    }
  }
 -- 
-2.42.0
+2.34.1
 
