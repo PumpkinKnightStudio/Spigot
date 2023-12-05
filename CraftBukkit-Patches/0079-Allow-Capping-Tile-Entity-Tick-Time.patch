@@ -1,4 +1,4 @@
-From 352d5f6059a5225ce1adc09518a3dde75ab8e0cc Mon Sep 17 00:00:00 2001
+From e90ede657315c762d1bdac08d9577d984fb86a59 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 20 Feb 2015 21:39:31 +1100
 Subject: [PATCH] Allow Capping (Tile)Entity Tick Time.
@@ -10,10 +10,10 @@ For tiles there is very little tradeoff for this option, as tile ticks are based
 This feature was commisioned by Chunkr.
 
 diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
-index 15e63dbfa4..88f200fc1c 100644
+index 20eb689cb8..71cf81d750 100644
 --- a/src/main/java/net/minecraft/world/level/World.java
 +++ b/src/main/java/net/minecraft/world/level/World.java
-@@ -158,6 +158,9 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -161,6 +161,9 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
  
      public final SpigotTimings.WorldTimingsHandler timings; // Spigot
      public static BlockPosition lastPhysicsProblem; // Spigot
@@ -23,7 +23,7 @@ index 15e63dbfa4..88f200fc1c 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -251,6 +254,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -254,6 +257,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
          });
          // CraftBukkit end
          timings = new SpigotTimings.WorldTimingsHandler(this); // Spigot - code below can generate new world and access timings
@@ -32,16 +32,17 @@ index 15e63dbfa4..88f200fc1c 100644
      }
  
      @Override
-@@ -638,20 +643,28 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -647,21 +652,30 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
          timings.tileEntityPending.stopTiming(); // Spigot
  
          timings.tileEntityTick.startTiming(); // Spigot
--        Iterator iterator = this.blockEntityTickers.iterator();
--
+-        Iterator<TickingBlockEntity> iterator = this.blockEntityTickers.iterator();
++        // Spigot start
++        // Iterator<TickingBlockEntity> iterator = this.blockEntityTickers.iterator();
+         boolean flag = this.tickRateManager().runsNormally();
+ 
 -        while (iterator.hasNext()) {
 -            TickingBlockEntity tickingblockentity = (TickingBlockEntity) iterator.next();
-+        // Spigot start
-+        // Iterator iterator = this.blockEntityTickers.iterator();
 +        int tilesThisCycle = 0;
 +        for (tileLimiter.initTick();
 +                tilesThisCycle < blockEntityTickers.size() && (tilesThisCycle % 10 != 0 || tileLimiter.shouldContinue());
@@ -64,7 +65,7 @@ index 15e63dbfa4..88f200fc1c 100644
 +                tilesThisCycle--;
 +                this.blockEntityTickers.remove(tileTickPosition--);
 +                // Spigot end
-             } else if (this.shouldTickBlocksAt(tickingblockentity.getPos())) {
+             } else if (flag && this.shouldTickBlocksAt(tickingblockentity.getPos())) {
                  tickingblockentity.tick();
              }
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
@@ -112,5 +113,5 @@ index 0000000000..23a39382be
 +    }
 +}
 -- 
-2.42.0
+2.43.0
 

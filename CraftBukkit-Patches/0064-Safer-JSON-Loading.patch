@@ -1,4 +1,4 @@
-From e505a51e4cc7ad4c4faa7e502bd11a63e39cf30e Mon Sep 17 00:00:00 2001
+From 902dcfff8181ca3fdfe6d4f27583de96576a76d1 Mon Sep 17 00:00:00 2001
 From: Suddenly <suddenly@suddenly.coffee>
 Date: Tue, 8 Jul 2014 09:44:18 +1000
 Subject: [PATCH] Safer JSON Loading
@@ -24,10 +24,10 @@ index 04a730277e..2b254136ff 100644
                      if (bufferedreader != null) {
                          try {
 diff --git a/src/main/java/net/minecraft/server/players/UserCache.java b/src/main/java/net/minecraft/server/players/UserCache.java
-index bde5f6086d..01e9ec3bf1 100644
+index e3286ffbf9..7738780050 100644
 --- a/src/main/java/net/minecraft/server/players/UserCache.java
 +++ b/src/main/java/net/minecraft/server/players/UserCache.java
-@@ -248,6 +248,11 @@ public class UserCache {
+@@ -251,6 +251,11 @@ public class UserCache {
              }
          } catch (FileNotFoundException filenotfoundexception) {
              ;
@@ -40,5 +40,5 @@ index bde5f6086d..01e9ec3bf1 100644
              UserCache.LOGGER.warn("Failed to load profile cache {}", this.file, ioexception);
          }
 -- 
-2.42.0
+2.43.0
 

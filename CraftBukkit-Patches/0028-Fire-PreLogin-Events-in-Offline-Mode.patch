@@ -1,25 +1,25 @@
-From 6ce2cf6a4c18a88152a28b0d72061699413de0ab Mon Sep 17 00:00:00 2001
+From 681c9f7171b935805bcb844d434e84458e1f328f Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 18 Dec 2013 13:32:10 +1100
 Subject: [PATCH] Fire PreLogin Events in Offline Mode
 
 
 diff --git a/src/main/java/net/minecraft/server/network/LoginListener.java b/src/main/java/net/minecraft/server/network/LoginListener.java
-index 678a4f0529..6f1d3a94d0 100644
+index f907de9429..61e8ab5d3d 100644
 --- a/src/main/java/net/minecraft/server/network/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/network/LoginListener.java
-@@ -140,7 +140,20 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
+@@ -141,7 +141,20 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
                  this.state = LoginListener.EnumProtocolState.KEY;
                  this.connection.send(new PacketLoginOutEncryptionBegin("", this.server.getKeyPair().getPublic().getEncoded(), this.challenge));
              } else {
--                this.startClientVerification(createOfflineProfile(this.requestedUsername));
+-                this.startClientVerification(UUIDUtil.createOfflineProfile(this.requestedUsername));
 +                // Spigot start
 +                new Thread("User Authenticator #" + LoginListener.UNIQUE_THREAD_ID.incrementAndGet()) {
 +
 +                    @Override
 +                    public void run() {
 +                        try {
-+                            new LoginHandler().fireEvents(createOfflineProfile(LoginListener.this.requestedUsername));
++                            new LoginHandler().fireEvents(UUIDUtil.createOfflineProfile(LoginListener.this.requestedUsername));
 +                        } catch (Exception ex) {
 +                            disconnect("Failed to verify username!");
 +                            server.server.getLogger().log(java.util.logging.Level.WARNING, "Exception verifying " + LoginListener.this.requestedUsername, ex);
@@ -30,7 +30,7 @@ index 678a4f0529..6f1d3a94d0 100644
              }
  
          }
-@@ -227,40 +240,7 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
+@@ -222,40 +235,7 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
                              return;
                          }
  
@@ -71,8 +71,8 @@ index 678a4f0529..6f1d3a94d0 100644
 +                        new LoginHandler().fireEvents(gameprofile);
                      } else if (LoginListener.this.server.isSingleplayer()) {
                          LoginListener.LOGGER.warn("Failed to verify username but will let them in anyway!");
-                         LoginListener.this.startClientVerification(LoginListener.createOfflineProfile(s1));
-@@ -297,6 +277,48 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
+                         LoginListener.this.startClientVerification(UUIDUtil.createOfflineProfile(s1));
+@@ -292,6 +272,48 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
          thread.start();
      }
  
@@ -122,5 +122,5 @@ index 678a4f0529..6f1d3a94d0 100644
      public void handleCustomQueryPacket(ServerboundCustomQueryAnswerPacket serverboundcustomqueryanswerpacket) {
          this.disconnect(LoginListener.DISCONNECT_UNEXPECTED_QUERY);
 -- 
-2.42.0
+2.43.0
 

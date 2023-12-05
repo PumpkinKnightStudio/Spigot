@@ -1,14 +1,14 @@
-From 185caa76c76d11847e9d5594a15527015e4b76e8 Mon Sep 17 00:00:00 2001
+From 6ba5fb32c1edf7c88199cede0b4c036e3b931a02 Mon Sep 17 00:00:00 2001
 From: David <dmck2b@gmail.com>
 Date: Mon, 21 Apr 2014 12:43:08 +0100
 Subject: [PATCH] Prevent NoClassDefError crash and notify on crash
 
 
 diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
-index fa0391b5ed..c331438113 100644
+index 0406626130..e45a5c14b4 100644
 --- a/src/main/java/net/minecraft/world/level/World.java
 +++ b/src/main/java/net/minecraft/world/level/World.java
-@@ -157,6 +157,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -160,6 +160,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      public final org.spigotmc.SpigotWorldConfig spigotConfig; // Spigot
  
      public final SpigotTimings.WorldTimingsHandler timings; // Spigot
@@ -16,7 +16,7 @@ index fa0391b5ed..c331438113 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -379,7 +380,13 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -382,7 +383,13 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
                  // CraftBukkit start
                  if (!this.captureBlockStates) { // Don't notify clients or update physics while capturing blockstates
                      // Modularize client and physic updates
@@ -65,5 +65,5 @@ index 4734d4ae83..b4eeeb0d00 100644
                  log.log( Level.SEVERE, "Server thread dump (Look for plugins here before reporting to Spigot!):" );
                  dumpThread( ManagementFactory.getThreadMXBean().getThreadInfo( MinecraftServer.getServer().serverThread.getId(), Integer.MAX_VALUE ), log );
 -- 
-2.42.0
+2.43.0
 

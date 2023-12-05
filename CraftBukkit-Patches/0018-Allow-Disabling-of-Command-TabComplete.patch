@@ -1,14 +1,14 @@
-From fe78629e47ec11c6476f1c9041859fc14513a98a Mon Sep 17 00:00:00 2001
+From bacf5816e4d6927b5d6632488a27e7c4edcac6bc Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 18:05:54 +1000
 Subject: [PATCH] Allow Disabling of Command TabComplete
 
 
 diff --git a/src/main/java/net/minecraft/commands/CommandDispatcher.java b/src/main/java/net/minecraft/commands/CommandDispatcher.java
-index 5a4d3a494..64d43456b 100644
+index 52f9c46b34..034d4b7592 100644
 --- a/src/main/java/net/minecraft/commands/CommandDispatcher.java
 +++ b/src/main/java/net/minecraft/commands/CommandDispatcher.java
-@@ -379,6 +379,7 @@ public class CommandDispatcher {
+@@ -432,6 +432,7 @@ public class CommandDispatcher {
      }
  
      public void sendCommands(EntityPlayer entityplayer) {
@@ -16,7 +16,7 @@ index 5a4d3a494..64d43456b 100644
          // CraftBukkit start
          // Register Vanilla commands into builtRoot as before
          Map<CommandNode<CommandListenerWrapper>, CommandNode<ICompletionProvider>> map = Maps.newIdentityHashMap(); // Use identity to prevent aliasing issues
-@@ -417,6 +418,7 @@ public class CommandDispatcher {
+@@ -470,6 +471,7 @@ public class CommandDispatcher {
  
          while (iterator.hasNext()) {
              CommandNode<CommandListenerWrapper> commandnode2 = (CommandNode) iterator.next();
@@ -25,10 +25,10 @@ index 5a4d3a494..64d43456b 100644
              if (commandnode2.canUse(commandlistenerwrapper)) {
                  ArgumentBuilder argumentbuilder = commandnode2.createBuilder(); // CraftBukkit - decompile error
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b303d8fab..004be8656 100644
+index 0ca48377ee..d2e62da863 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2077,6 +2077,13 @@ public final class CraftServer implements Server {
+@@ -2112,6 +2112,13 @@ public final class CraftServer implements Server {
      }
  
      public List<String> tabCompleteCommand(Player player, String message, WorldServer world, Vec3D pos) {
@@ -43,7 +43,7 @@ index b303d8fab..004be8656 100644
          try {
              if (message.startsWith("/")) {
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index bc9fbcc58..fc352ecf1 100644
+index bc9fbcc584..fc352ecf10 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -156,4 +156,23 @@ public class SpigotConfig
@@ -71,5 +71,5 @@ index bc9fbcc58..fc352ecf1 100644
 +    }
  }
 -- 
-2.42.0
+2.43.0
 

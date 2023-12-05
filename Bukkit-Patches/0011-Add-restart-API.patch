@@ -1,11 +1,11 @@
-From eca34aa3995a4038fa29936a4e7bef123447448a Mon Sep 17 00:00:00 2001
+From bcdd5fe2fec5aee09013f0491324a37dfca2f9d9 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 13 Jul 2015 19:10:15 +1000
 Subject: [PATCH] Add restart API.
 
 
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 6f296643..0f38cffd 100644
+index 6f2966434..0f38cffd9 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
 @@ -1804,6 +1804,13 @@ public interface Server extends PluginMessageRecipient {
@@ -23,5 +23,5 @@ index 6f296643..0f38cffd 100644
  
      @NotNull
 -- 
-2.42.0
+2.43.0
 

@@ -1,4 +1,4 @@
-From 1b4b6fac53cb77e93309d874960d213ba0068e7a Mon Sep 17 00:00:00 2001
+From 0e7f94619f881aac7afbe3c297125f85fda15a2d Mon Sep 17 00:00:00 2001
 From: erocs <github@erocs.org>
 Date: Sun, 8 Sep 2013 12:06:15 -0700
 Subject: [PATCH] Hopper Customisations
@@ -168,5 +168,5 @@ index ab984b2109..cec948a055 100644
 +    }
  }
 -- 
-2.42.0
+2.43.0
 

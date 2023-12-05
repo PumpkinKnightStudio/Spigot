@@ -1,4 +1,4 @@
-From 8fde5137806daa0f9700e545318fbc17fb9b1a38 Mon Sep 17 00:00:00 2001
+From fa3f71290f9bbf043c1c16724668fe22dbec8fb8 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -9,10 +9,10 @@ This will drastically cut down on tick timings for entities that are not in rang
 This change can have dramatic impact on gameplay if configured too low. Balance according to your servers desired gameplay.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index e4cd5abe0e..7cb48eb05a 100644
+index e714d7f714..100cb55592 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
-@@ -410,6 +410,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -427,6 +427,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
                  gameprofilerfiller.pop();
              }
  
@@ -20,7 +20,7 @@ index e4cd5abe0e..7cb48eb05a 100644
              timings.entityTick.startTiming(); // Spigot
              this.entityTickList.forEach((entity) -> {
                  if (!entity.isRemoved()) {
-@@ -843,6 +844,13 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -862,6 +863,13 @@ public class WorldServer extends World implements GeneratorAccessSeed {
      }
  
      public void tickNonPassenger(Entity entity) {
@@ -35,10 +35,10 @@ index e4cd5abe0e..7cb48eb05a 100644
          entity.setOldPosAndRot();
          GameProfilerFiller gameprofilerfiller = this.getProfiler();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 44f0d3d6fb..9e5d7fa7e5 100644
+index 1d1471aeb0..a7c38c5293 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -314,6 +314,12 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -315,6 +315,12 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
      // Main use case currently is for SPIGOT-7487, preventing dropping of leash when leash is removed
      public boolean pluginRemoved = false;
      public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getEntityTimings(this); // Spigot
@@ -51,7 +51,7 @@ index 44f0d3d6fb..9e5d7fa7e5 100644
  
      public float getBukkitYaw() {
          return this.yRot;
-@@ -351,6 +357,13 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -352,6 +358,13 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
          this.position = Vec3D.ZERO;
          this.blockPosition = BlockPosition.ZERO;
          this.chunkPosition = ChunkCoordIntPair.ZERO;
@@ -125,10 +125,10 @@ index 3d67ac66f6..c27be344f7 100644
      public void tick() {
          super.tick();
 diff --git a/src/main/java/net/minecraft/world/entity/EntityLiving.java b/src/main/java/net/minecraft/world/entity/EntityLiving.java
-index b8c112bcd8..684f35e012 100644
+index 2516f255b1..193ae58065 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityLiving.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityLiving.java
-@@ -267,6 +267,13 @@ public abstract class EntityLiving extends Entity implements Attackable {
+@@ -266,6 +266,13 @@ public abstract class EntityLiving extends Entity implements Attackable {
          return getYHeadRot();
      }
      // CraftBukkit end
@@ -143,10 +143,10 @@ index b8c112bcd8..684f35e012 100644
      protected EntityLiving(EntityTypes<? extends EntityLiving> entitytypes, World world) {
          super(entitytypes, world);
 diff --git a/src/main/java/net/minecraft/world/entity/item/EntityItem.java b/src/main/java/net/minecraft/world/entity/item/EntityItem.java
-index 5ebfa14c1e..7942e04d4f 100644
+index 0a7ceb6256..969d304469 100644
 --- a/src/main/java/net/minecraft/world/entity/item/EntityItem.java
 +++ b/src/main/java/net/minecraft/world/entity/item/EntityItem.java
-@@ -202,6 +202,28 @@ public class EntityItem extends Entity implements TraceableEntity {
+@@ -220,6 +220,28 @@ public class EntityItem extends Entity implements TraceableEntity {
          }
      }
  
@@ -176,7 +176,7 @@ index 5ebfa14c1e..7942e04d4f 100644
      protected BlockPosition getBlockPosBelowThatAffectsMyMovement() {
          return this.getOnPos(0.999999F);
 diff --git a/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java b/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java
-index ae62c50f1b..68cbd44270 100644
+index 49ae4e71bc..32bfae71eb 100644
 --- a/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java
 +++ b/src/main/java/net/minecraft/world/entity/npc/EntityVillager.java
 @@ -224,6 +224,17 @@ public class EntityVillager extends EntityVillagerAbstract implements Reputation
@@ -198,12 +198,12 @@ index ae62c50f1b..68cbd44270 100644
      protected void customServerAiStep() {
          this.level().getProfiler().push("villagerBrain");
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java b/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java
-index 0da5895fea..a3047ef01d 100644
+index 7fdb493b97..ef1b7e5bab 100644
 --- a/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java
 +++ b/src/main/java/net/minecraft/world/entity/projectile/EntityArrow.java
-@@ -75,6 +75,18 @@ public abstract class EntityArrow extends IProjectile {
-     @Nullable
+@@ -77,6 +77,18 @@ public abstract class EntityArrow extends IProjectile {
      private List<Entity> piercedAndKilledEntities;
+     public ItemStack pickupItemStack;
  
 +    // Spigot Start
 +    @Override
@@ -217,7 +217,7 @@ index 0da5895fea..a3047ef01d 100644
 +    }
 +    // Spigot End
 +
-     protected EntityArrow(EntityTypes<? extends EntityArrow> entitytypes, World world) {
+     protected EntityArrow(EntityTypes<? extends EntityArrow> entitytypes, World world, ItemStack itemstack) {
          super(entitytypes, world);
          this.pickup = EntityArrow.PickupStatus.DISALLOWED;
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/EntityFireworks.java b/src/main/java/net/minecraft/world/entity/projectile/EntityFireworks.java

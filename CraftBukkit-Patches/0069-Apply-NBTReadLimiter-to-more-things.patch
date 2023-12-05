@@ -1,14 +1,14 @@
-From e6c007c5be459b209fce95a98233997fbda9c950 Mon Sep 17 00:00:00 2001
+From 3b5acd7c87e9101b077e9909a7e752139395d037 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 27 Jul 2014 20:46:04 +1000
 Subject: [PATCH] Apply NBTReadLimiter to more things.
 
 
 diff --git a/src/main/java/net/minecraft/nbt/NBTCompressedStreamTools.java b/src/main/java/net/minecraft/nbt/NBTCompressedStreamTools.java
-index 7a7deeb082..733c653941 100644
+index ade19b8f18..521ea19199 100644
 --- a/src/main/java/net/minecraft/nbt/NBTCompressedStreamTools.java
 +++ b/src/main/java/net/minecraft/nbt/NBTCompressedStreamTools.java
-@@ -229,6 +229,12 @@ public class NBTCompressedStreamTools {
+@@ -297,6 +297,12 @@ public class NBTCompressedStreamTools {
      }
  
      public static NBTTagCompound read(DataInput datainput, NBTReadLimiter nbtreadlimiter) throws IOException {
@@ -67,5 +67,5 @@ index 0000000000..e74c61ca9b
 +    }
 +}
 -- 
-2.42.0
+2.43.0
 

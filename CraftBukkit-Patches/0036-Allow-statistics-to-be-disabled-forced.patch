@@ -1,4 +1,4 @@
-From 39149969c90b58f6f34da1c521cb910f2d6ef5e8 Mon Sep 17 00:00:00 2001
+From 5f8653d39fa6c81a1f0e6df0b1407711a92ea104 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Tue, 7 Jan 2014 15:56:26 +0000
 Subject: [PATCH] Allow statistics to be disabled/forced
@@ -94,5 +94,5 @@ index c5989e8e9b..0aab647abb 100644
 +    }
  }
 -- 
-2.42.0
+2.43.0
 

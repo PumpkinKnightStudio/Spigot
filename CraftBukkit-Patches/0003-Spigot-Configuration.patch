@@ -1,4 +1,4 @@
-From 1da3503ca9491d69636415f011389eee4446f0a6 Mon Sep 17 00:00:00 2001
+From 58f7deb1211aeb89c389d18b5653c2bea794dda7 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -6,7 +6,7 @@ Subject: [PATCH] Spigot Configuration
 Provides the basic infrastructure to load and save the Spigot configuration file, spigot.yml
 
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index bfd42c143..8d80161d2 100644
+index c7d70cbead..495e5b7d49 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -178,6 +178,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -31,10 +31,10 @@ index bfd42c143..8d80161d2 100644
          server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.STARTUP);
          // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
-index 63b48cf02..8610cb15f 100644
+index aac03fbfe2..eabc5d5231 100644
 --- a/src/main/java/net/minecraft/world/level/World.java
 +++ b/src/main/java/net/minecraft/world/level/World.java
-@@ -153,6 +153,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -156,6 +156,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      public List<EntityItem> captureDrops;
      public final it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap<SpawnCategory> ticksPerSpawnCategory = new it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap<>();
      public boolean populating;
@@ -42,7 +42,7 @@ index 63b48cf02..8610cb15f 100644
  
      public CraftWorld getWorld() {
          return this.world;
-@@ -165,6 +166,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+@@ -168,6 +169,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
      public abstract ResourceKey<WorldDimension> getTypeKey();
  
      protected World(WorldDataMutable worlddatamutable, ResourceKey<World> resourcekey, IRegistryCustom iregistrycustom, Holder<DimensionManager> holder, Supplier<GameProfilerFiller> supplier, boolean flag, boolean flag1, long i, int j, org.bukkit.generator.ChunkGenerator gen, org.bukkit.generator.BiomeProvider biomeProvider, org.bukkit.World.Environment env) {
@@ -51,10 +51,10 @@ index 63b48cf02..8610cb15f 100644
          this.world = new CraftWorld((WorldServer) this, gen, biomeProvider, env);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 9b0c485dc..42049a0ad 100644
+index 0d4a200a92..c9716881ef 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -899,6 +899,7 @@ public final class CraftServer implements Server {
+@@ -897,6 +897,7 @@ public final class CraftServer implements Server {
              logger.log(Level.WARNING, "Failed to load banned-players.json, " + ex.getMessage());
          }
  
@@ -62,7 +62,7 @@ index 9b0c485dc..42049a0ad 100644
          for (WorldServer world : console.getAllLevels()) {
              world.serverLevelData.setDifficulty(config.difficulty);
              world.setSpawnSettings(config.spawnMonsters, config.spawnAnimals);
-@@ -913,11 +914,13 @@ public final class CraftServer implements Server {
+@@ -911,11 +912,13 @@ public final class CraftServer implements Server {
                      }
                  }
              }
@@ -77,7 +77,7 @@ index 9b0c485dc..42049a0ad 100644
          ignoreVanillaPermissions = commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 560fa9b85..7863dc451 100644
+index 560fa9b859..7863dc4513 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -133,6 +133,14 @@ public class Main {
@@ -97,7 +97,7 @@ index 560fa9b85..7863dc451 100644
  
 diff --git a/src/main/java/org/spigotmc/SpigotCommand.java b/src/main/java/org/spigotmc/SpigotCommand.java
 new file mode 100644
-index 000000000..7443e7334
+index 0000000000..7443e7334c
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SpigotCommand.java
 @@ -0,0 +1,44 @@
@@ -147,7 +147,7 @@ index 000000000..7443e7334
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
 new file mode 100644
-index 000000000..9ee0b4a1e
+index 0000000000..9ee0b4a1e7
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -0,0 +1,140 @@
@@ -293,7 +293,7 @@ index 000000000..9ee0b4a1e
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 new file mode 100644
-index 000000000..1cce14866
+index 0000000000..1cce14866a
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -0,0 +1,82 @@
@@ -380,5 +380,5 @@ index 000000000..1cce14866
 +    }
 +}
 -- 
-2.42.0
+2.43.0
 

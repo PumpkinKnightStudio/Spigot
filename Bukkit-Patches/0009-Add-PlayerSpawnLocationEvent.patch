@@ -1,4 +1,4 @@
-From f496ed3970651f1eaddb0cd78bedd4c5e0b0024c Mon Sep 17 00:00:00 2001
+From 2c38fbfd1ea8c44d11b3b7591dc84b73a1610e81 Mon Sep 17 00:00:00 2001
 From: ninja <xninja@openmailbox.org>
 Date: Tue, 8 Apr 2014 14:01:32 +0200
 Subject: [PATCH] Add PlayerSpawnLocationEvent.
@@ -6,7 +6,7 @@ Subject: [PATCH] Add PlayerSpawnLocationEvent.
 
 diff --git a/src/main/java/org/spigotmc/event/player/PlayerSpawnLocationEvent.java b/src/main/java/org/spigotmc/event/player/PlayerSpawnLocationEvent.java
 new file mode 100644
-index 00000000..2515887c
+index 000000000..2515887c2
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/event/player/PlayerSpawnLocationEvent.java
 @@ -0,0 +1,53 @@
@@ -65,7 +65,7 @@ index 00000000..2515887c
 +}
 diff --git a/src/main/java/org/spigotmc/event/player/package-info.java b/src/main/java/org/spigotmc/event/player/package-info.java
 new file mode 100644
-index 00000000..6a2d5d84
+index 000000000..6a2d5d84e
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/event/player/package-info.java
 @@ -0,0 +1,4 @@
@@ -74,5 +74,5 @@ index 00000000..6a2d5d84
 + */
 +package org.spigotmc.event.player;
 -- 
-2.42.0
+2.43.0
 

@@ -1,4 +1,4 @@
-From 9b51a22b6e2baf9df92c5f949b1eb1cee170231e Mon Sep 17 00:00:00 2001
+From 6f68242946e5df4ddd3031169a646526271e5382 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -83,36 +83,43 @@ index 708f162e84..e5b997068b 100644
                  break;
              case STATUS:
 diff --git a/src/main/java/net/minecraft/server/network/LoginListener.java b/src/main/java/net/minecraft/server/network/LoginListener.java
-index 6f1d3a94d0..8c55672b11 100644
+index 61e8ab5d3d..67799e6d14 100644
 --- a/src/main/java/net/minecraft/server/network/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/network/LoginListener.java
-@@ -243,7 +243,7 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
+@@ -147,7 +147,7 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
+                     @Override
+                     public void run() {
+                         try {
+-                            new LoginHandler().fireEvents(UUIDUtil.createOfflineProfile(LoginListener.this.requestedUsername));
++                            new LoginHandler().fireEvents(createOfflineProfile(LoginListener.this.requestedUsername)); // Spigot
+                         } catch (Exception ex) {
+                             disconnect("Failed to verify username!");
+                             server.server.getLogger().log(java.util.logging.Level.WARNING, "Exception verifying " + LoginListener.this.requestedUsername, ex);
+@@ -238,7 +238,7 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
                          new LoginHandler().fireEvents(gameprofile);
                      } else if (LoginListener.this.server.isSingleplayer()) {
                          LoginListener.LOGGER.warn("Failed to verify username but will let them in anyway!");
--                        LoginListener.this.startClientVerification(LoginListener.createOfflineProfile(s1));
+-                        LoginListener.this.startClientVerification(UUIDUtil.createOfflineProfile(s1));
 +                        LoginListener.this.startClientVerification(LoginListener.this.createOfflineProfile(s1)); // Spigot
                      } else {
                          LoginListener.this.disconnect(IChatBaseComponent.translatable("multiplayer.disconnect.unverified_username"));
                          LoginListener.LOGGER.error("Username '{}' tried to join with an invalid session", s1);
-@@ -251,7 +251,7 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
+@@ -246,7 +246,7 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
                  } catch (AuthenticationUnavailableException authenticationunavailableexception) {
                      if (LoginListener.this.server.isSingleplayer()) {
                          LoginListener.LOGGER.warn("Authentication servers are down but will let them in anyway!");
--                        LoginListener.this.startClientVerification(LoginListener.createOfflineProfile(s1));
+-                        LoginListener.this.startClientVerification(UUIDUtil.createOfflineProfile(s1));
 +                        LoginListener.this.startClientVerification(LoginListener.this.createOfflineProfile(s1)); // Spigot
                      } else {
                          LoginListener.this.disconnect(IChatBaseComponent.translatable("multiplayer.disconnect.authservers_down"));
                          LoginListener.LOGGER.error("Couldn't verify username because servers are unavailable");
-@@ -335,10 +335,30 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
-         this.state = LoginListener.EnumProtocolState.ACCEPTED;
+@@ -337,6 +337,32 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
+         });
      }
  
--    protected static GameProfile createOfflineProfile(String s) {
--        UUID uuid = UUIDUtil.createOfflinePlayerUUID(s);
 +    // Spigot start
 +    protected GameProfile createOfflineProfile(String s) {
-+        UUID uuid;
++        java.util.UUID uuid;
 +        if ( connection.spoofedUUID != null )
 +        {
 +            uuid = connection.spoofedUUID;
@@ -131,18 +138,19 @@ index 6f1d3a94d0..8c55672b11 100644
 +                gameProfile.getProperties().put( property.name(), property );
 +            }
 +        }
- 
--        return new GameProfile(uuid, s);
++
 +        return gameProfile;
-+        // Spigot end
-     }
- 
++    }
++    // Spigot end
++
      private static enum EnumProtocolState {
+ 
+         HELLO, KEY, AUTHENTICATING, NEGOTIATING, VERIFYING, WAITING_FOR_DUPE_DISCONNECT, PROTOCOL_SWITCHING, ACCEPTED;
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index 393b44d7b7..99f19c0dcf 100644
+index c8090bc73e..67051c4e48 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-@@ -1925,7 +1925,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
+@@ -1932,7 +1932,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
  
                          String message = String.format(queueEvent.getFormat(), queueEvent.getPlayer().getDisplayName(), queueEvent.getMessage());
                          if (((LazyPlayerSet) queueEvent.getRecipients()).isLazy()) {
@@ -151,7 +159,7 @@ index 393b44d7b7..99f19c0dcf 100644
                                  PlayerConnection.this.server.getPlayerList().broadcastChatMessage(original, PlayerConnection.this.player, ChatMessageType.bind(ChatMessageType.CHAT, (Entity) PlayerConnection.this.player));
                                  return null;
                              }
-@@ -1961,7 +1961,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
+@@ -1968,7 +1968,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
  
                  s = String.format(event.getFormat(), event.getPlayer().getDisplayName(), event.getMessage());
                  if (((LazyPlayerSet) event.getRecipients()).isLazy()) {
@@ -160,7 +168,7 @@ index 393b44d7b7..99f19c0dcf 100644
                          PlayerConnection.this.server.getPlayerList().broadcastChatMessage(original, PlayerConnection.this.player, ChatMessageType.bind(ChatMessageType.CHAT, (Entity) PlayerConnection.this.player));
                          return;
                      }
-@@ -2218,6 +2218,13 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
+@@ -2225,6 +2225,13 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
          return this.connection.getRemoteAddress();
      }
  
@@ -175,10 +183,10 @@ index 393b44d7b7..99f19c0dcf 100644
          this.waitingForSwitchToConfig = true;
          this.removePlayerFromWorld();
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 2f9ab04aec..185bd9f553 100644
+index 92815d055f..47b472af44 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -584,7 +584,7 @@ public abstract class PlayerList {
+@@ -583,7 +583,7 @@ public abstract class PlayerList {
  
          EntityPlayer entity = new EntityPlayer(this.server, this.server.getLevel(World.OVERWORLD), gameprofile, ClientInformation.createDefault());
          Player player = entity.getBukkitEntity();
@@ -188,10 +196,10 @@ index 2f9ab04aec..185bd9f553 100644
          if (getBans().isBanned(gameprofile) && !getBans().get(gameprofile).hasExpired()) {
              GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.bans.get(gameprofile);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b79f9163b7..4868f4a066 100644
+index 8feb9c9c61..b8989e9c2d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -759,7 +759,13 @@ public final class CraftServer implements Server {
+@@ -757,7 +757,13 @@ public final class CraftServer implements Server {
  
      @Override
      public long getConnectionThrottle() {
@@ -207,10 +215,10 @@ index b79f9163b7..4868f4a066 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 64586fdd99..461ce7d61b 100644
+index 9098d4536e..0f2766054b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -2169,6 +2169,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2177,6 +2177,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      private final Player.Spigot spigot = new Player.Spigot()
      {
  

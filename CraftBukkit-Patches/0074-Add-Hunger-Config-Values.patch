@@ -1,35 +1,14 @@
-From b80cde5c8fd2355619637d6eb90e07049f27f105 Mon Sep 17 00:00:00 2001
+From f952802a65ffac8310d7699a8fee33a7ad2bc745 Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
 
 
-diff --git a/src/main/java/net/minecraft/world/entity/player/EntityHuman.java b/src/main/java/net/minecraft/world/entity/player/EntityHuman.java
-index 56d240ba03..f6c20eafe2 100644
---- a/src/main/java/net/minecraft/world/entity/player/EntityHuman.java
-+++ b/src/main/java/net/minecraft/world/entity/player/EntityHuman.java
-@@ -1393,7 +1393,7 @@ public abstract class EntityHuman extends EntityLiving {
-                             }
-                         }
- 
--                        this.causeFoodExhaustion(0.1F, EntityExhaustionEvent.ExhaustionReason.ATTACK); // CraftBukkit - EntityExhaustionEvent
-+                        this.causeFoodExhaustion(this.level().spigotConfig.combatExhaustion, EntityExhaustionEvent.ExhaustionReason.ATTACK); // CraftBukkit - EntityExhaustionEvent // Spigot - Change to use configurable value
-                     } else {
-                         this.level().playSound((EntityHuman) null, this.getX(), this.getY(), this.getZ(), SoundEffects.PLAYER_ATTACK_NODAMAGE, this.getSoundSource(), 1.0F, 1.0F);
-                         if (flag4) {
-@@ -1573,9 +1573,9 @@ public abstract class EntityHuman extends EntityLiving {
-         super.jumpFromGround();
-         this.awardStat(StatisticList.JUMP);
-         if (this.isSprinting()) {
--            this.causeFoodExhaustion(0.2F, EntityExhaustionEvent.ExhaustionReason.JUMP_SPRINT); // CraftBukkit - EntityExhaustionEvent
-+            this.causeFoodExhaustion(this.level().spigotConfig.jumpSprintExhaustion, EntityExhaustionEvent.ExhaustionReason.JUMP_SPRINT); // CraftBukkit - EntityExhaustionEvent // Spigot - Change to use configurable value
-         } else {
--            this.causeFoodExhaustion(0.05F, EntityExhaustionEvent.ExhaustionReason.JUMP); // CraftBukkit - EntityExhaustionEvent
-+            this.causeFoodExhaustion(this.level().spigotConfig.jumpWalkExhaustion, EntityExhaustionEvent.ExhaustionReason.JUMP); // CraftBukkit - EntityExhaustionEvent // Spigot - Change to use configurable value
-         }
- 
-     }
-@@ -1644,19 +1644,19 @@ public abstract class EntityHuman extends EntityLiving {
+diff --git a/src/main/java/net/minecraft/server/level/EntityPlayer.java b/src/main/java/net/minecraft/server/level/EntityPlayer.java
+index 0afc71d0c9..c69b4f7654 100644
+--- a/src/main/java/net/minecraft/server/level/EntityPlayer.java
++++ b/src/main/java/net/minecraft/server/level/EntityPlayer.java
+@@ -1551,19 +1551,19 @@ public class EntityPlayer extends EntityHuman {
                  i = Math.round((float) Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2) * 100.0F);
                  if (i > 0) {
                      this.awardStat(StatisticList.SWIM_ONE_CM, i);
@@ -52,7 +31,7 @@ index 56d240ba03..f6c20eafe2 100644
                  }
              } else if (this.onClimbable()) {
                  if (d1 > 0.0D) {
-@@ -1667,13 +1667,13 @@ public abstract class EntityHuman extends EntityLiving {
+@@ -1574,13 +1574,13 @@ public class EntityPlayer extends EntityHuman {
                  if (i > 0) {
                      if (this.isSprinting()) {
                          this.awardStat(StatisticList.SPRINT_ONE_CM, i);
@@ -69,6 +48,31 @@ index 56d240ba03..f6c20eafe2 100644
                      }
                  }
              } else if (this.isFallFlying()) {
+diff --git a/src/main/java/net/minecraft/world/entity/player/EntityHuman.java b/src/main/java/net/minecraft/world/entity/player/EntityHuman.java
+index ee2ca32701..31b4253f8e 100644
+--- a/src/main/java/net/minecraft/world/entity/player/EntityHuman.java
++++ b/src/main/java/net/minecraft/world/entity/player/EntityHuman.java
+@@ -1387,7 +1387,7 @@ public abstract class EntityHuman extends EntityLiving {
+                             }
+                         }
+ 
+-                        this.causeFoodExhaustion(0.1F, EntityExhaustionEvent.ExhaustionReason.ATTACK); // CraftBukkit - EntityExhaustionEvent
++                        this.causeFoodExhaustion(this.level().spigotConfig.combatExhaustion, EntityExhaustionEvent.ExhaustionReason.ATTACK); // CraftBukkit - EntityExhaustionEvent // Spigot - Change to use configurable value
+                     } else {
+                         this.level().playSound((EntityHuman) null, this.getX(), this.getY(), this.getZ(), SoundEffects.PLAYER_ATTACK_NODAMAGE, this.getSoundSource(), 1.0F, 1.0F);
+                         if (flag4) {
+@@ -1567,9 +1567,9 @@ public abstract class EntityHuman extends EntityLiving {
+         super.jumpFromGround();
+         this.awardStat(StatisticList.JUMP);
+         if (this.isSprinting()) {
+-            this.causeFoodExhaustion(0.2F, EntityExhaustionEvent.ExhaustionReason.JUMP_SPRINT); // CraftBukkit - EntityExhaustionEvent
++            this.causeFoodExhaustion(this.level().spigotConfig.jumpSprintExhaustion, EntityExhaustionEvent.ExhaustionReason.JUMP_SPRINT); // CraftBukkit - EntityExhaustionEvent // Spigot - Change to use configurable value
+         } else {
+-            this.causeFoodExhaustion(0.05F, EntityExhaustionEvent.ExhaustionReason.JUMP); // CraftBukkit - EntityExhaustionEvent
++            this.causeFoodExhaustion(this.level().spigotConfig.jumpWalkExhaustion, EntityExhaustionEvent.ExhaustionReason.JUMP); // CraftBukkit - EntityExhaustionEvent // Spigot - Change to use configurable value
+         }
+ 
+     }
 diff --git a/src/main/java/net/minecraft/world/food/FoodMetaData.java b/src/main/java/net/minecraft/world/food/FoodMetaData.java
 index cf72b81b5e..ee5a7c4606 100644
 --- a/src/main/java/net/minecraft/world/food/FoodMetaData.java
@@ -118,5 +122,5 @@ index 7882c95f4c..1b5d1e2837 100644
 +    }
  }
 -- 
-2.42.0
+2.43.0
 

@@ -1,14 +1,14 @@
-From ca6689e8e18db7f614eea799bffa3370a04c93fb Mon Sep 17 00:00:00 2001
+From 54dd29b50000ca67d75d8921d707a336f7fa9898 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 24 Oct 2021 20:29:25 +1100
 Subject: [PATCH] Configurable Thunder Chance
 
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 2c4a29f245..092ae42fab 100644
+index 96006c162c..69e4fee4cf 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
-@@ -501,7 +501,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
+@@ -518,7 +518,7 @@ public class WorldServer extends World implements GeneratorAccessSeed {
          GameProfilerFiller gameprofilerfiller = this.getProfiler();
  
          gameprofilerfiller.push("thunder");
@@ -33,5 +33,5 @@ index 68cf01386e..b6ac09ee9f 100644
 +    }
  }
 -- 
-2.42.0
+2.43.0
 

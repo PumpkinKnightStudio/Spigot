@@ -1,14 +1,14 @@
-From df4a88a2ff8ed48d0c8727de1cd69b643e96b857 Mon Sep 17 00:00:00 2001
+From ebf8d29effb4e1dd4f2d44e29af00df0de001dce Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Fri, 4 Jul 2014 23:03:13 +0200
 Subject: [PATCH] Make "moved wrongly" limit configurable
 
 
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index d610d6fd7..bd74d09a7 100644
+index 0e65f939a8..a8747c9761 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-@@ -538,7 +538,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
+@@ -541,7 +541,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
                  d10 = d6 * d6 + d7 * d7 + d8 * d8;
                  boolean flag2 = false;
  
@@ -17,7 +17,7 @@ index d610d6fd7..bd74d09a7 100644
                      flag2 = true;
                      PlayerConnection.LOGGER.warn("{} (vehicle of {}) moved wrongly! {}", new Object[]{entity.getName().getString(), this.player.getName().getString(), Math.sqrt(d10)});
                  }
-@@ -1215,7 +1215,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
+@@ -1242,7 +1242,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
                              d10 = d6 * d6 + d7 * d7 + d8 * d8;
                              boolean flag2 = false;
  
@@ -27,7 +27,7 @@ index d610d6fd7..bd74d09a7 100644
                                  PlayerConnection.LOGGER.warn("{} moved wrongly!", this.player.getName().getString());
                              }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 3540e2daf..9e34d3027 100644
+index 3540e2dafb..9e34d30271 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -326,4 +326,10 @@ public class SpigotConfig
@@ -42,5 +42,5 @@ index 3540e2daf..9e34d3027 100644
 +    }
  }
 -- 
-2.42.0
+2.43.0
 
