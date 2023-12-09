@@ -1,15 +1,15 @@
-From bcdd5fe2fec5aee09013f0491324a37dfca2f9d9 Mon Sep 17 00:00:00 2001
+From be10cfb15747c86ee98f5df6471a58e93a3a2e0e Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 13 Jul 2015 19:10:15 +1000
 Subject: [PATCH] Add restart API.
 
 
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 6f2966434..0f38cffd9 100644
+index b0700e95..34bdfee7 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1804,6 +1804,13 @@ public interface Server extends PluginMessageRecipient {
-         public void broadcast(@NotNull net.md_5.bungee.api.chat.BaseComponent... components) {
+@@ -1900,6 +1900,13 @@ public interface Server extends PluginMessageRecipient {
+         public KeyedBossBar createBossBar(@NotNull NamespacedKey key, @Nullable BaseComponent title, @NotNull BarColor color, @NotNull BarStyle style, @NotNull BarFlag... flags) {
              throw new UnsupportedOperationException("Not supported yet.");
          }
 +
@@ -23,5 +23,5 @@ index 6f2966434..0f38cffd9 100644
  
      @NotNull
 -- 
-2.43.0
+2.42.0.windows.2
 
