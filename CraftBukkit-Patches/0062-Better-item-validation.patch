@@ -1,11 +1,11 @@
-From fb6fca55752038d645161127cb82c0cd8558f756 Mon Sep 17 00:00:00 2001
+From d0bc4043c9b818f66e949317c7349686d9271efd Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
 
 
 diff --git a/src/main/java/net/minecraft/network/PacketDataSerializer.java b/src/main/java/net/minecraft/network/PacketDataSerializer.java
-index d5d5b75b36..138bf59b43 100644
+index d5d5b75b3..138bf59b4 100644
 --- a/src/main/java/net/minecraft/network/PacketDataSerializer.java
 +++ b/src/main/java/net/minecraft/network/PacketDataSerializer.java
 @@ -625,6 +625,10 @@ public class PacketDataSerializer extends ByteBuf {
@@ -20,7 +20,7 @@ index d5d5b75b36..138bf59b43 100644
              }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index 03b5764552..dfde2c619c 100644
+index 03b576455..dfde2c619 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 @@ -20,6 +20,10 @@ import org.bukkit.craftbukkit.util.CraftChatMessage;
@@ -58,10 +58,10 @@ index 03b5764552..dfde2c619c 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index d64638f2b6..0bc2e28668 100644
+index 31fd181c2..0a0b5a75e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-@@ -79,6 +79,10 @@ import org.bukkit.inventory.meta.Repairable;
+@@ -78,6 +78,10 @@ import org.bukkit.inventory.meta.Repairable;
  import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
  import org.bukkit.persistence.PersistentDataContainer;
  
@@ -72,7 +72,7 @@ index d64638f2b6..0bc2e28668 100644
  /**
   * Children must include the following:
   *
-@@ -333,18 +337,18 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
+@@ -332,18 +336,18 @@ class CraftMetaItem implements ItemMeta, Damageable, Repairable, BlockDataMeta {
              NBTTagCompound display = tag.getCompound(DISPLAY.NBT);
  
              if (display.contains(NAME.NBT)) {
@@ -96,7 +96,7 @@ index d64638f2b6..0bc2e28668 100644
              }
 diff --git a/src/main/java/org/spigotmc/ValidateUtils.java b/src/main/java/org/spigotmc/ValidateUtils.java
 new file mode 100644
-index 0000000000..58a9534816
+index 000000000..58a953481
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/ValidateUtils.java
 @@ -0,0 +1,14 @@

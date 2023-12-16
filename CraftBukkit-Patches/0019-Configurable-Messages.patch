@@ -1,11 +1,11 @@
-From 818319086783fc7f084a27e901ae3df197f8b0e8 Mon Sep 17 00:00:00 2001
+From 9a1f0ceb0211af818ec8632d828d42c142be6ffd Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 19:21:58 +1000
 Subject: [PATCH] Configurable Messages
 
 
 diff --git a/src/main/java/net/minecraft/server/network/HandshakeListener.java b/src/main/java/net/minecraft/server/network/HandshakeListener.java
-index e9ec3fd8c5..708f162e84 100644
+index e9ec3fd8c..708f162e8 100644
 --- a/src/main/java/net/minecraft/server/network/HandshakeListener.java
 +++ b/src/main/java/net/minecraft/server/network/HandshakeListener.java
 @@ -75,9 +75,9 @@ public class HandshakeListener implements PacketHandshakingInListener {
@@ -21,7 +21,7 @@ index e9ec3fd8c5..708f162e84 100644
  
                      this.connection.send(new PacketLoginOutDisconnect(ichatmutablecomponent));
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index f120e47804..7a5665303c 100644
+index f120e4780..7a5665303 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -597,7 +597,7 @@ public abstract class PlayerList {
@@ -43,10 +43,10 @@ index f120e47804..7a5665303c 100644
          }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index d2e62da863..7b7c4205df 100644
+index 7bad9025a..128f4b743 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -858,11 +858,11 @@ public final class CraftServer implements Server {
+@@ -856,11 +856,11 @@ public final class CraftServer implements Server {
              return true;
          }
  
@@ -63,7 +63,7 @@ index d2e62da863..7b7c4205df 100644
          return false;
      }
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index fc352ecf10..8ad8b25894 100644
+index fc352ecf1..8ad8b2589 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -12,6 +12,7 @@ import java.util.Map;

@@ -1,4 +1,4 @@
-From 9b6dc844d136ce92ab4cdc8bfbcee8b0d442085c Mon Sep 17 00:00:00 2001
+From a34689d48b943ec7870f6bad3f2fc65f0a5778b4 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:46:33 +1100
 Subject: [PATCH] Merge tweaks and configuration
@@ -6,7 +6,7 @@ Subject: [PATCH] Merge tweaks and configuration
 This allows the merging of Experience orbs, as well as the configuration of the merge radius of items. Additionally it refactors the merge algorithm to be a better experience for players.
 
 diff --git a/src/main/java/net/minecraft/world/entity/item/EntityItem.java b/src/main/java/net/minecraft/world/entity/item/EntityItem.java
-index efb64b2fee..595b7d1c0c 100644
+index efb64b2fe..595b7d1c0 100644
 --- a/src/main/java/net/minecraft/world/entity/item/EntityItem.java
 +++ b/src/main/java/net/minecraft/world/entity/item/EntityItem.java
 @@ -239,7 +239,10 @@ public class EntityItem extends Entity implements TraceableEntity {
@@ -31,10 +31,10 @@ index efb64b2fee..595b7d1c0c 100644
              } else {
                  merge(entityitem, itemstack1, this, itemstack);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index aa81911072..5e9c8c6a59 100644
+index be5b0756b..31847dc4c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -709,6 +709,23 @@ public class CraftEventFactory {
+@@ -706,6 +706,23 @@ public class CraftEventFactory {
              return false;
          }
  
@@ -59,7 +59,7 @@ index aa81911072..5e9c8c6a59 100644
      }
  
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index f42972427b..5ff085b9e6 100644
+index f42972427..5ff085b9e 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -134,4 +134,18 @@ public class SpigotWorldConfig
