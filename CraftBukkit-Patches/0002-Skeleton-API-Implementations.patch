@@ -1,4 +1,4 @@
-From 625a2509e92cd721fea6ec98b6c616b8fe5431b8 Mon Sep 17 00:00:00 2001
+From 18102d9b3e658c7a3eecbc2a46c4a6c30588b14c Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -63,10 +63,10 @@ index f9d3b5a49..b63472322 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java b/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
-index 7fa2588b8..e0acbada8 100644
+index be10d200e..861739d4c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
 +++ b/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
-@@ -90,4 +90,16 @@ public abstract class ServerCommandSender implements CommandSender {
+@@ -95,4 +95,16 @@ public abstract class ServerCommandSender implements CommandSender {
      public void sendMessage(UUID uuid, String... messages) {
          this.sendMessage(messages); // ServerCommandSenders have no use for senders
      }

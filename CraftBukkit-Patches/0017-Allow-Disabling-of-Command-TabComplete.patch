@@ -1,4 +1,4 @@
-From 0da383eb31b34e2f8b055f46f320202908397adf Mon Sep 17 00:00:00 2001
+From a596620343de1ec6310317bd1055f4f2f92785f1 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 18:05:54 +1000
 Subject: [PATCH] Allow Disabling of Command TabComplete

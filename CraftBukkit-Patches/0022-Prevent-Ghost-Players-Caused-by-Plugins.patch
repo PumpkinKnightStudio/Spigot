@@ -1,4 +1,4 @@
-From 2877e4c9fc544151a4f07e50b8f7d937de885d69 Mon Sep 17 00:00:00 2001
+From 4078b979da48229c2303ea24e9035f1407b82eef Mon Sep 17 00:00:00 2001
 From: Alex Ciuba <alexciuba@gmail.com>
 Date: Tue, 11 Jun 2013 15:23:03 -0400
 Subject: [PATCH] Prevent Ghost Players Caused by Plugins

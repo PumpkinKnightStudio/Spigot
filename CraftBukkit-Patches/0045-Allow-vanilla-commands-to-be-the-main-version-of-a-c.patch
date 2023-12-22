@@ -1,4 +1,4 @@
-From 7e2eeb05261e779636d0486dc69618109c2d0454 Mon Sep 17 00:00:00 2001
+From 4a4d4bf1067c7856e8eb7041f41e36cc83ff0cda Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Wed, 12 Feb 2014 20:44:14 +0000
 Subject: [PATCH] Allow vanilla commands to be the main version of a command

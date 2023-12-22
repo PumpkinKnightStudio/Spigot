@@ -1,4 +1,4 @@
-From 671d4872339ba0be127f3cb323e7d74501bbb732 Mon Sep 17 00:00:00 2001
+From 8b9254e80133553272a4ec9a85a788b9e6b7e720 Mon Sep 17 00:00:00 2001
 From: ninja- <xninja@openmailbox.org>
 Date: Tue, 8 Oct 2013 14:34:49 +0200
 Subject: [PATCH] Implement respawn API.
