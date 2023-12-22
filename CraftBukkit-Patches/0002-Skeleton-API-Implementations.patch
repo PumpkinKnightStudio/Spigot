@@ -1,4 +1,4 @@
-From 8e9cc465f2ba6bc18917b0c432058d76df489d56 Mon Sep 17 00:00:00 2001
+From 625a2509e92cd721fea6ec98b6c616b8fe5431b8 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -84,7 +84,7 @@ index 7fa2588b8..e0acbada8 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index dfe6110ef..2463725ce 100644
+index 5ad14d4a3..486c4a074 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -865,4 +865,15 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {

@@ -1,4 +1,4 @@
-From 8befbb5eea83c67e1af30f0eaf8bb17c8e04a280 Mon Sep 17 00:00:00 2001
+From 1d22695f088f6198cd13571c9e8f18798065fa12 Mon Sep 17 00:00:00 2001
 From: Tux <write@imaginarycode.com>
 Date: Sun, 9 Feb 2014 14:02:11 -0500
 Subject: [PATCH] Add support for fetching hidden players

@@ -1,4 +1,4 @@
-From aa7baaa4e4cbca661601398b033f00d654b56f61 Mon Sep 17 00:00:00 2001
+From 574640f457c10a5d3127a8dafddd3493be49b86f Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 7 Mar 2016 22:14:13 +1100
 Subject: [PATCH] Crop Growth Rates
@@ -6,7 +6,7 @@ Subject: [PATCH] Crop Growth Rates
 Allows configuring the growth rates of crops as a percentage of their normal growth rate.
 
 diff --git a/src/main/java/net/minecraft/world/level/block/Block.java b/src/main/java/net/minecraft/world/level/block/Block.java
-index 6815e56cfc..2da31a1c01 100644
+index 6815e56cf..2da31a1c0 100644
 --- a/src/main/java/net/minecraft/world/level/block/Block.java
 +++ b/src/main/java/net/minecraft/world/level/block/Block.java
 @@ -537,6 +537,18 @@ public class Block extends BlockBase implements IMaterial {
@@ -29,7 +29,7 @@ index 6815e56cfc..2da31a1c01 100644
  
          private final IBlockData first;
 diff --git a/src/main/java/net/minecraft/world/level/block/BlockBamboo.java b/src/main/java/net/minecraft/world/level/block/BlockBamboo.java
-index 5d6c4626b4..46031f80a0 100644
+index 5d6c4626b..46031f80a 100644
 --- a/src/main/java/net/minecraft/world/level/block/BlockBamboo.java
 +++ b/src/main/java/net/minecraft/world/level/block/BlockBamboo.java
 @@ -134,7 +134,7 @@ public class BlockBamboo extends Block implements IBlockFragilePlantElement {
@@ -42,7 +42,7 @@ index 5d6c4626b4..46031f80a0 100644
  
                  if (i < 16) {
 diff --git a/src/main/java/net/minecraft/world/level/block/BlockBambooSapling.java b/src/main/java/net/minecraft/world/level/block/BlockBambooSapling.java
-index 671c10395e..6d4d73ecf6 100644
+index 671c10395..6d4d73ecf 100644
 --- a/src/main/java/net/minecraft/world/level/block/BlockBambooSapling.java
 +++ b/src/main/java/net/minecraft/world/level/block/BlockBambooSapling.java
 @@ -45,7 +45,7 @@ public class BlockBambooSapling extends Block implements IBlockFragilePlantEleme
@@ -55,7 +55,7 @@ index 671c10395e..6d4d73ecf6 100644
          }
  
 diff --git a/src/main/java/net/minecraft/world/level/block/BlockCactus.java b/src/main/java/net/minecraft/world/level/block/BlockCactus.java
-index 2239b3660a..9b1b72c4cc 100644
+index 2239b3660..9b1b72c4c 100644
 --- a/src/main/java/net/minecraft/world/level/block/BlockCactus.java
 +++ b/src/main/java/net/minecraft/world/level/block/BlockCactus.java
 @@ -65,13 +65,14 @@ public class BlockCactus extends Block {
@@ -76,7 +76,7 @@ index 2239b3660a..9b1b72c4cc 100644
                  }
  
 diff --git a/src/main/java/net/minecraft/world/level/block/BlockCocoa.java b/src/main/java/net/minecraft/world/level/block/BlockCocoa.java
-index 33a159eea3..1ed9a7cf8b 100644
+index 33a159eea..1ed9a7cf8 100644
 --- a/src/main/java/net/minecraft/world/level/block/BlockCocoa.java
 +++ b/src/main/java/net/minecraft/world/level/block/BlockCocoa.java
 @@ -59,7 +59,7 @@ public class BlockCocoa extends BlockFacingHorizontal implements IBlockFragilePl
@@ -89,7 +89,7 @@ index 33a159eea3..1ed9a7cf8b 100644
  
              if (i < 2) {
 diff --git a/src/main/java/net/minecraft/world/level/block/BlockCrops.java b/src/main/java/net/minecraft/world/level/block/BlockCrops.java
-index 53ce0ebb25..945d260678 100644
+index 53ce0ebb2..945d26067 100644
 --- a/src/main/java/net/minecraft/world/level/block/BlockCrops.java
 +++ b/src/main/java/net/minecraft/world/level/block/BlockCrops.java
 @@ -84,7 +84,20 @@ public class BlockCrops extends BlockPlant implements IBlockFragilePlantElement
@@ -115,7 +115,7 @@ index 53ce0ebb25..945d260678 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/world/level/block/BlockGrowingTop.java b/src/main/java/net/minecraft/world/level/block/BlockGrowingTop.java
-index 5dec1616e6..c33668b161 100644
+index 5dec1616e..c33668b16 100644
 --- a/src/main/java/net/minecraft/world/level/block/BlockGrowingTop.java
 +++ b/src/main/java/net/minecraft/world/level/block/BlockGrowingTop.java
 @@ -44,7 +44,19 @@ public abstract class BlockGrowingTop extends BlockGrowingAbstract implements IB
@@ -140,7 +140,7 @@ index 5dec1616e6..c33668b161 100644
  
              if (this.canGrowInto(worldserver.getBlockState(blockposition1))) {
 diff --git a/src/main/java/net/minecraft/world/level/block/BlockMushroom.java b/src/main/java/net/minecraft/world/level/block/BlockMushroom.java
-index 50f5fb45bc..2949ea39f6 100644
+index 50f5fb45b..2949ea39f 100644
 --- a/src/main/java/net/minecraft/world/level/block/BlockMushroom.java
 +++ b/src/main/java/net/minecraft/world/level/block/BlockMushroom.java
 @@ -52,7 +52,7 @@ public class BlockMushroom extends BlockPlant implements IBlockFragilePlantEleme
@@ -153,7 +153,7 @@ index 50f5fb45bc..2949ea39f6 100644
              boolean flag = true;
              Iterator iterator = BlockPosition.betweenClosed(blockposition.offset(-4, -1, -4), blockposition.offset(4, 1, 4)).iterator();
 diff --git a/src/main/java/net/minecraft/world/level/block/BlockNetherWart.java b/src/main/java/net/minecraft/world/level/block/BlockNetherWart.java
-index 47cf9e8b62..3dac9936d7 100644
+index 47cf9e8b6..3dac9936d 100644
 --- a/src/main/java/net/minecraft/world/level/block/BlockNetherWart.java
 +++ b/src/main/java/net/minecraft/world/level/block/BlockNetherWart.java
 @@ -52,7 +52,7 @@ public class BlockNetherWart extends BlockPlant {
@@ -166,7 +166,7 @@ index 47cf9e8b62..3dac9936d7 100644
              org.bukkit.craftbukkit.event.CraftEventFactory.handleBlockGrowEvent(worldserver, blockposition, iblockdata, 2); // CraftBukkit
          }
 diff --git a/src/main/java/net/minecraft/world/level/block/BlockReed.java b/src/main/java/net/minecraft/world/level/block/BlockReed.java
-index 501798b582..afadf84429 100644
+index 501798b58..afadf8442 100644
 --- a/src/main/java/net/minecraft/world/level/block/BlockReed.java
 +++ b/src/main/java/net/minecraft/world/level/block/BlockReed.java
 @@ -62,10 +62,11 @@ public class BlockReed extends Block {
@@ -184,7 +184,7 @@ index 501798b582..afadf84429 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/world/level/block/BlockSapling.java b/src/main/java/net/minecraft/world/level/block/BlockSapling.java
-index e669b36880..47edb9b4ea 100644
+index e669b3688..47edb9b4e 100644
 --- a/src/main/java/net/minecraft/world/level/block/BlockSapling.java
 +++ b/src/main/java/net/minecraft/world/level/block/BlockSapling.java
 @@ -56,7 +56,7 @@ public class BlockSapling extends BlockPlant implements IBlockFragilePlantElemen
@@ -197,7 +197,7 @@ index e669b36880..47edb9b4ea 100644
          }
  
 diff --git a/src/main/java/net/minecraft/world/level/block/BlockStem.java b/src/main/java/net/minecraft/world/level/block/BlockStem.java
-index a02e5d559a..359505bcd2 100644
+index a02e5d559..359505bcd 100644
 --- a/src/main/java/net/minecraft/world/level/block/BlockStem.java
 +++ b/src/main/java/net/minecraft/world/level/block/BlockStem.java
 @@ -76,7 +76,7 @@ public class BlockStem extends BlockPlant implements IBlockFragilePlantElement {
@@ -210,7 +210,7 @@ index a02e5d559a..359505bcd2 100644
  
                  if (i < 7) {
 diff --git a/src/main/java/net/minecraft/world/level/block/BlockSweetBerryBush.java b/src/main/java/net/minecraft/world/level/block/BlockSweetBerryBush.java
-index 4cfae55661..16c3541cc3 100644
+index 4cfae5566..16c3541cc 100644
 --- a/src/main/java/net/minecraft/world/level/block/BlockSweetBerryBush.java
 +++ b/src/main/java/net/minecraft/world/level/block/BlockSweetBerryBush.java
 @@ -74,7 +74,7 @@ public class BlockSweetBerryBush extends BlockPlant implements IBlockFragilePlan
@@ -223,7 +223,7 @@ index 4cfae55661..16c3541cc3 100644
  
              if (!CraftEventFactory.handleBlockGrowEvent(worldserver, blockposition, iblockdata1, 2)) return; // CraftBukkit
 diff --git a/src/main/java/net/minecraft/world/level/block/BlockVine.java b/src/main/java/net/minecraft/world/level/block/BlockVine.java
-index 31eecf49a5..785b7234d9 100644
+index 31eecf49a..785b7234d 100644
 --- a/src/main/java/net/minecraft/world/level/block/BlockVine.java
 +++ b/src/main/java/net/minecraft/world/level/block/BlockVine.java
 @@ -186,7 +186,7 @@ public class BlockVine extends Block {
@@ -236,7 +236,7 @@ index 31eecf49a5..785b7234d9 100644
                  BlockPosition blockposition1 = blockposition.above();
                  BlockPosition blockposition2;
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 1cce14866a..f42972427b 100644
+index 1cce14866..f42972427 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -79,4 +79,59 @@ public class SpigotWorldConfig

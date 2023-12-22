@@ -1,4 +1,4 @@
-From f9b768f42021cb82de3718d92253c3201edc2c40 Mon Sep 17 00:00:00 2001
+From 0062163715dcf70b80bbffd3a83e79326e81f93d Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -8,7 +8,7 @@ Changes the mob spawning algorithm to properly account for view distance and the
 Needs better documentation.
 
 diff --git a/src/main/java/net/minecraft/server/level/ChunkProviderServer.java b/src/main/java/net/minecraft/server/level/ChunkProviderServer.java
-index e990a1b178..06cf1b8a59 100644
+index e990a1b17..06cf1b8a5 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkProviderServer.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkProviderServer.java
 @@ -439,7 +439,7 @@ public class ChunkProviderServer extends IChunkProvider {
@@ -21,7 +21,7 @@ index e990a1b178..06cf1b8a59 100644
                          }
  
 diff --git a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-index d2f7178031..e0db2aa0d3 100644
+index d2f717803..e0db2aa0d 100644
 --- a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 @@ -1107,6 +1107,17 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -77,7 +77,7 @@ index d2f7178031..e0db2aa0d3 100644
      }
  
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index acaf903011..0c0c29efe5 100644
+index acaf90301..0c0c29efe 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -180,4 +180,11 @@ public class SpigotWorldConfig

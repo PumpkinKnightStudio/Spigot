@@ -1,4 +1,4 @@
-From 3821f073be1f1ab43196d7fd36aefd9d4c6162e5 Mon Sep 17 00:00:00 2001
+From 908d746eb6fe0057f26cd74f1bd525711e124beb Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -186,7 +186,7 @@ index 76cc73153..d81d952aa 100644
          boolean oldSave = world.noSave;
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 2463725ce..8d93d97d7 100644
+index 486c4a074..ced47e0a6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 @@ -226,6 +226,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
