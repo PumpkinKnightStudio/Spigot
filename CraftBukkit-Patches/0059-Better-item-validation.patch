@@ -1,4 +1,4 @@
-From 01e6c0c35e0eed3fa598c72447363d4695985161 Mon Sep 17 00:00:00 2001
+From 8290b8191dd6224b7a2912f33220567a89af373a Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
@@ -58,7 +58,7 @@ index 03b576455..dfde2c619 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 31fd181c2..0a0b5a75e 100644
+index a2a195488..4e550b261 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -78,6 +78,10 @@ import org.bukkit.inventory.meta.Repairable;

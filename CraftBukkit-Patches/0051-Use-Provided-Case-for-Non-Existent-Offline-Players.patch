@@ -1,4 +1,4 @@
-From e066d2786e8159ebda99b9c053a49c22fda4dbbb Mon Sep 17 00:00:00 2001
+From 976137f13abc4f1da2b40e050c25e1e60e4aa4fd Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 14 Apr 2014 09:46:20 +1000
 Subject: [PATCH] Use Provided Case for Non Existent Offline Players

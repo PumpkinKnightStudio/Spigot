@@ -1,4 +1,4 @@
-From 1c7c711ac8f5bd8f5b8769ec7530cad03c74a5f8 Mon Sep 17 00:00:00 2001
+From c377c9cca1cf863ea28cf5a680ef9a41a74991f3 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 9 Jun 2017 16:29:31 +1000
 Subject: [PATCH] Configurable Advancement Disabling

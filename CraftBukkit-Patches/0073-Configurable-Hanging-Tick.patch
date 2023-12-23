@@ -1,4 +1,4 @@
-From cd394b149e2167470fb0a8024f165779232a7776 Mon Sep 17 00:00:00 2001
+From 2ed457c288b0a9dda0596a21dd87d5f9255755c8 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoung@mit.edu>
 Date: Sat, 9 Aug 2014 13:56:51 -0400
 Subject: [PATCH] Configurable Hanging Tick

@@ -1,4 +1,4 @@
-From 202c33ef7a6564000d913dfeb461c67f914fdb5e Mon Sep 17 00:00:00 2001
+From affe50e0ba02801f130f9c673bb9623ad3dae023 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Fri, 25 Apr 2014 18:17:30 -0400
 Subject: [PATCH] Configurable UserCache cap

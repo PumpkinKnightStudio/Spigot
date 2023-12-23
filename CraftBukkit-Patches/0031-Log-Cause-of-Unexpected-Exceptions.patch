@@ -1,4 +1,4 @@
-From c8af36d96ef74c14ec0521d8338153d02abb9941 Mon Sep 17 00:00:00 2001
+From 27b6c1948301bd2a37e26dced53b71884423d07d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 18 Dec 2013 13:39:14 +1100
 Subject: [PATCH] Log Cause of Unexpected Exceptions
