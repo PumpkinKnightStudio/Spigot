@@ -1,4 +1,4 @@
-From a5bf6cd75e8ec9e10b13d484ccd78d8ebf002a90 Mon Sep 17 00:00:00 2001
+From 659d5f7ad789a0897de8b9bd426b97104bc50553 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:52:41 +1100
 Subject: [PATCH] View Distance
@@ -6,7 +6,7 @@ Subject: [PATCH] View Distance
 This commit allows the user to select per world view distances.
 
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index bf05fdcf9..3031e0d27 100644
+index bf05fdcf93..3031e0d27d 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -281,8 +281,8 @@ public class WorldServer extends World implements GeneratorAccessSeed {
@@ -21,7 +21,7 @@ index bf05fdcf9..3031e0d27 100644
  
          Objects.requireNonNull(this.entityManager);
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index e95e28c85..f120e4780 100644
+index e95e28c850..f120e47804 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -234,7 +234,8 @@ public abstract class PlayerList {
@@ -43,31 +43,8 @@ index e95e28c85..f120e4780 100644
          entityplayer1.connection.teleport(CraftLocation.toBukkit(entityplayer1.position(), worldserver2.getWorld(), entityplayer1.getYRot(), entityplayer1.getXRot())); // CraftBukkit
          entityplayer1.connection.send(new PacketPlayOutSpawnPosition(worldserver1.getSharedSpawnPos(), worldserver1.getSharedSpawnAngle()));
          entityplayer1.connection.send(new PacketPlayOutServerDifficulty(worlddata.getDifficulty(), worlddata.isDifficultyLocked()));
-diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index d81d952aa..c7d7fef6a 100644
---- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-+++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1991,6 +1991,18 @@ public class CraftWorld extends CraftRegionAccessor implements World {
-         }
-     }
- 
-+    // Spigot start
-+    @Override
-+    public int getViewDistance() {
-+        return world.spigotConfig.viewDistance;
-+    }
-+
-+    @Override
-+    public int getSimulationDistance() {
-+        return world.spigotConfig.simulationDistance;
-+    }
-+    // Spigot end
-+
-     // Spigot start
-     private final org.bukkit.World.Spigot spigot = new org.bukkit.World.Spigot()
-     {
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
-index 5ff085b9e..acaf90301 100644
+index 5ff085b9e6..acaf903011 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -148,4 +148,36 @@ public class SpigotWorldConfig
