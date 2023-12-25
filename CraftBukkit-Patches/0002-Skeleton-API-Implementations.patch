@@ -1,4 +1,4 @@
-From fc9f1537e5923b743d8fc3d662f8ce7d14f57252 Mon Sep 17 00:00:00 2001
+From 4439bcea104524d00b20c834fc1be8a01ab23d6b Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -27,10 +27,10 @@ index 6b8f4c6200..63bfb7dd24 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 06d8d72d13..3c073645e6 100644
+index d936b9c8de..250a7e0ff6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1994,4 +1994,15 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -1993,4 +1993,15 @@ public class CraftWorld extends CraftRegionAccessor implements World {
              this.persistentDataContainer.putAll((NBTTagCompound) c);
          }
      }

@@ -1,4 +1,4 @@
-From a36b2e26de5c3ce7c639c6dc169f5c9725244e3a Mon Sep 17 00:00:00 2001
+From f06a0f8b9e7770fec48473c7b39eff6ba8d83604 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Tue, 2 Jul 2013 13:07:39 +1000
 Subject: [PATCH] POM Changes
@@ -6,7 +6,7 @@ Subject: [PATCH] POM Changes
 Basic changes to the build system which mark the artifact as Spigot, and the necessary code changes to ensure proper functionality. Also disables the auto updater provided by CraftBukkit as it is useless to us.
 
 diff --git a/checkstyle.xml b/checkstyle.xml
-index ec61ec757..b3da3373a 100644
+index ec61ec7570..b3da3373ac 100644
 --- a/checkstyle.xml
 +++ b/checkstyle.xml
 @@ -25,6 +25,9 @@
@@ -34,7 +34,7 @@ index ec61ec757..b3da3373a 100644
          <!-- See http://checkstyle.sourceforge.net/config_imports.html -->
          <module name="AvoidStarImport">
 diff --git a/pom.xml b/pom.xml
-index 946275ae7..123a45263 100644
+index 946275ae7f..123a452635 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,13 +1,20 @@
@@ -112,7 +112,7 @@ index 946275ae7..123a45263 100644
                              <Specification-Title>Bukkit</Specification-Title>
                              <Specification-Version>${api.version}</Specification-Version>
 diff --git a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
-index f905d17b6..93046379d 100644
+index f905d17b6b..93046379d0 100644
 --- a/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 +++ b/src/main/java/org/bukkit/craftbukkit/util/Versioning.java
 @@ -11,7 +11,7 @@ public final class Versioning {

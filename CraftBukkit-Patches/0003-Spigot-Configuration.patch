@@ -1,4 +1,4 @@
-From cd02cc96163017c680b3823fe716515e71d3b9c3 Mon Sep 17 00:00:00 2001
+From 927d9766187079971e021c10eb680df54a78eab1 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -6,7 +6,7 @@ Subject: [PATCH] Spigot Configuration
 Provides the basic infrastructure to load and save the Spigot configuration file, spigot.yml
 
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index c7d70cbea..495e5b7d4 100644
+index c7d70cbead..495e5b7d49 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -178,6 +178,11 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -31,7 +31,7 @@ index c7d70cbea..495e5b7d4 100644
          server.enablePlugins(org.bukkit.plugin.PluginLoadOrder.STARTUP);
          // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/world/level/World.java b/src/main/java/net/minecraft/world/level/World.java
-index aac03fbfe..eabc5d523 100644
+index aac03fbfe2..eabc5d5231 100644
 --- a/src/main/java/net/minecraft/world/level/World.java
 +++ b/src/main/java/net/minecraft/world/level/World.java
 @@ -156,6 +156,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -51,7 +51,7 @@ index aac03fbfe..eabc5d523 100644
          this.world = new CraftWorld((WorldServer) this, gen, biomeProvider, env);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 63bfb7dd2..de269fbca 100644
+index 63bfb7dd24..de269fbca8 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -895,6 +895,7 @@ public final class CraftServer implements Server {
@@ -77,7 +77,7 @@ index 63bfb7dd2..de269fbca 100644
          ignoreVanillaPermissions = commandsConfiguration.getBoolean("ignore-vanilla-permissions");
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index f62c1c7f2..7eabffa33 100644
+index f62c1c7f2c..7eabffa333 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
 @@ -133,6 +133,14 @@ public class Main {
@@ -97,7 +97,7 @@ index f62c1c7f2..7eabffa33 100644
  
 diff --git a/src/main/java/org/spigotmc/SpigotCommand.java b/src/main/java/org/spigotmc/SpigotCommand.java
 new file mode 100644
-index 000000000..7443e7334
+index 0000000000..7443e7334c
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SpigotCommand.java
 @@ -0,0 +1,44 @@
@@ -147,7 +147,7 @@ index 000000000..7443e7334
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
 new file mode 100644
-index 000000000..9ee0b4a1e
+index 0000000000..9ee0b4a1e7
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -0,0 +1,140 @@
@@ -293,7 +293,7 @@ index 000000000..9ee0b4a1e
 +}
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 new file mode 100644
-index 000000000..1cce14866
+index 0000000000..1cce14866a
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 @@ -0,0 +1,82 @@
