@@ -1,4 +1,4 @@
-From 3599dd8a691d2d83bc873cb26513e0f9f67089de Mon Sep 17 00:00:00 2001
+From 5c89ba82205abc450857427849663c60653dc42f Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Thu, 27 Jun 2013 17:26:09 +1000
 Subject: [PATCH] Properly Close Inventories

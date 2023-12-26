@@ -1,4 +1,4 @@
-From ac94ae89dfb29c2d8812de1e3770bdaa6b33eecb Mon Sep 17 00:00:00 2001
+From f4f9ad318f6f381d47bd4fd51234459d391c58bb Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 12 Jan 2014 20:56:41 +1100
 Subject: [PATCH] Try and Debug Crash Reports Crashing
