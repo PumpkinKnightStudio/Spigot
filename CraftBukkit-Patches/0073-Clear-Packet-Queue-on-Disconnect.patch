@@ -1,0 +1,34 @@
+From 59ef181224dc521e2dc29bb183ee589b4f9d7a3f Mon Sep 17 00:00:00 2001
+From: md_5 <git@md-5.net>
+Date: Wed, 22 Jul 2015 19:04:37 +1000
+Subject: [PATCH] Clear Packet Queue on Disconnect
+
+
+diff --git a/src/main/java/net/minecraft/network/NetworkManager.java b/src/main/java/net/minecraft/network/NetworkManager.java
+index 1e0b785c82..5968fa1225 100644
+--- a/src/main/java/net/minecraft/network/NetworkManager.java
++++ b/src/main/java/net/minecraft/network/NetworkManager.java
+@@ -610,6 +610,7 @@ public class NetworkManager extends SimpleChannelInboundHandler<Packet<?>> {
+ 
+                     packetlistener1.onDisconnect(ichatbasecomponent);
+                 }
++                this.pendingActions.clear(); // Free up packet queue.
+ 
+             }
+         }
+diff --git a/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
+index 66fc312e1f..68eb94b84e 100644
+--- a/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
++++ b/src/main/java/net/minecraft/server/network/ServerCommonPacketListenerImpl.java
+@@ -193,7 +193,7 @@ public abstract class ServerCommonPacketListenerImpl implements ServerCommonPack
+ 
+     public void send(Packet<?> packet, @Nullable PacketSendListener packetsendlistener) {
+         // CraftBukkit start
+-        if (packet == null) {
++        if (packet == null || this.processedDisconnect) { // Spigot
+             return;
+         } else if (packet instanceof PacketPlayOutSpawnPosition) {
+             PacketPlayOutSpawnPosition packet6 = (PacketPlayOutSpawnPosition) packet;
+-- 
+2.43.0
+

@@ -1,4 +1,4 @@
-From b9f69a01a0b9113d90442a7a9084c9c606dbf957 Mon Sep 17 00:00:00 2001
+From 9520bb1e87ade6671e655fe3126b04d4659497a9 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 1 Dec 2013 18:18:41 +1100
 Subject: [PATCH] BungeeCord Support
@@ -147,7 +147,7 @@ index 61e8ab5d3d..67799e6d14 100644
  
          HELLO, KEY, AUTHENTICATING, NEGOTIATING, VERIFYING, WAITING_FOR_DUPE_DISCONNECT, PROTOCOL_SWITCHING, ACCEPTED;
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index 6b7cc8ff21..319df91503 100644
+index 03f285a956..876cb0d9f0 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
 @@ -1935,7 +1935,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
