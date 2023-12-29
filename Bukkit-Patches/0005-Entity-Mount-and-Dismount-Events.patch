@@ -1,5 +1,5 @@
-From 9757a3316a649ff43921bd154093226eef1b44f2 Mon Sep 17 00:00:00 2001
-From: md_5 <md_5@live.com.au>
+From 0eebd1a01ecea8aa47816c29c721947ee4c6b8cf Mon Sep 17 00:00:00 2001
+From: md_5 <git@md-5.net>
 Date: Tue, 2 Jul 2013 20:32:53 +1000
 Subject: [PATCH] Entity Mount and Dismount Events
 

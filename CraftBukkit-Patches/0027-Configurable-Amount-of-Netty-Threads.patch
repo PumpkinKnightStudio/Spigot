@@ -1,4 +1,4 @@
-From d898ff566adeff28689e659f21a754dc87950139 Mon Sep 17 00:00:00 2001
+From 94233202a293991a936eb30879e6b6a06339d38a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 13 Dec 2013 11:58:58 +1100
 Subject: [PATCH] Configurable Amount of Netty Threads
@@ -28,7 +28,7 @@ index 303d3b3b14..f5f47885d0 100644
  
      public boolean isReady() {
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 3bb51f4528..c5989e8e9b 100644
+index 1e6b13103a..8091770655 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -224,4 +224,11 @@ public class SpigotConfig

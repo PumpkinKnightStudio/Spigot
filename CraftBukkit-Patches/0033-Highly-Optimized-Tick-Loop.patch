@@ -1,4 +1,4 @@
-From d53ac6ba9e75bf2de511db33f40530840300715c Mon Sep 17 00:00:00 2001
+From cf6f3aa62bb0e2e244925a1eff24494f1cbcee35 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 26 Jan 2017 21:50:51 +0000
 Subject: [PATCH] Highly Optimized Tick Loop
@@ -64,7 +64,7 @@ index f5f47885d0..6d3111a6a2 100644
                  boolean flag = i == 0L;
  
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 0aab647abb..4987040ff2 100644
+index c81333c505..593cab3bdd 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -266,4 +266,9 @@ public class SpigotConfig

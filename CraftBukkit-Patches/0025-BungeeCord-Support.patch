@@ -1,9 +1,10 @@
-From 98bbcfa2e2600088452341e4d099d0176571aa83 Mon Sep 17 00:00:00 2001
-From: md_5 <md_5@live.com.au>
-Date: Sun, 1 Dec 2013 18:18:41 +1100
+From ba5c8b30408afea26a20b18789ff643580e62153 Mon Sep 17 00:00:00 2001
+From: md_5 <git@md-5.net>
+Date: Sat, 12 Apr 2014 21:23:58 +1000
 Subject: [PATCH] BungeeCord Support
 
-Provides support for IP forwarding via BungeeCord.
+* Provides support for IP forwarding via BungeeCord.
+* Treats Bungee as Online Mode.
 
 diff --git a/src/main/java/net/minecraft/network/NetworkManager.java b/src/main/java/net/minecraft/network/NetworkManager.java
 index c512c2b9cd..2c4e85749a 100644
@@ -34,6 +35,26 @@ index 78a7dc329d..c3347013f2 100644
      }
  
      @Override
+diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
+index 8e54082c5f..df923b7a10 100644
+--- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
++++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
+@@ -223,7 +223,14 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
+         if (!this.usesAuthentication()) {
+             DedicatedServer.LOGGER.warn("**** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!");
+             DedicatedServer.LOGGER.warn("The server will make no attempt to authenticate usernames. Beware.");
+-            DedicatedServer.LOGGER.warn("While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.");
++            // Spigot start
++            if (org.spigotmc.SpigotConfig.bungee) {
++                DedicatedServer.LOGGER.warn("Whilst this makes it possible to use BungeeCord, unless access to your server is properly restricted, it also opens up the ability for hackers to connect with any username they choose.");
++                DedicatedServer.LOGGER.warn("Please see http://www.spigotmc.org/wiki/firewall-guide/ for further information.");
++            } else {
++                DedicatedServer.LOGGER.warn("While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.");
++            }
++            // Spigot end
+             DedicatedServer.LOGGER.warn("To change this, set \"online-mode\" to \"true\" in the server.properties file.");
+         }
+ 
 diff --git a/src/main/java/net/minecraft/server/network/HandshakeListener.java b/src/main/java/net/minecraft/server/network/HandshakeListener.java
 index 18b350f024..bd42cbe128 100644
 --- a/src/main/java/net/minecraft/server/network/HandshakeListener.java
@@ -182,6 +203,19 @@ index 03f285a956..876cb0d9f0 100644
      public void switchToConfig() {
          this.waitingForSwitchToConfig = true;
          this.removePlayerFromWorld();
+diff --git a/src/main/java/net/minecraft/server/players/NameReferencingFileConverter.java b/src/main/java/net/minecraft/server/players/NameReferencingFileConverter.java
+index 3bf6d7d2d4..8e95956397 100644
+--- a/src/main/java/net/minecraft/server/players/NameReferencingFileConverter.java
++++ b/src/main/java/net/minecraft/server/players/NameReferencingFileConverter.java
+@@ -68,7 +68,7 @@ public class NameReferencingFileConverter {
+             return new String[i];
+         });
+ 
+-        if (minecraftserver.usesAuthentication()) {
++        if (minecraftserver.usesAuthentication() || org.spigotmc.SpigotConfig.bungee) { // Spigot: bungee = online mode, for now.
+             minecraftserver.getProfileRepository().findProfilesByNames(astring, profilelookupcallback);
+         } else {
+             String[] astring1 = astring;
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
 index 92815d055f..47b472af44 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
@@ -232,7 +266,7 @@ index 31fe6e00ea..49fbd7e015 100644
          public void respawn()
          {
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 130016282a..3bb51f4528 100644
+index 130016282a..1e6b13103a 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -214,4 +214,14 @@ public class SpigotConfig
@@ -245,7 +279,7 @@ index 130016282a..3bb51f4528 100644
 +        if ( version < 4 )
 +        {
 +            set( "settings.bungeecord", false );
-+            System.out.println( "Oudated config, disabling BungeeCord support!" );
++            System.out.println( "Outdated config, disabling BungeeCord support!" );
 +        }
 +        bungee = getBoolean( "settings.bungeecord", false );
 +    }

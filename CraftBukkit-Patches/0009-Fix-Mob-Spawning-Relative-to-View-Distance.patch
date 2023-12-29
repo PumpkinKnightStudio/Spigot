@@ -1,5 +1,5 @@
-From 11fc9f4e572013a6ff0ce4cc0888fd2f1762a97e Mon Sep 17 00:00:00 2001
-From: md_5 <md_5@live.com.au>
+From 167325f34f90bda3e7398b5c2b192cd3e0ab103e Mon Sep 17 00:00:00 2001
+From: md_5 <git@md-5.net>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
 

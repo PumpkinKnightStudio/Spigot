@@ -1,4 +1,4 @@
-From a92f0095769d519cdf05e8612b3ef671c214ba24 Mon Sep 17 00:00:00 2001
+From e5eff30c05bc6f9a4a61d5339a33ba535a6eb953 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Wed, 12 Feb 2014 20:44:14 +0000
 Subject: [PATCH] Allow vanilla commands to be the main version of a command
@@ -46,7 +46,7 @@ index 77c5f7d029..17dc79c69d 100644
      }
  
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 40c09ca21b..588d4656bd 100644
+index 5d2c3a6b88..ba66d92906 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -8,8 +8,10 @@ import java.lang.reflect.Method;

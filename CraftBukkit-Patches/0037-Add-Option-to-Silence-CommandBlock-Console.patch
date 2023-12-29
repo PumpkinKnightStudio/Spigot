@@ -1,4 +1,4 @@
-From cb65c37ad0c8ef3cfdc557497fe635c9d46a958d Mon Sep 17 00:00:00 2001
+From 0b76ae45ee3b3a7ef8ae4781b8e5288e50ab1c88 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 9 Feb 2014 14:39:01 +1100
 Subject: [PATCH] Add Option to Silence CommandBlock Console
@@ -18,7 +18,7 @@ index c0d0087a32..d7973559db 100644
          }
  
 diff --git a/src/main/java/org/spigotmc/SpigotConfig.java b/src/main/java/org/spigotmc/SpigotConfig.java
-index 4f9b55c713..40c09ca21b 100644
+index c612c321d9..5d2c3a6b88 100644
 --- a/src/main/java/org/spigotmc/SpigotConfig.java
 +++ b/src/main/java/org/spigotmc/SpigotConfig.java
 @@ -294,4 +294,10 @@ public class SpigotConfig
