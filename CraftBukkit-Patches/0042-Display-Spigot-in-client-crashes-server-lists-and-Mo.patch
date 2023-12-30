@@ -1,4 +1,4 @@
-From 11b821be3fe4848d3c68271dcb7ad653f91a48f4 Mon Sep 17 00:00:00 2001
+From bcf372f9680f49779ac3bd34aff6469eaa858f4c Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thethinkofdeath@gmail.com>
 Date: Fri, 11 Apr 2014 11:16:34 +0100
 Subject: [PATCH] Display 'Spigot' in client crashes, server lists and Mojang

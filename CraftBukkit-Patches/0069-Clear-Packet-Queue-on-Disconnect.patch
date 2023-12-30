@@ -1,4 +1,4 @@
-From ee89d1026fbdeddaf28c342b91c5585085afce99 Mon Sep 17 00:00:00 2001
+From e6c2f33400c48338fccef82f2a8225d8e157bc05 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 22 Jul 2015 19:04:37 +1000
 Subject: [PATCH] Clear Packet Queue on Disconnect

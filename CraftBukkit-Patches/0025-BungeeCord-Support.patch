@@ -1,4 +1,4 @@
-From ba5c8b30408afea26a20b18789ff643580e62153 Mon Sep 17 00:00:00 2001
+From 480c8c290207b141ed5f90f31eb841aaedb29587 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 12 Apr 2014 21:23:58 +1000
 Subject: [PATCH] BungeeCord Support
@@ -230,7 +230,7 @@ index 92815d055f..47b472af44 100644
          if (getBans().isBanned(gameprofile) && !getBans().get(gameprofile).hasExpired()) {
              GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.bans.get(gameprofile);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 9459468a46..77c5f7d029 100644
+index 8c8a4cd740..515943e9b5 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -755,7 +755,13 @@ public final class CraftServer implements Server {
@@ -248,6 +248,15 @@ index 9459468a46..77c5f7d029 100644
      }
  
      @Override
+@@ -1752,7 +1758,7 @@ public final class CraftServer implements Server {
+         if (result == null) {
+             GameProfile profile = null;
+             // Only fetch an online UUID in online mode
+-            if (getOnlineMode()) {
++            if (getOnlineMode() || org.spigotmc.SpigotConfig.bungee) { // Spigot: bungee = online mode, for now.
+                 // This is potentially blocking :(
+                 profile = console.getProfileCache().get(name).orElse(null);
+             }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 index 31fe6e00ea..49fbd7e015 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java

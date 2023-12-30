@@ -1,4 +1,4 @@
-From bef141e4815a6120f389969c9a8869a7e75fe7de Mon Sep 17 00:00:00 2001
+From 151aef123be861bbd25eb1f21b3927a8eb5028e2 Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Tue, 22 Jul 2014 15:59:01 +0200
 Subject: [PATCH] Make "moved too quickly" limit configurable

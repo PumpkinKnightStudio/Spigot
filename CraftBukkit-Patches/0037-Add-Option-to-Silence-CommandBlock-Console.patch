@@ -1,4 +1,4 @@
-From 0b76ae45ee3b3a7ef8ae4781b8e5288e50ab1c88 Mon Sep 17 00:00:00 2001
+From 82b0d0a1b96fde28b64e3a3769d9cf88682b50a1 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 9 Feb 2014 14:39:01 +1100
 Subject: [PATCH] Add Option to Silence CommandBlock Console

@@ -1,4 +1,4 @@
-From 0a21c725641c82fca1dbfecf6089e462d3096815 Mon Sep 17 00:00:00 2001
+From e25ddb4b1e621af6916b7cbb386410ab65201d2b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 13 Apr 2014 09:00:59 +1000
 Subject: [PATCH] Print Stack on InternalException

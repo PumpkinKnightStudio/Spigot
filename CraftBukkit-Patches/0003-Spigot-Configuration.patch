@@ -1,4 +1,4 @@
-From 7c9e16ae9840acad888560989adaff9e35798ac7 Mon Sep 17 00:00:00 2001
+From 86e5b12c4aeec1261e4e16923813449dca973e99 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 7 Jul 2013 09:32:53 +1000
 Subject: [PATCH] Spigot Configuration
@@ -51,7 +51,7 @@ index aac03fbfe2..eabc5d5231 100644
          this.world = new CraftWorld((WorldServer) this, gen, biomeProvider, env);
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 63bfb7dd24..de269fbca8 100644
+index e3c8fb366e..ab361755a6 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -895,6 +895,7 @@ public final class CraftServer implements Server {

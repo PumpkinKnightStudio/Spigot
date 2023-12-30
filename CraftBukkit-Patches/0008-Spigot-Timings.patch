@@ -1,4 +1,4 @@
-From 641445f5c7531e45589ffc2b096e646d761ee150 Mon Sep 17 00:00:00 2001
+From d16210ba51eae0a60d03ea2d12e4200c1cc6734f Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -585,10 +585,10 @@ index 570f628549..c66df1e7a9 100644
          };
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index ca0b47ea25..c276c6b99c 100644
+index df332d0e04..0a4ae1abef 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2465,6 +2465,11 @@ public final class CraftServer implements Server {
+@@ -2470,6 +2470,11 @@ public final class CraftServer implements Server {
      private final org.bukkit.Server.Spigot spigot = new org.bukkit.Server.Spigot()
      {
  

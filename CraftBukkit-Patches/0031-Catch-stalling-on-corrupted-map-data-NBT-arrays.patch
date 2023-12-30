@@ -1,4 +1,4 @@
-From f62cdcc170dc407e15ff4c6084dd7aff49949dd7 Mon Sep 17 00:00:00 2001
+From 5eaa0dbed2fff5fed913fa6053a2adc48891a4c5 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Mon, 20 Jan 2014 13:44:07 +1100
 Subject: [PATCH] Catch stalling on corrupted map data / NBT arrays.

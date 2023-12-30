@@ -1,4 +1,4 @@
-From 7360b684fbc60997ca80313681f3fa69977157a0 Mon Sep 17 00:00:00 2001
+From 6a67af39a1f924c2aff5ef23664da1224e35d9d8 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 21 Jun 2013 18:01:29 +1000
 Subject: [PATCH] Allow Disabling of Command Logging
