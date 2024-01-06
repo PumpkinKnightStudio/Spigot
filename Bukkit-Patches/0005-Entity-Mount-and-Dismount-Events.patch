@@ -1,4 +1,4 @@
-From de338828b1112a8c1bf81bd24cf8bcfaab56736b Mon Sep 17 00:00:00 2001
+From 78ac3f15ac47a0f6217af36b1e169c62d17031f5 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 2 Jul 2013 20:32:53 +1000
 Subject: [PATCH] Entity Mount and Dismount Events
@@ -126,6 +126,16 @@ index 00000000..b1b21227
 +        return handlers;
 +    }
 +}
+diff --git a/src/main/java/org/spigotmc/event/entity/package-info.java b/src/main/java/org/spigotmc/event/entity/package-info.java
+new file mode 100644
+index 00000000..264664eb
+--- /dev/null
++++ b/src/main/java/org/spigotmc/event/entity/package-info.java
+@@ -0,0 +1,4 @@
++/**
++ * Spigot-specific entity events.
++ */
++package org.spigotmc.event.entity;
 -- 
 2.43.0
 
