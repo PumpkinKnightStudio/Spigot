@@ -1,4 +1,4 @@
-From de57c847f46e5f316d799aac4332721eadffbeae Mon Sep 17 00:00:00 2001
+From cd0c89689abe865ebbf8eb9c14f11a0443a391b6 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Sun, 3 Feb 2013 05:10:21 -0500
 Subject: [PATCH] Entity Activation Range
@@ -35,10 +35,10 @@ index cdfa973454..a1b3b4911e 100644
          entity.setOldPosAndRot();
          GameProfilerFiller gameprofilerfiller = this.getProfiler();
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 1d1471aeb0..a7c38c5293 100644
+index 9999b8404a..0016298d9a 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -315,6 +315,12 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -317,6 +317,12 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
      // Main use case currently is for SPIGOT-7487, preventing dropping of leash when leash is removed
      public boolean pluginRemoved = false;
      public CustomTimingsHandler tickTimer = org.bukkit.craftbukkit.SpigotTimings.getEntityTimings(this); // Spigot
@@ -51,7 +51,7 @@ index 1d1471aeb0..a7c38c5293 100644
  
      public float getBukkitYaw() {
          return this.yRot;
-@@ -352,6 +358,13 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -354,6 +360,13 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
          this.position = Vec3D.ZERO;
          this.blockPosition = BlockPosition.ZERO;
          this.chunkPosition = ChunkCoordIntPair.ZERO;

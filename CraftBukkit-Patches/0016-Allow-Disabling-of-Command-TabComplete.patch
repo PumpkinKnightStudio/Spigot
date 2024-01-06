@@ -1,4 +1,4 @@
-From 3771e1ba4f209b25bfe9eb21bb3381bd687dda1d Mon Sep 17 00:00:00 2001
+From eac95ca3d8c5292aef605d31d33fa749a0c45c1d Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 21 Jun 2013 18:05:54 +1000
 Subject: [PATCH] Allow Disabling of Command TabComplete

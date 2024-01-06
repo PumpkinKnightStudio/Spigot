@@ -1,4 +1,4 @@
-From 2394afbcc5cc85ce688ba172af5c702ad6cd8b6a Mon Sep 17 00:00:00 2001
+From 20d0392ccd6d18760684b9f730cfbd4ef547c2cb Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Thu, 27 Jun 2013 17:26:09 +1000
 Subject: [PATCH] Properly Close Inventories

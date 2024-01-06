@@ -1,4 +1,4 @@
-From d16210ba51eae0a60d03ea2d12e4200c1cc6734f Mon Sep 17 00:00:00 2001
+From e8045af9db6ba518db761f5c7a9e894f06de23c5 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -321,7 +321,7 @@ index ee64c4546d..bd76f469a0 100644
      }
      // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index a86c04c92d..1d1471aeb0 100644
+index 5f6680fdad..9999b8404a 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -137,6 +137,7 @@ import org.bukkit.craftbukkit.event.CraftPortalEvent;
@@ -332,7 +332,7 @@ index a86c04c92d..1d1471aeb0 100644
  import org.bukkit.event.entity.EntityCombustByEntityEvent;
  import org.bukkit.event.hanging.HangingBreakByEntityEvent;
  import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
-@@ -313,6 +314,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -315,6 +316,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
      // Marks an entity, that it was removed by a plugin via Entity#remove
      // Main use case currently is for SPIGOT-7487, preventing dropping of leash when leash is removed
      public boolean pluginRemoved = false;
@@ -340,7 +340,7 @@ index a86c04c92d..1d1471aeb0 100644
  
      public float getBukkitYaw() {
          return this.yRot;
-@@ -790,6 +792,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -792,6 +794,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
      }
  
      public void move(EnumMoveType enummovetype, Vec3D vec3d) {
@@ -348,7 +348,7 @@ index a86c04c92d..1d1471aeb0 100644
          if (this.noPhysics) {
              this.setPos(this.getX() + vec3d.x, this.getY() + vec3d.y, this.getZ() + vec3d.z);
          } else {
-@@ -950,6 +953,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -952,6 +955,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
                  this.level().getProfiler().pop();
              }
          }

@@ -1,4 +1,4 @@
-From be774321b91e8620bc6e22f9591951fa39696264 Mon Sep 17 00:00:00 2001
+From de338828b1112a8c1bf81bd24cf8bcfaab56736b Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 2 Jul 2013 20:32:53 +1000
 Subject: [PATCH] Entity Mount and Dismount Events
@@ -6,21 +6,28 @@ Subject: [PATCH] Entity Mount and Dismount Events
 
 diff --git a/src/main/java/org/spigotmc/event/entity/EntityDismountEvent.java b/src/main/java/org/spigotmc/event/entity/EntityDismountEvent.java
 new file mode 100644
-index 00000000..00d8ec81
+index 00000000..be9560ff
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/event/entity/EntityDismountEvent.java
-@@ -0,0 +1,48 @@
+@@ -0,0 +1,55 @@
 +package org.spigotmc.event.entity;
 +
 +import org.bukkit.entity.Entity;
 +import org.bukkit.event.Cancellable;
 +import org.bukkit.event.HandlerList;
 +import org.bukkit.event.entity.EntityEvent;
++import org.jetbrains.annotations.ApiStatus;
 +import org.jetbrains.annotations.NotNull;
 +
 +/**
 + * Called when an entity stops riding another entity.
++ *
++ * @deprecated replaced by {@link org.bukkit.event.entity.EntityDismountEvent}.
++ * This event will never be called directly and instead will be dynamically
++ * replaced by {@link org.bukkit.event.entity.EntityDismountEvent}.
 + */
++@Deprecated
++@ApiStatus.ScheduledForRemoval
 +public class EntityDismountEvent extends EntityEvent implements Cancellable {
 +
 +    private static final HandlerList handlers = new HandlerList();
@@ -60,21 +67,28 @@ index 00000000..00d8ec81
 +}
 diff --git a/src/main/java/org/spigotmc/event/entity/EntityMountEvent.java b/src/main/java/org/spigotmc/event/entity/EntityMountEvent.java
 new file mode 100644
-index 00000000..de9c41ef
+index 00000000..b1b21227
 --- /dev/null
 +++ b/src/main/java/org/spigotmc/event/entity/EntityMountEvent.java
-@@ -0,0 +1,48 @@
+@@ -0,0 +1,55 @@
 +package org.spigotmc.event.entity;
 +
 +import org.bukkit.entity.Entity;
 +import org.bukkit.event.Cancellable;
 +import org.bukkit.event.HandlerList;
 +import org.bukkit.event.entity.EntityEvent;
++import org.jetbrains.annotations.ApiStatus;
 +import org.jetbrains.annotations.NotNull;
 +
 +/**
 + * Called when an entity attempts to ride another entity.
++ *
++ * @deprecated replaced by {@link org.bukkit.event.entity.EntityMountEvent}.
++ * This event will never be called directly and instead will be dynamically
++ * replaced by {@link org.bukkit.event.entity.EntityMountEvent}.
 + */
++@Deprecated
++@ApiStatus.ScheduledForRemoval
 +public class EntityMountEvent extends EntityEvent implements Cancellable {
 +
 +    private static final HandlerList handlers = new HandlerList();
@@ -112,16 +126,6 @@ index 00000000..de9c41ef
 +        return handlers;
 +    }
 +}
-diff --git a/src/main/java/org/spigotmc/event/entity/package-info.java b/src/main/java/org/spigotmc/event/entity/package-info.java
-new file mode 100644
-index 00000000..264664eb
---- /dev/null
-+++ b/src/main/java/org/spigotmc/event/entity/package-info.java
-@@ -0,0 +1,4 @@
-+/**
-+ * Spigot-specific entity events.
-+ */
-+package org.spigotmc.event.entity;
 -- 
 2.43.0
 
