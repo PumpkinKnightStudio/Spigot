@@ -15,7 +15,7 @@ index e98ed55d..900855eb 100644
 +        <dependency>
 +            <groupId>net.md-5</groupId>
 +            <artifactId>bungeecord-chat</artifactId>
-+            <version>1.20-R0.1</version>
++            <version>1.20-R0.2</version>
 +            <type>jar</type>
 +            <scope>compile</scope>
 +        </dependency>
