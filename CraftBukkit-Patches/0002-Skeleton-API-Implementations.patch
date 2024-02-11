@@ -1,4 +1,4 @@
-From 416f33d6ebb703545d1b9fea91b8bab6e559fda1 Mon Sep 17 00:00:00 2001
+From 2264c75aa2943a2a48488905069d789c4f4c9741 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -6,10 +6,10 @@ Subject: [PATCH] Skeleton API Implementations
 This contains the basic, empty implementations for some Spigot-API extensions. They are included early in the patching progress so that compilation will still succeed midway despite the APIs only being provided by subsequent patches.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 76e17bc35f..7c628dc46e 100644
+index b4dbefe63c..bb951cd609 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2377,4 +2377,16 @@ public final class CraftServer implements Server {
+@@ -2480,4 +2480,16 @@ public final class CraftServer implements Server {
      public UnsafeValues getUnsafe() {
          return CraftMagicNumbers.INSTANCE;
      }
@@ -27,10 +27,10 @@ index 76e17bc35f..7c628dc46e 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 88a4725171..0fe7f61704 100644
+index 208e5ed4f1..94714208d2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1948,4 +1948,15 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -1989,4 +1989,15 @@ public class CraftWorld extends CraftRegionAccessor implements World {
              this.persistentDataContainer.putAll((NBTTagCompound) c);
          }
      }
@@ -63,10 +63,10 @@ index f9d3b5a499..b63472322d 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java b/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
-index 7fa2588b89..e0acbada89 100644
+index be10d200e5..861739d4c4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
 +++ b/src/main/java/org/bukkit/craftbukkit/command/ServerCommandSender.java
-@@ -90,4 +90,16 @@ public abstract class ServerCommandSender implements CommandSender {
+@@ -95,4 +95,16 @@ public abstract class ServerCommandSender implements CommandSender {
      public void sendMessage(UUID uuid, String... messages) {
          this.sendMessage(messages); // ServerCommandSenders have no use for senders
      }
@@ -84,10 +84,10 @@ index 7fa2588b89..e0acbada89 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 80abe8d4ff..e74bbf419f 100644
+index 6c5e309664..824cfbf1ca 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -1170,4 +1170,15 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -865,4 +865,15 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          }
          return perm;
      }
@@ -124,10 +124,10 @@ index 3a4fb14bff..3a68e1cf5c 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 407312d96f..afb5b489ad 100644
+index 18d2c8a069..d5ee78f17e 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -2181,4 +2181,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2203,4 +2203,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      public boolean isAllowingServerListings() {
          return getHandle().allowsListing();
      }
@@ -172,5 +172,5 @@ index e28177b7a7..977d6b6a86 100644
 +    // Spigot end
  }
 -- 
-2.42.0
+2.43.0
 

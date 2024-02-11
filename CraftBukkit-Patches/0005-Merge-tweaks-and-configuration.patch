@@ -1,4 +1,4 @@
-From 95f7143863699284e1ccd4409d13e2355a49fdd8 Mon Sep 17 00:00:00 2001
+From 56da7c4ec8d6e4272f882670d5f510578a40f660 Mon Sep 17 00:00:00 2001
 From: md_5 <md_5@live.com.au>
 Date: Sat, 23 Mar 2013 09:46:33 +1100
 Subject: [PATCH] Merge tweaks and configuration
@@ -6,10 +6,10 @@ Subject: [PATCH] Merge tweaks and configuration
 This allows the merging of Experience orbs, as well as the configuration of the merge radius of items. Additionally it refactors the merge algorithm to be a better experience for players.
 
 diff --git a/src/main/java/net/minecraft/world/entity/item/EntityItem.java b/src/main/java/net/minecraft/world/entity/item/EntityItem.java
-index 4759909691..acb5448b13 100644
+index efb64b2fee..595b7d1c0c 100644
 --- a/src/main/java/net/minecraft/world/entity/item/EntityItem.java
 +++ b/src/main/java/net/minecraft/world/entity/item/EntityItem.java
-@@ -221,7 +221,10 @@ public class EntityItem extends Entity implements TraceableEntity {
+@@ -239,7 +239,10 @@ public class EntityItem extends Entity implements TraceableEntity {
  
      private void mergeWithNeighbours() {
          if (this.isMergable()) {
@@ -21,7 +21,7 @@ index 4759909691..acb5448b13 100644
                  return entityitem != this && entityitem.isMergable();
              });
              Iterator iterator = list.iterator();
-@@ -251,7 +254,7 @@ public class EntityItem extends Entity implements TraceableEntity {
+@@ -269,7 +272,7 @@ public class EntityItem extends Entity implements TraceableEntity {
          ItemStack itemstack1 = entityitem.getItem();
  
          if (Objects.equals(this.target, entityitem.target) && areMergable(itemstack, itemstack1)) {
@@ -31,22 +31,20 @@ index 4759909691..acb5448b13 100644
              } else {
                  merge(entityitem, itemstack1, this, itemstack);
 diff --git a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-index 1c39b97d24..d18f9a4e2a 100644
+index 18b3e90c3c..21d9b9f5f2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/event/CraftEventFactory.java
-@@ -697,6 +697,23 @@ public class CraftEventFactory {
-                 return true;
-             }
-             event = CraftEventFactory.callLightningStrikeEvent((LightningStrike) entity.getBukkitEntity(), cause);
-+        // Spigot start
-+        } else if (entity instanceof EntityExperienceOrb) {
-+            EntityExperienceOrb xp = (EntityExperienceOrb) entity;
+@@ -710,6 +710,23 @@ public class CraftEventFactory {
+             return false;
+         }
+ 
++        // Spigot start - SPIGOT-7523: Merge after spawn event and only merge if the event was not cancelled (gets checked above)
++        if (entity instanceof EntityExperienceOrb xp) {
 +            double radius = world.spigotConfig.expMerge;
 +            if (radius > 0) {
 +                List<Entity> entities = world.getEntities(entity, entity.getBoundingBox().inflate(radius, radius, radius));
 +                for (Entity e : entities) {
-+                    if (e instanceof EntityExperienceOrb) {
-+                        EntityExperienceOrb loopItem = (EntityExperienceOrb) e;
++                    if (e instanceof EntityExperienceOrb loopItem) {
 +                        if (!loopItem.isRemoved()) {
 +                            xp.value += loopItem.value;
 +                            loopItem.discard();
@@ -54,10 +52,12 @@ index 1c39b97d24..d18f9a4e2a 100644
 +                    }
 +                }
 +            }
++        }
 +        // Spigot end
-         } else if (!(entity instanceof EntityPlayer)) {
-             event = CraftEventFactory.callEntitySpawnEvent(entity);
-         }
++
+         return true;
+     }
+ 
 diff --git a/src/main/java/org/spigotmc/SpigotWorldConfig.java b/src/main/java/org/spigotmc/SpigotWorldConfig.java
 index f42972427b..5ff085b9e6 100644
 --- a/src/main/java/org/spigotmc/SpigotWorldConfig.java
@@ -82,5 +82,5 @@ index f42972427b..5ff085b9e6 100644
 +    }
  }
 -- 
-2.42.0
+2.43.0
 
