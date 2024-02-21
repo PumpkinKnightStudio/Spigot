@@ -1,14 +1,14 @@
-From c12f2c627dd41b0a0a27c0ed5739925e3a2dedea Mon Sep 17 00:00:00 2001
+From 6e85479109a354266144de3fade54958e2381256 Mon Sep 17 00:00:00 2001
 From: DerFlash <bte@freenet.de>
 Date: Tue, 9 Jul 2013 00:11:12 +0200
 Subject: [PATCH] Save ticks lived to nbttag
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 0016298d9a..6f0498a455 100644
+index 36972362a4..7ff06ffff7 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -1969,6 +1969,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -1981,6 +1981,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
              if (maxAirTicks != getDefaultMaxAirSupply()) {
                  nbttagcompound.putInt("Bukkit.MaxAirSupply", getMaxAirSupply());
              }
@@ -16,7 +16,7 @@ index 0016298d9a..6f0498a455 100644
              // CraftBukkit end
              IChatBaseComponent ichatbasecomponent = this.getCustomName();
  
-@@ -2127,6 +2128,11 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -2139,6 +2140,11 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
              }
  
              // CraftBukkit start
@@ -29,5 +29,5 @@ index 0016298d9a..6f0498a455 100644
              this.visibleByDefault = !nbttagcompound.contains("Bukkit.visibleByDefault") || nbttagcompound.getBoolean("Bukkit.visibleByDefault");
              // SPIGOT-6907: re-implement LivingEntity#setMaximumAir()
 -- 
-2.43.0
+2.43.2
 

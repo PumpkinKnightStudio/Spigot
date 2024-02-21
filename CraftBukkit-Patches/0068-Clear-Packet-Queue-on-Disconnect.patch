@@ -1,4 +1,4 @@
-From fe1b25338976f7196c00a8defc0aaaef993b3b8c Mon Sep 17 00:00:00 2001
+From 862592eb60a900d2e7dd89d9216862d23684acd4 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 22 Jul 2015 19:04:37 +1000
 Subject: [PATCH] Clear Packet Queue on Disconnect
@@ -30,5 +30,5 @@ index 66fc312e1f..68eb94b84e 100644
          } else if (packet instanceof PacketPlayOutSpawnPosition) {
              PacketPlayOutSpawnPosition packet6 = (PacketPlayOutSpawnPosition) packet;
 -- 
-2.43.0
+2.43.2
 

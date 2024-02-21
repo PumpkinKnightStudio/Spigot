@@ -1,11 +1,11 @@
-From b30e76ae275624d05f07179a23d053ae059f6569 Mon Sep 17 00:00:00 2001
+From 3b4a452ee8e4271fefef56714c4a2d4641a926aa Mon Sep 17 00:00:00 2001
 From: Jonas Konrad <me@yawk.at>
 Date: Fri, 4 Jul 2014 23:03:13 +0200
 Subject: [PATCH] Make "moved wrongly" limit configurable
 
 
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index b886a48c6f..968dd9504c 100644
+index 24137a61fc..00719d88b8 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
 @@ -546,7 +546,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
@@ -42,5 +42,5 @@ index dcb5270691..d1e6921c1d 100644
 +    }
  }
 -- 
-2.43.0
+2.43.2
 

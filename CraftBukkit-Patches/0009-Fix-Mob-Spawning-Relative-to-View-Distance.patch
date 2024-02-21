@@ -1,4 +1,4 @@
-From a5514f1c19e3f1c7f58bdbe9281559df54fe0ad3 Mon Sep 17 00:00:00 2001
+From bc85535d200c826c83080431bdf9c25a4c53716a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 21 Jun 2013 17:29:54 +1000
 Subject: [PATCH] Fix Mob Spawning Relative to View Distance
@@ -21,7 +21,7 @@ index e990a1b178..06cf1b8a59 100644
                          }
  
 diff --git a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-index 6ef7fc63c7..8ab3b23b06 100644
+index 5f7b9dff7a..631e43ab55 100644
 --- a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 @@ -1105,6 +1105,17 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
@@ -93,5 +93,5 @@ index acaf903011..0c0c29efe5 100644
 +    }
  }
 -- 
-2.43.0
+2.43.2
 

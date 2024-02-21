@@ -1,4 +1,4 @@
-From e8045af9db6ba518db761f5c7a9e894f06de23c5 Mon Sep 17 00:00:00 2001
+From 9ca63875e0613dfcd354d082f9aa89cfeea06ee1 Mon Sep 17 00:00:00 2001
 From: Aikar <aikar@aikar.co>
 Date: Thu, 10 Jan 2013 00:18:11 -0500
 Subject: [PATCH] Spigot Timings
@@ -119,7 +119,7 @@ index 93f3119c18..bd32505366 100644
          this.profiler.popPush("send chunks");
          iterator = this.playerList.getPlayers().iterator();
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 495e5b7d49..0a7e7af51c 100644
+index 08103f6469..728b324142 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -59,6 +59,7 @@ import org.apache.logging.log4j.Level;
@@ -198,7 +198,7 @@ index d4d9b5dd6d..e990a1b178 100644
                      }
                  }
 diff --git a/src/main/java/net/minecraft/server/level/WorldServer.java b/src/main/java/net/minecraft/server/level/WorldServer.java
-index 3031e0d27d..cdfa973454 100644
+index e9c287944e..5dbdbb1111 100644
 --- a/src/main/java/net/minecraft/server/level/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/level/WorldServer.java
 @@ -173,6 +173,7 @@ import net.minecraft.world.level.storage.WorldDataServer;
@@ -276,7 +276,7 @@ index 3031e0d27d..cdfa973454 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index ee64c4546d..bd76f469a0 100644
+index 6b29f1fd4a..546580e260 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
 @@ -323,6 +323,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
@@ -321,7 +321,7 @@ index ee64c4546d..bd76f469a0 100644
      }
      // CraftBukkit end
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 5f6680fdad..9999b8404a 100644
+index 9d5622c769..91aba4956f 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -137,6 +137,7 @@ import org.bukkit.craftbukkit.event.CraftPortalEvent;
@@ -332,7 +332,7 @@ index 5f6680fdad..9999b8404a 100644
  import org.bukkit.event.entity.EntityCombustByEntityEvent;
  import org.bukkit.event.hanging.HangingBreakByEntityEvent;
  import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
-@@ -315,6 +316,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -316,6 +317,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
      // Marks an entity, that it was removed by a plugin via Entity#remove
      // Main use case currently is for SPIGOT-7487, preventing dropping of leash when leash is removed
      public boolean pluginRemoved = false;
@@ -340,7 +340,7 @@ index 5f6680fdad..9999b8404a 100644
  
      public float getBukkitYaw() {
          return this.yRot;
-@@ -792,6 +794,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -804,6 +806,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
      }
  
      public void move(EnumMoveType enummovetype, Vec3D vec3d) {
@@ -348,7 +348,7 @@ index 5f6680fdad..9999b8404a 100644
          if (this.noPhysics) {
              this.setPos(this.getX() + vec3d.x, this.getY() + vec3d.y, this.getZ() + vec3d.z);
          } else {
-@@ -952,6 +955,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
+@@ -964,6 +967,7 @@ public abstract class Entity implements INamableTileEntity, EntityAccess, IComma
                  this.level().getProfiler().pop();
              }
          }
@@ -357,10 +357,10 @@ index 5f6680fdad..9999b8404a 100644
  
      private boolean isStateClimbable(IBlockData iblockdata) {
 diff --git a/src/main/java/net/minecraft/world/entity/EntityLiving.java b/src/main/java/net/minecraft/world/entity/EntityLiving.java
-index 2657100257..fe8c2c8a29 100644
+index df09a9d386..25a5f0f5f4 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityLiving.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityLiving.java
-@@ -143,6 +143,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
+@@ -145,6 +145,8 @@ import org.bukkit.event.entity.EntityTeleportEvent;
  import org.bukkit.event.player.PlayerItemConsumeEvent;
  // CraftBukkit end
  
@@ -369,7 +369,7 @@ index 2657100257..fe8c2c8a29 100644
  public abstract class EntityLiving extends Entity implements Attackable {
  
      private static final Logger LOGGER = LogUtils.getLogger();
-@@ -2859,6 +2861,7 @@ public abstract class EntityLiving extends Entity implements Attackable {
+@@ -2880,6 +2882,7 @@ public abstract class EntityLiving extends Entity implements Attackable {
  
      @Override
      public void tick() {
@@ -377,7 +377,7 @@ index 2657100257..fe8c2c8a29 100644
          super.tick();
          this.updatingUsingItem();
          this.updateSwimAmount();
-@@ -2900,7 +2903,9 @@ public abstract class EntityLiving extends Entity implements Attackable {
+@@ -2921,7 +2924,9 @@ public abstract class EntityLiving extends Entity implements Attackable {
          }
  
          if (!this.isRemoved()) {
@@ -387,7 +387,7 @@ index 2657100257..fe8c2c8a29 100644
          }
  
          double d0 = this.getX() - this.xo;
-@@ -2984,6 +2989,7 @@ public abstract class EntityLiving extends Entity implements Attackable {
+@@ -3005,6 +3010,7 @@ public abstract class EntityLiving extends Entity implements Attackable {
          }
  
          this.refreshDirtyAttributes();
@@ -395,7 +395,7 @@ index 2657100257..fe8c2c8a29 100644
      }
  
      public void detectEquipmentUpdatesPublic() { // CraftBukkit
-@@ -3158,6 +3164,7 @@ public abstract class EntityLiving extends Entity implements Attackable {
+@@ -3179,6 +3185,7 @@ public abstract class EntityLiving extends Entity implements Attackable {
  
          this.setDeltaMovement(d0, d1, d2);
          this.level().getProfiler().push("ai");
@@ -403,7 +403,7 @@ index 2657100257..fe8c2c8a29 100644
          if (this.isImmobile()) {
              this.jumping = false;
              this.xxa = 0.0F;
-@@ -3167,6 +3174,7 @@ public abstract class EntityLiving extends Entity implements Attackable {
+@@ -3188,6 +3195,7 @@ public abstract class EntityLiving extends Entity implements Attackable {
              this.serverAiStep();
              this.level().getProfiler().pop();
          }
@@ -411,7 +411,7 @@ index 2657100257..fe8c2c8a29 100644
  
          this.level().getProfiler().pop();
          this.level().getProfiler().push("jump");
-@@ -3206,6 +3214,7 @@ public abstract class EntityLiving extends Entity implements Attackable {
+@@ -3227,6 +3235,7 @@ public abstract class EntityLiving extends Entity implements Attackable {
              this.resetFallDistance();
          }
  
@@ -419,7 +419,7 @@ index 2657100257..fe8c2c8a29 100644
          label104:
          {
              EntityLiving entityliving = this.getControllingPassenger();
-@@ -3221,6 +3230,7 @@ public abstract class EntityLiving extends Entity implements Attackable {
+@@ -3242,6 +3251,7 @@ public abstract class EntityLiving extends Entity implements Attackable {
  
              this.travel(vec3d1);
          }
@@ -427,7 +427,7 @@ index 2657100257..fe8c2c8a29 100644
  
          this.level().getProfiler().pop();
          this.level().getProfiler().push("freezing");
-@@ -3247,7 +3257,9 @@ public abstract class EntityLiving extends Entity implements Attackable {
+@@ -3268,7 +3278,9 @@ public abstract class EntityLiving extends Entity implements Attackable {
              this.checkAutoSpinAttack(axisalignedbb, this.getBoundingBox());
          }
  
@@ -559,7 +559,7 @@ index cb9b347b27..e36e39d993 100644
                  }
              }
 diff --git a/src/main/java/net/minecraft/world/level/chunk/storage/ChunkRegionLoader.java b/src/main/java/net/minecraft/world/level/chunk/storage/ChunkRegionLoader.java
-index 570f628549..c66df1e7a9 100644
+index 0482f20b77..f64a16d615 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/storage/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/storage/ChunkRegionLoader.java
 @@ -483,10 +483,13 @@ public class ChunkRegionLoader {
@@ -585,10 +585,10 @@ index 570f628549..c66df1e7a9 100644
          };
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index df332d0e04..0a4ae1abef 100644
+index 09e034c309..76d53232a1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2470,6 +2470,11 @@ public final class CraftServer implements Server {
+@@ -2482,6 +2482,11 @@ public final class CraftServer implements Server {
      private final org.bukkit.Server.Spigot spigot = new org.bukkit.Server.Spigot()
      {
  
@@ -824,5 +824,5 @@ index c885bc7443..70794669ff 100644
 +    // Spigot end
  }
 -- 
-2.43.0
+2.43.2
 

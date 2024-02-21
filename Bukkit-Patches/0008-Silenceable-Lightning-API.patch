@@ -1,14 +1,14 @@
-From ce9555726679c98813d0d8154233761a6ef94621 Mon Sep 17 00:00:00 2001
+From f791d4528e5540e8e72eace01fd5499257917fed Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Sun, 23 Feb 2014 16:16:29 -0400
 Subject: [PATCH] Silenceable Lightning API
 
 
 diff --git a/src/main/java/org/bukkit/World.java b/src/main/java/org/bukkit/World.java
-index e3897aab..d453a975 100644
+index 2abcf42f5..0fd2e9ee1 100644
 --- a/src/main/java/org/bukkit/World.java
 +++ b/src/main/java/org/bukkit/World.java
-@@ -2738,6 +2738,35 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
+@@ -2779,6 +2779,35 @@ public interface World extends RegionAccessor, WorldInfo, PluginMessageRecipient
      // Spigot start
      public class Spigot {
  
@@ -45,7 +45,7 @@ index e3897aab..d453a975 100644
  
      @NotNull
 diff --git a/src/main/java/org/bukkit/entity/LightningStrike.java b/src/main/java/org/bukkit/entity/LightningStrike.java
-index d913298e..b27447d7 100644
+index d913298ea..b27447d7a 100644
 --- a/src/main/java/org/bukkit/entity/LightningStrike.java
 +++ b/src/main/java/org/bukkit/entity/LightningStrike.java
 @@ -86,6 +86,16 @@ public interface LightningStrike extends Entity {
@@ -66,5 +66,5 @@ index d913298e..b27447d7 100644
  
      @NotNull
 -- 
-2.43.0
+2.43.2
 

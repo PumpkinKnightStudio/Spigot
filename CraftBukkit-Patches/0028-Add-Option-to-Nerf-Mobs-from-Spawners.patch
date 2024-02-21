@@ -1,4 +1,4 @@
-From 8b0577e42a67420e77e82174fdc8df6f94ece1f9 Mon Sep 17 00:00:00 2001
+From 3015a21cd55de2c1e783de7541f66c18fbf62057 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 2 Feb 2014 16:55:46 +0000
 Subject: [PATCH] Add Option to Nerf Mobs from Spawners
@@ -38,5 +38,5 @@ index 457a8e84b0..3e398c4e06 100644
 +    }
  }
 -- 
-2.43.0
+2.43.2
 

@@ -1,4 +1,4 @@
-From d57d2287f87345cf92238707fd78cdb94ce868b7 Mon Sep 17 00:00:00 2001
+From 4d82fa254f468a2f4c24458c8d33a8a3fee2c177 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 27 Jul 2014 20:46:04 +1000
 Subject: [PATCH] Apply NBTReadLimiter to more things.
@@ -67,5 +67,5 @@ index 0000000000..e74c61ca9b
 +    }
 +}
 -- 
-2.43.0
+2.43.2
 

@@ -1,4 +1,4 @@
-From 01be14cbbe4eae471da86d03955dda9885eb11fc Mon Sep 17 00:00:00 2001
+From e9cbb53791838a51bf43f4a72ab540c32fbc2ec9 Mon Sep 17 00:00:00 2001
 From: Minecrell <dev@minecrell.net>
 Date: Sun, 17 Aug 2014 12:42:53 +0200
 Subject: [PATCH] Make debug logging togglable.
@@ -65,5 +65,5 @@ index 40be2a9680..722ca84968 100644
      </Loggers>
  </Configuration>
 -- 
-2.43.0
+2.43.2
 

@@ -1,4 +1,4 @@
-From c91933f0a817933c155ad8cf808409e3c442f4bc Mon Sep 17 00:00:00 2001
+From 00420ea5d8670a002d18091ffff46b85028f9351 Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Sun, 29 Jun 2014 21:10:34 +0100
 Subject: [PATCH] Limit block placement/interaction packets
@@ -45,7 +45,7 @@ index 675909dc64..44ed8f10d4 100644
          this.blockHit = packetdataserializer.readBlockHitResult();
          this.sequence = packetdataserializer.readVarInt();
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index a37d13c61a..b886a48c6f 100644
+index 247b23dc17..24137a61fc 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
 @@ -1529,10 +1529,30 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
@@ -88,5 +88,5 @@ index a37d13c61a..b886a48c6f 100644
          WorldServer worldserver = this.player.serverLevel();
          EnumHand enumhand = packetplayinblockplace.getHand();
 -- 
-2.43.0
+2.43.2
 

@@ -1,4 +1,4 @@
-From 02fc0bf9c7ebb8c72dcd21ae97cbbdc75acb651f Mon Sep 17 00:00:00 2001
+From a3b245935253672c48690122c3a814e7d1b5a15f Mon Sep 17 00:00:00 2001
 From: Thinkofdeath <thinkofdeath@spigotmc.org>
 Date: Wed, 2 Jul 2014 23:35:51 +0100
 Subject: [PATCH] Better item validation
@@ -20,10 +20,10 @@ index d5d5b75b36..138bf59b43 100644
              }
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index 03b5764552..dfde2c619c 100644
+index bfa9975988..391ed14231 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-@@ -20,6 +20,10 @@ import org.bukkit.craftbukkit.util.CraftChatMessage;
+@@ -21,6 +21,10 @@ import org.bukkit.craftbukkit.util.CraftChatMessage;
  import org.bukkit.craftbukkit.util.CraftMagicNumbers;
  import org.bukkit.inventory.meta.BookMeta;
  
@@ -34,7 +34,7 @@ index 03b5764552..dfde2c619c 100644
  @DelegateDeserialization(SerializableMeta.class)
  public class CraftMetaBook extends CraftMetaItem implements BookMeta {
      static final ItemMetaKey BOOK_TITLE = new ItemMetaKey("title");
-@@ -80,11 +84,11 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+@@ -81,11 +85,11 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
          super(tag);
  
          if (tag.contains(BOOK_TITLE.NBT)) {
@@ -48,7 +48,7 @@ index 03b5764552..dfde2c619c 100644
          }
  
          if (tag.contains(RESOLVED.NBT)) {
-@@ -112,7 +116,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+@@ -113,7 +117,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
                  } else {
                      page = validatePage(page);
                  }
@@ -58,7 +58,7 @@ index 03b5764552..dfde2c619c 100644
          }
      }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
-index 16b17c5a62..fd300b0895 100644
+index 024631bdae..2ba9b75e33 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaItem.java
 @@ -79,6 +79,10 @@ import org.bukkit.inventory.meta.Repairable;
@@ -115,5 +115,5 @@ index 0000000000..58a9534816
 +    }
 +}
 -- 
-2.43.0
+2.43.2
 

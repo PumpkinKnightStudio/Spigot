@@ -1,4 +1,4 @@
-From 04be24fd1a3fa3afc34946a59f34305250afbb84 Mon Sep 17 00:00:00 2001
+From d04fdbe5644b26513cd7a2f430bbbd10efaf84c5 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -6,10 +6,10 @@ Subject: [PATCH] Skeleton API Implementations
 This contains the basic, empty implementations for some Spigot-API extensions. They are included early in the patching progress so that compilation will still succeed midway despite the APIs only being provided by subsequent patches.
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 9cb58095c4..e3c8fb366e 100644
+index b0dad048fd..02b38d961d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -2461,4 +2461,16 @@ public final class CraftServer implements Server {
+@@ -2473,4 +2473,16 @@ public final class CraftServer implements Server {
      public UnsafeValues getUnsafe() {
          return CraftMagicNumbers.INSTANCE;
      }
@@ -27,10 +27,10 @@ index 9cb58095c4..e3c8fb366e 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 71b8fd19de..74fd305b20 100644
+index fa92ac0523..90bb2728df 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -1993,4 +1993,15 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -2031,4 +2031,15 @@ public class CraftWorld extends CraftRegionAccessor implements World {
              this.persistentDataContainer.putAll((NBTTagCompound) c);
          }
      }
@@ -84,10 +84,10 @@ index be10d200e5..861739d4c4 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 5ad14d4a39..486c4a074b 100644
+index d19210e115..56d4de675d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -865,4 +865,15 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -866,4 +866,15 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          }
          return perm;
      }
@@ -124,10 +124,10 @@ index 3a4fb14bff..3a68e1cf5c 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 8c3f4c05d9..d163590287 100644
+index 3cfd3a7fc2..6c825881e1 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -2178,4 +2178,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2246,4 +2246,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      public boolean isAllowingServerListings() {
          return getHandle().allowsListing();
      }
@@ -144,10 +144,10 @@ index 8c3f4c05d9..d163590287 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-index d522ff8813..03b5764552 100644
+index d4c47feb05..bfa9975988 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBook.java
-@@ -347,6 +347,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+@@ -348,6 +348,7 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
          if (this.pages != null) {
              meta.pages = new ArrayList<String>(this.pages);
          }
@@ -155,7 +155,7 @@ index d522ff8813..03b5764552 100644
          return meta;
      }
  
-@@ -419,4 +420,15 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
+@@ -420,4 +421,15 @@ public class CraftMetaBook extends CraftMetaItem implements BookMeta {
  
          return builder;
      }
@@ -172,5 +172,5 @@ index d522ff8813..03b5764552 100644
 +    // Spigot end
  }
 -- 
-2.43.0
+2.43.2
 

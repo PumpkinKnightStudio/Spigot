@@ -1,4 +1,4 @@
-From b782b90f07ef5aaba1313901f1e7486f5cfc2867 Mon Sep 17 00:00:00 2001
+From 6742389444efb17d5a6e16f9c2310964a289d7c6 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 2 Jul 2013 13:07:39 +1000
 Subject: [PATCH] POM Changes
@@ -34,7 +34,7 @@ index ec61ec7570..b3da3373ac 100644
          <!-- See http://checkstyle.sourceforge.net/config_imports.html -->
          <module name="AvoidStarImport">
 diff --git a/pom.xml b/pom.xml
-index a9ffd7fa5e..266853a682 100644
+index 44aba403a1..323892c4a4 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -1,13 +1,20 @@
@@ -72,7 +72,7 @@ index a9ffd7fa5e..266853a682 100644
              <version>${project.version}</version>
              <scope>compile</scope>
          </dependency>
-@@ -290,11 +297,26 @@
+@@ -296,11 +303,26 @@
                  <groupId>net.md-5</groupId>
                  <artifactId>scriptus</artifactId>
                  <version>0.5.0</version>
@@ -102,7 +102,7 @@ index a9ffd7fa5e..266853a682 100644
                          <phase>initialize</phase>
                          <goals>
                              <goal>describe</goal>
-@@ -327,7 +349,7 @@
+@@ -333,7 +355,7 @@
                          <manifestEntries>
                              <Main-Class>org.bukkit.craftbukkit.Main</Main-Class>
                              <Implementation-Title>CraftBukkit</Implementation-Title>
@@ -125,5 +125,5 @@ index f905d17b6b..93046379d0 100644
  
          if (stream != null) {
 -- 
-2.43.0
+2.43.2
 

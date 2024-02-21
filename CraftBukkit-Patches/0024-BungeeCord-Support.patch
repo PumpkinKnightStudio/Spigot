@@ -1,4 +1,4 @@
-From b2bb8ee1dd3c7fc9197cef3ca1d197ea5c60f9e3 Mon Sep 17 00:00:00 2001
+From 9fe023cfabdcab6e93b83671c0a4b6f685959c1a Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 12 Apr 2014 21:23:58 +1000
 Subject: [PATCH] BungeeCord Support
@@ -36,7 +36,7 @@ index 78a7dc329d..c3347013f2 100644
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 8e54082c5f..df923b7a10 100644
+index 4c36e63e1c..7ce35b37be 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -223,7 +223,14 @@ public class DedicatedServer extends MinecraftServer implements IMinecraftServer
@@ -168,7 +168,7 @@ index 21e7d5db02..631dd2003b 100644
  
          HELLO, KEY, AUTHENTICATING, NEGOTIATING, VERIFYING, WAITING_FOR_DUPE_DISCONNECT, PROTOCOL_SWITCHING, ACCEPTED;
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index 03f285a956..876cb0d9f0 100644
+index b2c16cb5a8..4927391a34 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
 @@ -1935,7 +1935,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
@@ -217,10 +217,10 @@ index 3bf6d7d2d4..8e95956397 100644
          } else {
              String[] astring1 = astring;
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index 92815d055f..47b472af44 100644
+index f7c7bb35fe..a5982632a7 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -583,7 +583,7 @@ public abstract class PlayerList {
+@@ -584,7 +584,7 @@ public abstract class PlayerList {
  
          EntityPlayer entity = new EntityPlayer(this.server, this.server.getLevel(World.OVERWORLD), gameprofile, ClientInformation.createDefault());
          Player player = entity.getBukkitEntity();
@@ -230,10 +230,10 @@ index 92815d055f..47b472af44 100644
          if (getBans().isBanned(gameprofile) && !getBans().get(gameprofile).hasExpired()) {
              GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.bans.get(gameprofile);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 8c8a4cd740..515943e9b5 100644
+index 620ef31298..190c3d671d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -755,7 +755,13 @@ public final class CraftServer implements Server {
+@@ -767,7 +767,13 @@ public final class CraftServer implements Server {
  
      @Override
      public long getConnectionThrottle() {
@@ -248,7 +248,7 @@ index 8c8a4cd740..515943e9b5 100644
      }
  
      @Override
-@@ -1752,7 +1758,7 @@ public final class CraftServer implements Server {
+@@ -1764,7 +1770,7 @@ public final class CraftServer implements Server {
          if (result == null) {
              GameProfile profile = null;
              // Only fetch an online UUID in online mode
@@ -258,10 +258,10 @@ index 8c8a4cd740..515943e9b5 100644
                  profile = console.getProfileCache().get(name).orElse(null);
              }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 31fe6e00ea..49fbd7e015 100644
+index cc74be0e1f..6328bf9355 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -2184,6 +2184,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2252,6 +2252,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      private final Player.Spigot spigot = new Player.Spigot()
      {
  
@@ -294,5 +294,5 @@ index 130016282a..1e6b13103a 100644
 +    }
  }
 -- 
-2.43.0
+2.43.2
 

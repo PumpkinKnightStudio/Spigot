@@ -1,11 +1,11 @@
-From 20726b53c9abf27f93c1b42a5a9d987fd4213ffc Mon Sep 17 00:00:00 2001
+From 3a578bc00de585ac43b8965a5ebd670511215181 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 21 Jun 2013 18:01:29 +1000
 Subject: [PATCH] Allow Disabling of Command Logging
 
 
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index bd76f469a0..f787182eee 100644
+index 546580e260..6ec4641943 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
 @@ -1991,6 +1991,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
@@ -32,5 +32,5 @@ index 7f14cbc63b..bc9fbcc584 100644
 +    }
  }
 -- 
-2.43.0
+2.43.2
 

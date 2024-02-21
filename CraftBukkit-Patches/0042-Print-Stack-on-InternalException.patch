@@ -1,4 +1,4 @@
-From 0d90202ec8752e0f248b1d50a831029dad77a2b4 Mon Sep 17 00:00:00 2001
+From c8fabf761a64a462813d98a9fb54e35a9c1a9f94 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 13 Apr 2014 09:00:59 +1000
 Subject: [PATCH] Print Stack on InternalException
@@ -17,5 +17,5 @@ index 2c4e85749a..7a083a9961 100644
  
      protected void channelRead0(ChannelHandlerContext channelhandlercontext, Packet<?> packet) {
 -- 
-2.43.0
+2.43.2
 
