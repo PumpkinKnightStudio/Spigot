@@ -1,4 +1,4 @@
-From 9fe023cfabdcab6e93b83671c0a4b6f685959c1a Mon Sep 17 00:00:00 2001
+From 398295426767c3285927e0ced53dea988577acaa Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 12 Apr 2014 21:23:58 +1000
 Subject: [PATCH] BungeeCord Support
@@ -217,7 +217,7 @@ index 3bf6d7d2d4..8e95956397 100644
          } else {
              String[] astring1 = astring;
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index f7c7bb35fe..a5982632a7 100644
+index 0888a72c2b..2839680a9d 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
 @@ -584,7 +584,7 @@ public abstract class PlayerList {
@@ -227,7 +227,7 @@ index f7c7bb35fe..a5982632a7 100644
 -        PlayerLoginEvent event = new PlayerLoginEvent(player, loginlistener.connection.hostname, ((java.net.InetSocketAddress) socketaddress).getAddress());
 +        PlayerLoginEvent event = new PlayerLoginEvent(player, loginlistener.connection.hostname, ((java.net.InetSocketAddress) socketaddress).getAddress(), ((java.net.InetSocketAddress) loginlistener.connection.channel.remoteAddress()).getAddress());
  
-         if (getBans().isBanned(gameprofile) && !getBans().get(gameprofile).hasExpired()) {
+         if (this.bans.isBanned(gameprofile)) {
              GameProfileBanEntry gameprofilebanentry = (GameProfileBanEntry) this.bans.get(gameprofile);
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 index 620ef31298..190c3d671d 100644
