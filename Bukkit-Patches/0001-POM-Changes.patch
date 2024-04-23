@@ -1,11 +1,11 @@
-From d90893ee2239326c984c4b6a79ebe5e5b7f94edd Mon Sep 17 00:00:00 2001
+From 91e2de4eda24b10ffa70b98e426ba0296e1c9bb0 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 2 Jun 2013 10:36:24 +1000
 Subject: [PATCH] POM Changes
 
 
 diff --git a/checkstyle.xml b/checkstyle.xml
-index 4b2615435..3e7d0cb3a 100644
+index 4b261543..3e7d0cb3 100644
 --- a/checkstyle.xml
 +++ b/checkstyle.xml
 @@ -45,6 +45,10 @@
@@ -20,7 +20,7 @@ index 4b2615435..3e7d0cb3a 100644
          <!-- See http://checkstyle.sourceforge.net/config_imports.html -->
          <module name="AvoidStarImport">
 diff --git a/pom.xml b/pom.xml
-index fe7ecda44..4d2bfb4ba 100644
+index ad7e1905..f829cb9d 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -3,14 +3,14 @@
@@ -31,7 +31,7 @@ index fe7ecda44..4d2bfb4ba 100644
 -    <artifactId>bukkit</artifactId>
 +    <groupId>org.spigotmc</groupId>
 +    <artifactId>spigot-api</artifactId>
-     <version>1.20.4-R0.1-SNAPSHOT</version>
+     <version>1.20.5-R0.1-SNAPSHOT</version>
      <packaging>jar</packaging>
  
 -    <name>Bukkit</name>

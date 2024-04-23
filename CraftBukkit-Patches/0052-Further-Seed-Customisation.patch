@@ -1,4 +1,4 @@
-From c6105b058424a486ccc2d53d83e5f055973ede12 Mon Sep 17 00:00:00 2001
+From e46c5fa0359e12051364837cc38a3e6a16a7cd60 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -6,10 +6,10 @@ Subject: [PATCH] Further Seed Customisation
 Allow server admins that really want to to customise the seeds used in world generation even further.
 
 diff --git a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-index 80bd238581..75d4df1dc6 100644
+index 731f8ff9cc..378b720f61 100644
 --- a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-@@ -202,7 +202,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.d {
+@@ -202,7 +202,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.c {
              this.randomState = RandomState.create(GeneratorSettingBase.dummy(), (HolderGetter) iregistrycustom.lookupOrThrow(Registries.NOISE), j);
          }
  
@@ -19,10 +19,10 @@ index 80bd238581..75d4df1dc6 100644
          ThreadedMailbox<Runnable> threadedmailbox = ThreadedMailbox.create(executor, "worldgen");
  
 diff --git a/src/main/java/net/minecraft/world/entity/monster/EntitySlime.java b/src/main/java/net/minecraft/world/entity/monster/EntitySlime.java
-index 8246789e2b..8fe9b3cc4a 100644
+index 76341d3d66..6c445ace2e 100644
 --- a/src/main/java/net/minecraft/world/entity/monster/EntitySlime.java
 +++ b/src/main/java/net/minecraft/world/entity/monster/EntitySlime.java
-@@ -346,7 +346,7 @@ public class EntitySlime extends EntityInsentient implements IMonster {
+@@ -343,7 +343,7 @@ public class EntitySlime extends EntityInsentient implements IMonster {
                  }
  
                  ChunkCoordIntPair chunkcoordintpair = new ChunkCoordIntPair(blockposition);
@@ -32,12 +32,12 @@ index 8246789e2b..8fe9b3cc4a 100644
                  if (randomsource.nextInt(10) == 0 && flag && blockposition.getY() < 40) {
                      return checkMobSpawnRules(entitytypes, generatoraccess, enummobspawn, blockposition, randomsource);
 diff --git a/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java b/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java
-index ca310d23ab..ca53783c4f 100644
+index 1457de06cd..b1eedb99f3 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/ChunkGenerator.java
-@@ -102,8 +102,8 @@ public abstract class ChunkGenerator {
+@@ -108,8 +108,8 @@ public abstract class ChunkGenerator {
  
-     protected abstract Codec<? extends ChunkGenerator> codec();
+     protected abstract MapCodec<? extends ChunkGenerator> codec();
  
 -    public ChunkGeneratorStructureState createState(HolderLookup<StructureSet> holderlookup, RandomState randomstate, long i) {
 -        return ChunkGeneratorStructureState.createForNormal(randomstate, i, this.biomeSource, holderlookup);
@@ -45,9 +45,9 @@ index ca310d23ab..ca53783c4f 100644
 +        return ChunkGeneratorStructureState.createForNormal(randomstate, i, this.biomeSource, holderlookup, conf); // Spigot
      }
  
-     public Optional<ResourceKey<Codec<? extends ChunkGenerator>>> getTypeNameForDataFixer() {
+     public Optional<ResourceKey<MapCodec<? extends ChunkGenerator>>> getTypeNameForDataFixer() {
 diff --git a/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java b/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java
-index 35f744746c..80eacaf7a2 100644
+index c196274ed9..f11134ca3d 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/ChunkGeneratorStructureState.java
 @@ -34,6 +34,11 @@ import net.minecraft.world.level.levelgen.structure.placement.ConcentricRingsStr
@@ -149,7 +149,7 @@ index 35f744746c..80eacaf7a2 100644
      private static boolean hasBiomesForStructureSet(StructureSet structureset, WorldChunkManager worldchunkmanager) {
          Stream<Holder<BiomeBase>> stream = structureset.structures().stream().flatMap((structureset_a) -> {
 diff --git a/src/main/java/net/minecraft/world/level/levelgen/ChunkProviderFlat.java b/src/main/java/net/minecraft/world/level/levelgen/ChunkProviderFlat.java
-index 6d6b3abd1c..926848b826 100644
+index 6006583657..fd2401e331 100644
 --- a/src/main/java/net/minecraft/world/level/levelgen/ChunkProviderFlat.java
 +++ b/src/main/java/net/minecraft/world/level/levelgen/ChunkProviderFlat.java
 @@ -49,14 +49,14 @@ public class ChunkProviderFlat extends ChunkGenerator {
@@ -170,7 +170,7 @@ index 6d6b3abd1c..926848b826 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
-index 447b0ef691..91c542f176 100644
+index dfe09d8858..185e9dbc76 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftChunk.java
 @@ -219,7 +219,7 @@ public class CraftChunk implements Chunk {

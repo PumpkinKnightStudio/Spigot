@@ -1,4 +1,4 @@
-From e33b15c0fb0fef552e0eccfdaa57c975a62ae265 Mon Sep 17 00:00:00 2001
+From f682bf57dcdc8680e75d7077b0f91b3ec1af30e5 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 13 Apr 2014 14:41:23 +1000
 Subject: [PATCH] Use Offline Player Data Once if Required.
@@ -6,38 +6,40 @@ Subject: [PATCH] Use Offline Player Data Once if Required.
 If we are online mode and the only copy of player data we can find is the player's offline mode data, we will attempt a once off conversion by reading this data and then renaming the file so it won't be used again.
 
 diff --git a/src/main/java/net/minecraft/world/level/storage/WorldNBTStorage.java b/src/main/java/net/minecraft/world/level/storage/WorldNBTStorage.java
-index 689d28b5b9..d77142665d 100644
+index 935acab0e9..c79f0fbd91 100644
 --- a/src/main/java/net/minecraft/world/level/storage/WorldNBTStorage.java
 +++ b/src/main/java/net/minecraft/world/level/storage/WorldNBTStorage.java
-@@ -57,10 +57,28 @@ public class WorldNBTStorage {
- 
-         try {
-             File file = new File(this.playerDir, entityhuman.getStringUUID() + ".dat");
-+            // Spigot Start
-+            boolean usingWrongFile = false;
-+            if ( !file.exists() )
+@@ -75,10 +75,29 @@ public class WorldNBTStorage {
+         File file = this.playerDir;
+         // String s1 = entityhuman.getStringUUID(); // CraftBukkit - used above
+         File file1 = new File(file, s1 + s);
++        // Spigot Start
++        boolean usingWrongFile = false;
++        if ( !file1.exists() )
++        {
++            file1 = new File( file, java.util.UUID.nameUUIDFromBytes( ( "OfflinePlayer:" + name ).getBytes( java.nio.charset.StandardCharsets.UTF_8 ) ).toString() + s );
++            if ( file1.exists() )
 +            {
-+                file = new File( this.playerDir, java.util.UUID.nameUUIDFromBytes( ( "OfflinePlayer:" + entityhuman.getScoreboardName() ).getBytes( "UTF-8" ) ).toString() + ".dat");
-+                if ( file.exists() )
++                usingWrongFile = true;
++                org.bukkit.Bukkit.getServer().getLogger().warning( "Using offline mode UUID file for player " + name + " as it is the only copy we can find." );
++            }
++        }
++        // Spigot End
+ 
+         if (file1.exists() && file1.isFile()) {
+             try {
+-                return Optional.of(NBTCompressedStreamTools.readCompressed(file1.toPath(), NBTReadLimiter.unlimitedHeap()));
++                // Spigot Start
++                Optional<NBTTagCompound> optional = Optional.of(NBTCompressedStreamTools.readCompressed(file1.toPath(), NBTReadLimiter.unlimitedHeap()));
++                if ( usingWrongFile )
 +                {
-+                    usingWrongFile = true;
-+                    org.bukkit.Bukkit.getServer().getLogger().warning( "Using offline mode UUID file for player " + entityhuman.getScoreboardName() + " as it is the only copy we can find." );
++                    file1.renameTo( new File( file1.getPath() + ".offline-read" ) );
 +                }
-+            }
-+            // Spigot End
- 
-             if (file.exists() && file.isFile()) {
-                 nbttagcompound = NBTCompressedStreamTools.readCompressed(file.toPath(), NBTReadLimiter.unlimitedHeap());
++                return optional;
++                // Spigot End
+             } catch (Exception exception) {
+                 WorldNBTStorage.LOGGER.warn("Failed to load player data for {}", name); // CraftBukkit
              }
-+            // Spigot Start
-+            if ( usingWrongFile )
-+            {
-+                file.renameTo( new File( file.getPath() + ".offline-read" ) );
-+            }
-+            // Spigot End
-         } catch (Exception exception) {
-             WorldNBTStorage.LOGGER.warn("Failed to load player data for {}", entityhuman.getName().getString());
-         }
 -- 
 2.43.2
 

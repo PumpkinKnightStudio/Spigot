@@ -1,4 +1,4 @@
-From c48b83af5b84cbca581756269205127614f0b91c Mon Sep 17 00:00:00 2001
+From d81a15c461e215d534112b157a513efbe96cd395 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Wed, 9 Jul 2014 10:35:44 +1000
 Subject: [PATCH] Add CommandLine EULA Flag
@@ -8,10 +8,10 @@ This flag contains the same message as eula.txt (albeit with proper grammar for 
 This feature only exists for hosting companies and people who manage servers in bulk who wish to agree to the terms by setting a flag in a script.
 
 diff --git a/src/main/java/net/minecraft/server/Main.java b/src/main/java/net/minecraft/server/Main.java
-index b7a570be3c..2d053758d6 100644
+index 31da7b55ef..341cada5a2 100644
 --- a/src/main/java/net/minecraft/server/Main.java
 +++ b/src/main/java/net/minecraft/server/Main.java
-@@ -148,7 +148,16 @@ public class Main {
+@@ -150,7 +150,16 @@ public class Main {
                  return;
              }
  

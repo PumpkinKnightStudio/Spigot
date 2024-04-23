@@ -1,14 +1,14 @@
-From 286d617188bb31799c6612622573e102ef95e90c Mon Sep 17 00:00:00 2001
+From 153b64980bf4491c2ab71b05180aa1197d75c8a4 Mon Sep 17 00:00:00 2001
 From: ninja <xninja@openmailbox.org>
 Date: Tue, 8 Apr 2014 14:05:19 +0200
 Subject: [PATCH] Implement PlayerSpawnLocationEvent.
 
 
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index a5982632a7..0e4ba589c9 100644
+index 5c298068df..c89e7572a0 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -224,6 +224,19 @@ public abstract class PlayerList {
+@@ -223,6 +223,19 @@ public abstract class PlayerList {
          entityplayer.setServerLevel(worldserver1);
          String s1 = networkmanager.getLoggableAddress(this.server.logIPs());
  

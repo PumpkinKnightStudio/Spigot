@@ -1,14 +1,14 @@
-From 74900857bb4ee608e0a53a1fd30f822ab885f55a Mon Sep 17 00:00:00 2001
+From 2944bcf4ee8aa777ccff1a7761612718e2100436 Mon Sep 17 00:00:00 2001
 From: drXor <mcyoungsota@gmail.com>
 Date: Fri, 23 May 2014 18:05:10 -0400
 Subject: [PATCH] Configurable save-on-stop-only for UserCache
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index f61c9ce7c1..01c74b7f13 100644
+index a0dfc63607..8fd7f5f959 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -955,6 +955,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
+@@ -965,6 +965,12 @@ public abstract class MinecraftServer extends IAsyncTaskHandlerReentrant<TickTas
          } catch (IOException ioexception1) {
              MinecraftServer.LOGGER.error("Failed to unlock level {}", this.storageSource.getLevelId(), ioexception1);
          }
@@ -22,7 +22,7 @@ index f61c9ce7c1..01c74b7f13 100644
      }
  
 diff --git a/src/main/java/net/minecraft/server/players/UserCache.java b/src/main/java/net/minecraft/server/players/UserCache.java
-index f65e21c655..c5147ee88c 100644
+index 2071d44626..0ee2026472 100644
 --- a/src/main/java/net/minecraft/server/players/UserCache.java
 +++ b/src/main/java/net/minecraft/server/players/UserCache.java
 @@ -117,7 +117,7 @@ public class UserCache {

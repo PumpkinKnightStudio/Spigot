@@ -1,11 +1,11 @@
-From 2a183e59b360428cb7371f10f9551295f95166d9 Mon Sep 17 00:00:00 2001
+From 8c7bbb01d41cdceffcfd1fd2596e808f1f136ff5 Mon Sep 17 00:00:00 2001
 From: Suddenly <suddenly@suddenly.coffee>
 Date: Tue, 8 Jul 2014 09:44:18 +1000
 Subject: [PATCH] Safer JSON Loading
 
 
 diff --git a/src/main/java/net/minecraft/server/players/JsonList.java b/src/main/java/net/minecraft/server/players/JsonList.java
-index 04a730277e..2b254136ff 100644
+index f4544fb327..e10fc779bd 100644
 --- a/src/main/java/net/minecraft/server/players/JsonList.java
 +++ b/src/main/java/net/minecraft/server/players/JsonList.java
 @@ -175,6 +175,14 @@ public abstract class JsonList<K, V extends JsonListEntry<K>> {
@@ -24,7 +24,7 @@ index 04a730277e..2b254136ff 100644
                      if (bufferedreader != null) {
                          try {
 diff --git a/src/main/java/net/minecraft/server/players/UserCache.java b/src/main/java/net/minecraft/server/players/UserCache.java
-index c5147ee88c..6e97ee7465 100644
+index 0ee2026472..8c998e3077 100644
 --- a/src/main/java/net/minecraft/server/players/UserCache.java
 +++ b/src/main/java/net/minecraft/server/players/UserCache.java
 @@ -250,6 +250,11 @@ public class UserCache {
