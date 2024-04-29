@@ -1,4 +1,4 @@
-From 5ffafe75d458ae38c2fda3751f9e4acdfa0a516d Mon Sep 17 00:00:00 2001
+From cd737ef8770bbc51e7ed6bb4b5cf6e125af244a4 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Tue, 25 Mar 2014 16:10:01 +1100
 Subject: [PATCH] Async Operation Catching
@@ -6,10 +6,10 @@ Subject: [PATCH] Async Operation Catching
 Catch and throw an exception when a potentially unsafe operation occurs on a thread other than the main server thread.
 
 diff --git a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-index 3d467e82d9..5fb7710b9c 100644
+index ba3fd74a7a..514e21fe35 100644
 --- a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-@@ -1314,6 +1314,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.c {
+@@ -1315,6 +1315,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.c {
      }
  
      protected void addEntity(Entity entity) {
@@ -17,7 +17,7 @@ index 3d467e82d9..5fb7710b9c 100644
          if (!(entity instanceof EntityComplexPart)) {
              EntityTypes<?> entitytypes = entity.getType();
              int i = entitytypes.clientTrackingRange() * 16;
-@@ -1349,6 +1350,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.c {
+@@ -1350,6 +1351,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.c {
      }
  
      protected void removeEntity(Entity entity) {
@@ -25,7 +25,7 @@ index 3d467e82d9..5fb7710b9c 100644
          if (entity instanceof EntityPlayer entityplayer) {
              this.updatePlayerStatus(entityplayer, false);
              ObjectIterator objectiterator = this.entityMap.values().iterator();
-@@ -1568,6 +1570,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.c {
+@@ -1569,6 +1571,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.c {
          }
  
          public void removePlayer(EntityPlayer entityplayer) {
@@ -33,7 +33,7 @@ index 3d467e82d9..5fb7710b9c 100644
              if (this.seenBy.remove(entityplayer.connection)) {
                  this.serverEntity.removePairing(entityplayer);
              }
-@@ -1575,6 +1578,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.c {
+@@ -1576,6 +1579,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.c {
          }
  
          public void updatePlayer(EntityPlayer entityplayer) {
@@ -78,7 +78,7 @@ index 8024fb7211..ff1d7729be 100644
              if (entity instanceof EntityPlayer entityplayer) {
                  WorldServer.this.players.remove(entityplayer);
 diff --git a/src/main/java/net/minecraft/world/entity/EntityLiving.java b/src/main/java/net/minecraft/world/entity/EntityLiving.java
-index 5bcdc72acc..10ef8be84b 100644
+index 2753e23ef4..4ed30c9265 100644
 --- a/src/main/java/net/minecraft/world/entity/EntityLiving.java
 +++ b/src/main/java/net/minecraft/world/entity/EntityLiving.java
 @@ -1131,6 +1131,7 @@ public abstract class EntityLiving extends Entity implements Attackable {
@@ -132,7 +132,7 @@ index 44e9274466..3b5a26c48f 100644
          if (commandMap.dispatch(sender, commandLine)) {
              return true;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 8a3ce04225..cb698c8f31 100644
+index 33865e427c..987a31e77f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 @@ -283,6 +283,7 @@ public class CraftWorld extends CraftRegionAccessor implements World {
@@ -196,10 +196,10 @@ index a81a639cd5..eaa0a1355d 100644
          List<Entity> notchEntityList = entity.level().getEntities(entity, entity.getBoundingBox().inflate(x, y, z), Predicates.alwaysTrue());
          List<org.bukkit.entity.Entity> bukkitEntityList = new java.util.ArrayList<org.bukkit.entity.Entity>(notchEntityList.size());
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index a139ef47c2..5ad9456946 100644
+index f1bab98382..4bba356388 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -475,6 +475,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -476,6 +476,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
      @Override
      public void kickPlayer(String message) {

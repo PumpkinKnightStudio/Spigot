@@ -1,4 +1,4 @@
-From c5e77495d10f9fc6020eaa43cca0d39ad95c7ef2 Mon Sep 17 00:00:00 2001
+From b07a4932efc9931592f8b6af1b17efbadc93b345 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sun, 2 Jun 2013 15:10:56 +1000
 Subject: [PATCH] Skeleton API Implementations
@@ -27,10 +27,10 @@ index d1d13683a4..36255ef9a2 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-index 96fe7c7e17..8a3ce04225 100644
+index fe3252ea23..33865e427c 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftWorld.java
-@@ -2055,4 +2055,15 @@ public class CraftWorld extends CraftRegionAccessor implements World {
+@@ -2051,4 +2051,15 @@ public class CraftWorld extends CraftRegionAccessor implements World {
              this.persistentDataContainer.putAll((NBTTagCompound) c);
          }
      }
@@ -124,10 +124,10 @@ index 3a4fb14bff..3a68e1cf5c 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 7c268035f7..a139ef47c2 100644
+index 304453fcd9..f1bab98382 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -2314,4 +2314,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2311,4 +2311,15 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      public boolean isAllowingServerListings() {
          return getHandle().allowsListing();
      }
@@ -172,7 +172,7 @@ index d338430fde..ed599634a1 100644
 +    // Spigot end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBookSigned.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBookSigned.java
-index 0e0511a8f5..c049bbbf3f 100644
+index 075c01a830..e1361a6760 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBookSigned.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBookSigned.java
 @@ -292,6 +292,7 @@ public class CraftMetaBookSigned extends CraftMetaItem implements BookMeta {
@@ -183,7 +183,7 @@ index 0e0511a8f5..c049bbbf3f 100644
          return meta;
      }
  
-@@ -360,4 +361,15 @@ public class CraftMetaBookSigned extends CraftMetaItem implements BookMeta {
+@@ -364,4 +365,15 @@ public class CraftMetaBookSigned extends CraftMetaItem implements BookMeta {
  
          return builder;
      }

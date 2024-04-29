@@ -1,4 +1,4 @@
-From e46c5fa0359e12051364837cc38a3e6a16a7cd60 Mon Sep 17 00:00:00 2001
+From 69ac16749c0c90c96c3ed4f16d9504e3c7ca8372 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Fri, 4 Jul 2014 13:28:45 +1000
 Subject: [PATCH] Further Seed Customisation
@@ -6,10 +6,10 @@ Subject: [PATCH] Further Seed Customisation
 Allow server admins that really want to to customise the seeds used in world generation even further.
 
 diff --git a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-index 731f8ff9cc..378b720f61 100644
+index d67296445b..d86f9bffb0 100644
 --- a/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/PlayerChunkMap.java
-@@ -202,7 +202,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.c {
+@@ -203,7 +203,7 @@ public class PlayerChunkMap extends IChunkLoader implements PlayerChunk.c {
              this.randomState = RandomState.create(GeneratorSettingBase.dummy(), (HolderGetter) iregistrycustom.lookupOrThrow(Registries.NOISE), j);
          }
  

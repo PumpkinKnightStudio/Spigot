@@ -1,4 +1,4 @@
-From f47ebe00c598ad753883dcd477bc5fd567818553 Mon Sep 17 00:00:00 2001
+From 75c8c7a3a03ee7202e197bb725fdb0fd872f6437 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 13 Dec 2014 03:06:05 +0100
 Subject: [PATCH] BungeeCord Chat API
@@ -130,10 +130,10 @@ index eaa0a1355d..493365515c 100644
  
      public org.bukkit.entity.Entity.Spigot spigot()
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index ef0208ff21..ac1b5e2c93 100644
+index e4fab756c7..845f4c09d4 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -193,6 +193,8 @@ import org.bukkit.profile.PlayerProfile;
+@@ -194,6 +194,8 @@ import org.bukkit.profile.PlayerProfile;
  import org.bukkit.scoreboard.Scoreboard;
  import org.jetbrains.annotations.NotNull;
  
@@ -142,7 +142,7 @@ index ef0208ff21..ac1b5e2c93 100644
  @DelegateDeserialization(CraftOfflinePlayer.class)
  public class CraftPlayer extends CraftHumanEntity implements Player {
      private long firstPlayed = 0;
-@@ -2357,6 +2359,48 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2354,6 +2356,48 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
              return java.util.Collections.unmodifiableSet( ret );
          }
@@ -295,7 +295,7 @@ index ed599634a1..0d0c14997c 100644
  
      @Override
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBookSigned.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBookSigned.java
-index c049bbbf3f..0d2965441b 100644
+index e1361a6760..b5e7e344fc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBookSigned.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftMetaBookSigned.java
 @@ -20,6 +20,12 @@ import org.bukkit.configuration.serialization.DelegateDeserialization;
@@ -311,7 +311,7 @@ index c049bbbf3f..0d2965441b 100644
  @DelegateDeserialization(SerializableMeta.class)
  public class CraftMetaBookSigned extends CraftMetaItem implements BookMeta {
      @ItemMetaKey.Specific(ItemMetaKey.Specific.To.NBT)
-@@ -365,6 +371,83 @@ public class CraftMetaBookSigned extends CraftMetaItem implements BookMeta {
+@@ -369,6 +375,83 @@ public class CraftMetaBookSigned extends CraftMetaItem implements BookMeta {
      // Spigot start
      private BookMeta.Spigot spigot = new SpigotMeta();
      private class SpigotMeta extends BookMeta.Spigot {

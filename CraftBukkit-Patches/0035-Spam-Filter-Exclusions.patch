@@ -1,14 +1,14 @@
-From bd414045eff3508cb4e99a70577f9df6575e7524 Mon Sep 17 00:00:00 2001
+From f405a9275aca42808d9bcaae6e81a76d4c6471a8 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 8 Feb 2014 08:13:40 +0000
 Subject: [PATCH] Spam Filter Exclusions
 
 
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index 0b6f20b5e5..4ef720f6c0 100644
+index cf9d0b4eb9..c6fe6b9134 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-@@ -1783,7 +1783,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
+@@ -1777,7 +1777,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
              }
              // CraftBukkit end
              this.performUnsignedChatCommand(serverboundchatcommandpacket.command());
@@ -17,7 +17,7 @@ index 0b6f20b5e5..4ef720f6c0 100644
          }, true); // CraftBukkit - sync commands
      }
  
-@@ -1822,7 +1822,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
+@@ -1816,7 +1816,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
                  }
                  // CraftBukkit end
                  this.performSignedChatCommand(serverboundchatcommandsignedpacket, (LastSeenMessages) optional.get());
@@ -26,7 +26,7 @@ index 0b6f20b5e5..4ef720f6c0 100644
              }, true); // CraftBukkit - sync commands
          }
      }
-@@ -2116,11 +2116,22 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
+@@ -2110,11 +2110,22 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
          }
          // this.server.getPlayerList().broadcastChatMessage(playerchatmessage, this.player, ChatMessageType.bind(ChatMessageType.CHAT, (Entity) this.player));
          // CraftBukkit end

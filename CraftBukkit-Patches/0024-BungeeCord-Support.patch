@@ -1,4 +1,4 @@
-From 839c239d5e6f604bb903f193c29b69e0f4f9f0af Mon Sep 17 00:00:00 2001
+From fc986568b12e054a50b14641e8bd6ee0df68be56 Mon Sep 17 00:00:00 2001
 From: md_5 <git@md-5.net>
 Date: Sat, 12 Apr 2014 21:23:58 +1000
 Subject: [PATCH] BungeeCord Support
@@ -104,7 +104,7 @@ index 1cf2ab25ef..41c1383c77 100644
  
      }
 diff --git a/src/main/java/net/minecraft/server/network/LoginListener.java b/src/main/java/net/minecraft/server/network/LoginListener.java
-index dccb7f31a6..abeab3c6ee 100644
+index 3dd37d96cd..4720516797 100644
 --- a/src/main/java/net/minecraft/server/network/LoginListener.java
 +++ b/src/main/java/net/minecraft/server/network/LoginListener.java
 @@ -174,7 +174,7 @@ public class LoginListener implements PacketLoginInListener, TickablePacketListe
@@ -168,10 +168,10 @@ index dccb7f31a6..abeab3c6ee 100644
  
          HELLO, KEY, AUTHENTICATING, NEGOTIATING, VERIFYING, WAITING_FOR_COOKIES, WAITING_FOR_DUPE_DISCONNECT, PROTOCOL_SWITCHING, ACCEPTED; // CraftBukkit
 diff --git a/src/main/java/net/minecraft/server/network/PlayerConnection.java b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-index 947ee46c98..0b6f20b5e5 100644
+index 55b4a6d72b..cf9d0b4eb9 100644
 --- a/src/main/java/net/minecraft/server/network/PlayerConnection.java
 +++ b/src/main/java/net/minecraft/server/network/PlayerConnection.java
-@@ -2007,7 +2007,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
+@@ -2001,7 +2001,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
  
                          String message = String.format(queueEvent.getFormat(), queueEvent.getPlayer().getDisplayName(), queueEvent.getMessage());
                          if (((LazyPlayerSet) queueEvent.getRecipients()).isLazy()) {
@@ -180,7 +180,7 @@ index 947ee46c98..0b6f20b5e5 100644
                                  PlayerConnection.this.server.getPlayerList().broadcastChatMessage(original, PlayerConnection.this.player, ChatMessageType.bind(ChatMessageType.CHAT, (Entity) PlayerConnection.this.player));
                                  return null;
                              }
-@@ -2043,7 +2043,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
+@@ -2037,7 +2037,7 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
  
                  s = String.format(event.getFormat(), event.getPlayer().getDisplayName(), event.getMessage());
                  if (((LazyPlayerSet) event.getRecipients()).isLazy()) {
@@ -189,7 +189,7 @@ index 947ee46c98..0b6f20b5e5 100644
                          PlayerConnection.this.server.getPlayerList().broadcastChatMessage(original, PlayerConnection.this.player, ChatMessageType.bind(ChatMessageType.CHAT, (Entity) PlayerConnection.this.player));
                          return;
                      }
-@@ -2295,6 +2295,13 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
+@@ -2289,6 +2289,13 @@ public class PlayerConnection extends ServerCommonPacketListenerImpl implements
          return this.connection.getRemoteAddress();
      }
  
@@ -258,10 +258,10 @@ index a2847b3b0f..a98f74f1b2 100644
                  profile = console.getProfileCache().get(name).orElse(null);
              }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 79ef310bdf..c5d9d415ab 100644
+index 18503ded5b..0adeaeac4f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -2320,6 +2320,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -2317,6 +2317,12 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
      private final Player.Spigot spigot = new Player.Spigot()
      {
  

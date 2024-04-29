@@ -1,14 +1,14 @@
-From 2903ff153e462611a4f7f99a95b2e611adc4de85 Mon Sep 17 00:00:00 2001
+From c59c58288a7cc51c3d4bf0056913fe57959c7754 Mon Sep 17 00:00:00 2001
 From: lazertester <austin.techhead@gmail.com>
 Date: Sun, 17 Aug 2014 19:56:17 +1000
 Subject: [PATCH] Add Hunger Config Values
 
 
 diff --git a/src/main/java/net/minecraft/server/level/EntityPlayer.java b/src/main/java/net/minecraft/server/level/EntityPlayer.java
-index ae8eb3f432..240e033a69 100644
+index c750ef037d..428254ea08 100644
 --- a/src/main/java/net/minecraft/server/level/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/EntityPlayer.java
-@@ -1636,19 +1636,19 @@ public class EntityPlayer extends EntityHuman {
+@@ -1646,19 +1646,19 @@ public class EntityPlayer extends EntityHuman {
                  i = Math.round((float) Math.sqrt(d0 * d0 + d1 * d1 + d2 * d2) * 100.0F);
                  if (i > 0) {
                      this.awardStat(StatisticList.SWIM_ONE_CM, i);
@@ -31,7 +31,7 @@ index ae8eb3f432..240e033a69 100644
                  }
              } else if (this.onClimbable()) {
                  if (d1 > 0.0D) {
-@@ -1659,13 +1659,13 @@ public class EntityPlayer extends EntityHuman {
+@@ -1669,13 +1669,13 @@ public class EntityPlayer extends EntityHuman {
                  if (i > 0) {
                      if (this.isSprinting()) {
                          this.awardStat(StatisticList.SPRINT_ONE_CM, i);
